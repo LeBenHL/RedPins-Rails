@@ -58,5 +58,12 @@ module RedPins
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # ERROR CODES
+    SUCCESS = 1
+    ERR_NO_USER_EXISTS = -1
+    ERR_USER_EXISTS = -2
+    ERR_BAD_EMAIL = -3
+    ERR_BAD_FACEBOOK_ID = -4
   end
 end
