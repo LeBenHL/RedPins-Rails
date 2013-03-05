@@ -26,6 +26,9 @@ gem 'jquery-rails'
 # Used for Validation of emails
 gem 'valid_email'
 
+# Used to annotate models with their fields and data types
+gem 'annotate', ">=2.5.0"
+
 group :test, :development do
   gem "rspec-rails", "~> 2.0"
 end
