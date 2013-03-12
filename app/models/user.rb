@@ -11,9 +11,10 @@
 
 require 'valid_email'
 class User < ActiveRecord::Base
-  attr_accessible :email, :facebook_id
+  attr_accessible :email, :facebook_id, :id
   validates :email, :presence => true, :uniqueness => true, :email => true
   validates :facebook_id, :presence => true, :uniqueness => true
+  has_many :events, :through => :likes
 
   def self.login(email, facebook_id)
     @user = User.where(:facebook_id => facebook_id)[0]
@@ -43,5 +44,36 @@ class User < ActiveRecord::Base
       end
     end
     return RedPins::Application::SUCCESS
+  end
+
+  def self.getUser(facebook_id)
+    return User.where(:facebook_id => facebook_id)[0]
+  end
+
+  def rateEvent(event_id, like)
+    begin
+      @like = Like.create!(:user_id => self.id, :event_id => event_id, :like => like)
+    rescue => ex
+      return false
+    end
+    return true
+  end
+
+  def rateEvent?(event_id)
+    @like = Like.where(:user_id => self.id, :event_id => event_id)[0]
+    return true unless @like.nil?
+    return false
+  end
+
+  def getRatingForEvent(event_id)
+    Like.where(:user_id => self.id, :event_id => event_id)[0]
+  end
+
+  #TEST
+  def deleteRatingForEvent(event_id)
+    @like = Like.where(:user_id => self.id, :event_id => event_id)[0]
+    return false if @like.nil?
+    @like.delete
+    return true
   end
 end

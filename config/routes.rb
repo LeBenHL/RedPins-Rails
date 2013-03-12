@@ -1,5 +1,8 @@
 RedPins::Application.routes.draw do
 
+  resources :likes
+
+
   match '/users/login' => 'Users#login', :via => :post
   match '/users/add' => 'Users#add', :via => :post
 

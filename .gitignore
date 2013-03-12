@@ -16,3 +16,6 @@
 
 /config/database.yml
 .DS_Store
+
+redpins_development
+redpins_testing
