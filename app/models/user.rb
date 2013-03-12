@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
   validates :facebook_id, :presence => true, :uniqueness => true
   has_many :events, :through => :likes
 
-  def self.login(email, facebook_id)
+  def self.login(facebook_id)
     @user = User.where(:facebook_id => facebook_id)[0]
     if @user
       return RedPins::Application::SUCCESS
