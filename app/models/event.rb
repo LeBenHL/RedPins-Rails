@@ -7,17 +7,18 @@
 #  time        :datetime         not null
 #  title       :string(255)      not null
 #  url         :string(255)      not null
+#  user_id     :string(255)      not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #
 
 class Event < ActiveRecord::Base
-  attr_accessible :location, :time, :title, :url
+  attr_accessible :location, :time, :title, :url, :user_id
   validates :title, :presence => true
   validates :time, :presence => true
   validates :location, :presence => true
   
-  def self.add(title, time, location, url)
+  def self.add(title, time, location, url = "")
     begin
       @event = Event.create!(:title => title, :time => time, :location => location, :url => url)
     rescue => exception
