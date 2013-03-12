@@ -42,6 +42,6 @@ class User < ActiveRecord::Base
           return RedPins::Application::ERR_BAD_FACEBOOK_ID
       end
     end
-    return SUCCESS
+    return RedPins::Application::SUCCESS
   end
 end
