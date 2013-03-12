@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
     return User.where(:facebook_id => facebook_id)[0]
   end
 
-  def rateEvent(event_id, like)
+  def likeEvent(event_id, like)
     begin
       @like = Like.create!(:user_id => self.id, :event_id => event_id, :like => like)
     rescue => ex
@@ -59,7 +59,7 @@ class User < ActiveRecord::Base
     return true
   end
 
-  def rateEvent?(event_id)
+  def likeEvent?(event_id)
     @like = Like.where(:user_id => self.id, :event_id => event_id)[0]
     return true unless @like.nil?
     return false
@@ -70,7 +70,7 @@ class User < ActiveRecord::Base
   end
 
   #TEST
-  def deleteRatingForEvent(event_id)
+  def removeLike(event_id)
     @like = Like.where(:user_id => self.id, :event_id => event_id)[0]
     return false if @like.nil?
     @like.delete

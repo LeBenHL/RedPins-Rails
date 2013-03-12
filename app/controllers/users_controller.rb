@@ -28,18 +28,61 @@ class UsersController < ApplicationController
     end
   end
 
-  # POST /users/rateEvent
-  def rateEvent
+  # POST /users/likeEvent
+  def likeEvent
+    response = User.login(params['facebook_id'])
+    @hash = {}
+    if response > 0
+      @user = User.getUser(params['facebook_id'])
+      response = @user.likeEvent(params['event_id'], params['like'])
+      if response
+        @hash[:errCode] = RedPins::Application::SUCCESS
+      else
+        @hash[:errCode] = RedPins::Application::ERR_USER_LIKE_EVENT
+      end
+    else
+      @hash[:errCode] = response
+    end
+    respond_to do |format|
+      format.json { render :json => @hash }
+    end
   end
 
-  # POST /users/deleteRating
-  def deleteRatingForEvent
-
+  # POST /users/removeLike
+  def removeLike
+    response = User.login(params['facebook_id'])
+    @hash = {}
+    if response > 0
+      @user = User.getUser(params['facebook_id'])
+      response = @user.removeLike(params['event_id'])
+      if response
+        @hash[:errCode] = RedPins::Application::SUCCESS
+      else
+        @hash[:errCode] = RedPins::Application::ERR_USER_LIKE_EVENT
+      end
+    else
+      @hash[:errCode] = response
+    end
+    respond_to do |format|
+      format.json { render :json => @hash }
+    end
   end
 
-  # POST /users/alreadyRatedEvent
-  def rateEvent?
-
+  # POST /users/alreadyLikedEvent
+  def likeEvent?
+    response = User.login(params['facebook_id'])
+    @hash = {}
+    if response > 0
+      @user = User.getUser(params['facebook_id'])
+      @hash[:errCode] = RedPins::Application::SUCCESS
+      response = @user.likeEvent?(params['event_id'])
+      @hash[:alreadyLikedEvent] = response
+    else
+      @hash[:errCode] = response
+    end
+    respond_to do |format|
+      format.json { render :json => @hash }
+    end
   end
 
 end

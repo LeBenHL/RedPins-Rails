@@ -5,6 +5,9 @@ RedPins::Application.routes.draw do
 
   match '/users/login' => 'Users#login', :via => :post
   match '/users/add' => 'Users#add', :via => :post
+  match '/users/likeEvent' => 'Users#likeEvent', :via => :post
+  match '/users/removeLike' => 'Users#removeLike', :via => :post
+  match '/users/alreadyLikedEvent' => 'Users#likeEvent?', :via => :post
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
