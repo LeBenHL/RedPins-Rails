@@ -17,6 +17,7 @@ class Event < ActiveRecord::Base
   validates :title, :presence => true
   validates :time, :presence => true
   validates :location, :presence => true
+  has_many :likes
   has_many :users, :through => :likes
   
   def self.add(title, time, location, url = "")
@@ -34,6 +35,12 @@ class Event < ActiveRecord::Base
       end
     end
     return RedPins::Application::SUCCESS
+  end
+
+  def calculateRating
+    likes = self.likes.where(:like => true).count
+    dislikes = self.likes.where(:like => false).count
+    return { :likes => likes, :dislikes => dislikes}
   end
   
 end
