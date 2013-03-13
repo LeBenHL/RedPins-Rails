@@ -28,7 +28,7 @@ describe Event do
     Like.create(:event_id => @event.id, :user_id => @user3.id, :like => false)
     Like.create(:event_id => @event.id, :user_id => @user4.id, :like => false)
     Like.create(:event_id => @event.id, :user_id => @user5.id, :like => true)
-    ratings = @event.calculateRating
+    ratings = @event.getRatings
     ratings[:likes].should equal(3)
     ratings[:dislikes].should equal(2)
   end

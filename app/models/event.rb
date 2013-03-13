@@ -37,7 +37,7 @@ class Event < ActiveRecord::Base
     return RedPins::Application::SUCCESS
   end
 
-  def calculateRating
+  def getRatings
     likes = self.likes.where(:like => true).count
     dislikes = self.likes.where(:like => false).count
     return { :likes => likes, :dislikes => dislikes}
