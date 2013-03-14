@@ -46,5 +46,19 @@ class Event < ActiveRecord::Base
     dislikes = self.likes.where(:like => false).count
     return { :likes => likes, :dislikes => dislikes}
   end
+
+  def getComments
+    commentsArray = []
+    self.comments.each do |comment|
+      hash = {}
+      hash[:facebook_id] = comment.user.facebook_id
+      hash[:created_at] = comment.created_at
+      hash[:firstname] = comment.user.firstname
+      hash[:lastname] = comment.user.lastname
+      hash[:comment] = comment.comment
+      commentsArray.push(hash)
+    end
+    return commentsArray
+  end
   
 end

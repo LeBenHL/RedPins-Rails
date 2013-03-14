@@ -11,7 +11,7 @@
 #
 
 class Comment < ActiveRecord::Base
-  attr_accessible :comment, :event_id, :user_id
+  attr_accessible :comment, :event_id, :user_id, :created_at
   belongs_to :user
   belongs_to :event
   validates :user, :presence => true
