@@ -7,11 +7,13 @@
 #  facebook_id :string(255)      not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  firstname   :string(255)
+#  lastname    :string(255)
 #
 
 require 'valid_email'
 class User < ActiveRecord::Base
-  attr_accessible :email, :facebook_id, :id
+  attr_accessible :email, :facebook_id, :id, :firstname, :lastname
   validates :email, :presence => true, :uniqueness => true, :email => true
   validates :facebook_id, :presence => true, :uniqueness => true
   has_many :likes
