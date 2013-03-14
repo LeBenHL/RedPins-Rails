@@ -18,6 +18,10 @@ ERR_BAD_EMAIL = -3
 ERR_BAD_FACEBOOK_ID = -4
 
 describe User do
+  before(:each) do
+    @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com')
+  end
+
   it 'adds a user into the database' do
     response = User.add('email@email.com', 'testUser')
     expect(response).to eq(SUCCESS)
@@ -53,7 +57,6 @@ describe User do
   end
 
   it 'users can like events' do
-    @event = Event.create(:title => 'newEvent', :time => '2013-03-14', :location => 'Berkeley', :url => 'www.thEvent.com')
     User.add('email@email.com', 'testUser')
     @user = User.getUser('testUser')
     response = @user.likeEvent(@event.id, true)
@@ -64,7 +67,6 @@ describe User do
   end
 
   it 'users can dislike events' do
-    @event = Event.create(:title => 'newEvent', :time => '2013-03-14', :location => 'Berkeley', :url => 'www.thEvent.com')
     User.add('email@email.com', 'testUser')
     @user = User.getUser('testUser')
     response = @user.likeEvent(@event.id, false)
@@ -77,12 +79,11 @@ describe User do
   it 'users cannot like events that do not exist' do
     User.add('email@email.com', 'testUser')
     @user = User.getUser('testUser')
-    response = @user.likeEvent(1, true)
+    response = @user.likeEvent(100, true)
     response.should equal(false)
   end
 
   it 'likeEvent? returns true if user has rated an event before' do
-    @event = Event.create(:title => 'newEvent', :time => '2013-03-14', :location => 'Berkeley', :url => 'www.thEvent.com')
     User.add('email@email.com', 'testUser')
     @user = User.getUser('testUser')
     response = @user.likeEvent(@event.id, true)
@@ -91,7 +92,6 @@ describe User do
   end
 
   it 'likeEvent? returns false if user has not rated an event before' do
-    @event = Event.create(:title => 'newEvent', :time => '2013-03-14', :location => 'Berkeley', :url => 'www.thEvent.com')
     User.add('email@email.com', 'testUser')
     @user = User.getUser('testUser')
     @user.likeEvent?(@event.id).should equal(false)
@@ -111,7 +111,6 @@ describe User do
   end
 
   it 'getRatingForEvent should return like object of an event if a user has liked that event before' do
-    @event = Event.create(:title => 'newEvent', :time => '2013-03-14', :location => 'Berkeley', :url => 'www.thEvent.com')
     User.add('email@email.com', 'testUser')
     @user = User.getUser('testUser')
     @user.likeEvent(@event.id, true)
@@ -123,7 +122,6 @@ describe User do
   end
 
   it 'getRatingForEvent should return nil if a user has not liked that event before' do
-    @event = Event.create(:title => 'newEvent', :time => '2013-03-14', :location => 'Berkeley', :url => 'www.thEvent.com')
     User.add('email@email.com', 'testUser')
     @user = User.getUser('testUser')
     @like = @user.getRatingForEvent(@event.id)
@@ -131,7 +129,6 @@ describe User do
   end
 
   it 'removeLike should return true if like object was successfully deleted' do
-    @event = Event.create(:title => 'newEvent', :time => '2013-03-14', :location => 'Berkeley', :url => 'www.thEvent.com')
     User.add('email@email.com', 'testUser')
     @user = User.getUser('testUser')
     @user.likeEvent(@event.id, true)
@@ -144,7 +141,6 @@ describe User do
   end
 
   it 'removeLike should return false if user has not rating event before uet' do
-    @event = Event.create(:title => 'newEvent', :time => '2013-03-14', :location => 'Berkeley', :url => 'www.thEvent.com')
     User.add('email@email.com', 'testUser')
     @user = User.getUser('testUser')
     response = @user.removeLike(@event.id)

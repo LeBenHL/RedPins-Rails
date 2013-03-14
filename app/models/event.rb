@@ -1,19 +1,20 @@
 # == Schema Information
 #
-# Table name: event
+# Table name: events
 #
-#  id          :integer          not null, primary key
-#  location    :string(255)      not null
-#  start_time  :datetime         not null
-#  title       :string(255)      not null
-#  url         :string(255)      not null
-#  user_id     :string(255)      not null
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id         :integer          not null, primary key
+#  title      :string(255)
+#  url        :string(255)
+#  location   :string(255)
+#  start_time :datetime
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  user_id    :string(255)
+#  end_time   :datetime
 #
 
 class Event < ActiveRecord::Base
-  attr_accessible :location, :time, :title, :url, :user_id
+  attr_accessible :location, :time, :title, :url, :user_id, :start_time, :end_time
   validates :title, :presence => true
   validates :start_time, :presence => true
   validates :end_time, :presence => true

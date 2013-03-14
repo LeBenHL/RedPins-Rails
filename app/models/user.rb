@@ -69,7 +69,6 @@ class User < ActiveRecord::Base
     Like.where(:user_id => self.id, :event_id => event_id)[0]
   end
 
-  #TEST
   def removeLike(event_id)
     @like = Like.where(:user_id => self.id, :event_id => event_id)[0]
     return false if @like.nil?

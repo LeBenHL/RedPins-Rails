@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: events
+#
+#  id         :integer          not null, primary key
+#  title      :string(255)
+#  url        :string(255)
+#  location   :string(255)
+#  start_time :datetime
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  user_id    :string(255)
+#  end_time   :datetime
+#
+
 require 'spec_helper'
 
 SUCCESS = 1
@@ -6,6 +21,10 @@ ERR_BAD_TIME = -6
 ERR_BAD_LOCATION = -7
 
 describe Event do
+  before(:each) do
+    @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com')
+  end
+
   it 'adds an event into the database with URL' do
     response = Event.add('test event1', DateTime.new(2013,4,1), "berkeley", "google.com")
     expect(response).to eq(SUCCESS)
@@ -22,7 +41,6 @@ describe Event do
     @user3 = User.create(:email => 'email3@email.com', :facebook_id => 'testUser3')
     @user4 = User.create(:email => 'email4@email.com', :facebook_id => 'testUser4')
     @user5 = User.create(:email => 'email5@email.com', :facebook_id => 'testUser5')
-    @event = Event.create(:title => 'newEvent', :time => '2013-03-14', :location => 'Berkeley', :url => 'www.thEvent.com')
     Like.create(:event_id => @event.id, :user_id => @user1.id, :like => true)
     Like.create(:event_id => @event.id, :user_id => @user2.id, :like => true)
     Like.create(:event_id => @event.id, :user_id => @user3.id, :like => false)
