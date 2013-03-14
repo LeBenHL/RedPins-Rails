@@ -173,4 +173,26 @@ describe User do
     response.should equal(false)
   end
 
+  it 'deleteEvent should return true if deletion was successful' do
+    @user = User.getUser('testUser')
+    response = @user.deleteEvent(@event.id)
+    response.should equal(true)
+    @event2 = Event.where(:id => @event.id)[0]
+    @event2.should be_nil
+  end
+
+  it 'deleteEvent should return false if a user tried deleting an event that does not exist in the db' do
+    @user = User.getUser('testUser')
+    response = @user.deleteEvent(100)
+    response.should equal(false)
+  end
+
+  it 'deleteEvent should return false if a user tries deleting an event they do not own' do
+    @user2 = User.create(:email => "email2@email.com", :facebook_id => 'testUser2', :firstname => 'Red', :lastname => 'Pin')
+    response = @user2.deleteEvent(@event.id)
+    response.should equal(false)
+    @event2 = Event.where(:id => @event.id)[0]
+    @event2.should_not be_nil
+  end
+
 end

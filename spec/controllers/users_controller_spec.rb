@@ -225,7 +225,7 @@ describe UsersController do
     before(:each) do
       @user = User.create(:email => "email@email.com", :facebook_id => 'testUser', :firstname => 'Red', :lastname => 'Pin')
       @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com', :user_id => @user.id)
-      @user2 = User.create(:email => "email@email.com", :facebook_id => 'testUser2', :firstname => 'Red', :lastname => 'Pin')
+      @user2 = User.create(:email => "email2@email.com", :facebook_id => 'testUser2', :firstname => 'Red', :lastname => 'Pin')
     end
 
     it 'should return SUCCESS when event is successfully deleted' do

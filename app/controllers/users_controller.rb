@@ -125,4 +125,24 @@ class UsersController < ApplicationController
     end
   end
 
+  # POST /users/deleteEvent
+  def deleteEvent
+    response = User.login(params['facebook_id'])
+    @hash = {}
+    if response > 0
+      @user = User.getUser(params['facebook_id'])
+      response = @user.deleteEvent(params['event_id'])
+      if response
+        @hash[:errCode] = RedPins::Application::SUCCESS
+      else
+        @hash[:errCode] = RedPins::Application::ERR_USER_DELETE_EVENT
+      end
+    else
+      @hash[:errCode] = response
+    end
+    respond_to do |format|
+      format.json { render :json => @hash }
+    end
+  end
+
 end

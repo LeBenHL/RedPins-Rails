@@ -105,4 +105,15 @@ class User < ActiveRecord::Base
     end
     return true
   end
+
+  def deleteEvent(event_id)
+    begin
+      @event = Event.find(event_id)
+      return false unless @event.user_id == self.id
+      @event.delete
+    rescue => ex
+      return false
+    end
+    return true
+  end
 end
