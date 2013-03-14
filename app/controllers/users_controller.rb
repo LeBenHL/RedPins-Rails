@@ -105,4 +105,24 @@ class UsersController < ApplicationController
     end
   end
 
+  # POST /users/bookmarkEvent
+  def bookmarkEvent
+    response = User.login(params['facebook_id'])
+    @hash = {}
+    if response > 0
+      @user = User.getUser(params['facebook_id'])
+      response = @user.bookmarkEvent(params['event_id'])
+      if response
+        @hash[:errCode] = RedPins::Application::SUCCESS
+      else
+        @hash[:errCode] = RedPins::Application::ERR_USER_BOOKMARK
+      end
+    else
+      @hash[:errCode] = response
+    end
+    respond_to do |format|
+      format.json { render :json => @hash }
+    end
+  end
+
 end

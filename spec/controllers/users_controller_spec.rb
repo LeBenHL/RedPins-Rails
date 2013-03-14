@@ -84,6 +84,14 @@ describe UsersController do
       parsed_body['errCode'].should == RedPins::Application::ERR_NO_USER_EXISTS
     end
 
+    it 'should return ERR_USER_LIKE_EVENT when a user attempts to like/dislike an event multiple times' do
+      params = { event_id: @event.id, facebook_id: 'testUser', like: true }
+      post '/users/likeEvent.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      post '/users/likeEvent.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::ERR_USER_LIKE_EVENT
+    end
+
   end
 
   describe 'Post #removeLike', :type => :request do
@@ -172,6 +180,43 @@ describe UsersController do
       post '/users/postComment.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
       parsed_body = JSON.parse(response.body)
       parsed_body['errCode'].should == RedPins::Application::ERR_NO_USER_EXISTS
+    end
+
+  end
+
+  describe 'Post #bookmarkEvent', :type => :request do
+    before(:each) do
+      @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com')
+      @user = User.create(:email => "email@email.com", :facebook_id => 'testUser', :firstname => 'Red', :lastname => 'Pin')
+    end
+
+    it 'should return SUCCESS when bookmark is successfully created' do
+      params = { event_id: @event.id, facebook_id: 'testUser'}
+      post '/users/bookmarkEvent.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::SUCCESS
+    end
+
+    it 'should return ERR_USER_BOOKMARK when user attempts to bookmark an event that does not exist in the db' do
+      params = { event_id: 100, facebook_id: 'testUser'}
+      post '/users/bookmarkEvent.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::ERR_USER_BOOKMARK
+    end
+
+    it 'should return ERR_NO_USER_EXISTS when a user bookmarks an event but user w/ facebook_id, {FACEBOOK_ID} does not exist in the database' do
+      params = { event_id: @event.id, facebook_id: 'testUser2'}
+      post '/users/bookmarkEvent.json', params.to_json, { 'CONTENT_TYPE' => 'application/json'}
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::ERR_NO_USER_EXISTS
+    end
+
+    it 'should return ERR_USER_BOOKMARK when a user attempts to bookmark an event twice' do
+      params = { event_id: @event.id, facebook_id: 'testUser'}
+      post '/users/bookmarkEvent.json', params.to_json, { 'CONTENT_TYPE' => 'application/json'}
+      post '/users/bookmarkEvent.json', params.to_json, { 'CONTENT_TYPE' => 'application/json'}
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::ERR_USER_BOOKMARK
     end
 
   end

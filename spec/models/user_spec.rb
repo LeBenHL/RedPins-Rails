@@ -164,7 +164,7 @@ describe User do
     response.should equal(false)
   end
 
-  it 'Users should not be able to bookmark the same event twice' do
+  it 'users should not be able to bookmark the same event twice' do
     @user = User.getUser('testUser')
     response = @user.bookmarkEvent(@event.id)
     response.should equal(true)
