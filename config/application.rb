@@ -76,6 +76,7 @@ module RedPins
     ERR_BAD_TIME = -6
     ERR_BAD_LOCATION = -7
     ERR_NO_EVENT_EXISTS = -9
+    ERR_EVENT_CREATION = -14
     
   end
 end
