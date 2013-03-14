@@ -195,4 +195,52 @@ describe User do
     @event2.should_not be_nil
   end
 
+  it 'cancelEvent should return true if canceling was successful' do
+    @user = User.getUser('testUser')
+    response = @user.cancelEvent(@event.id)
+    response.should equal(true)
+    @event2 = Event.where(:id => @event.id)[0]
+    @event2.canceled.should equal(true)
+  end
+
+  it 'cancelEvent should return false if a user tried canceling an event that does not exist in the db' do
+    @user = User.getUser('testUser')
+    response = @user.cancelEvent(100)
+    response.should equal(false)
+  end
+
+  it 'cancelEvent should return false if a user tries canceling an event they do not own' do
+    @user2 = User.create(:email => "email2@email.com", :facebook_id => 'testUser2', :firstname => 'Red', :lastname => 'Pin')
+    response = @user2.cancelEvent(@event.id)
+    response.should equal(false)
+    @event2 = Event.where(:id => @event.id)[0]
+    @event2.canceled.should equal(false)
+  end
+
+  it 'restoreEvent should return true if restoring was successful' do
+    @user = User.getUser('testUser')
+    @user.cancelEvent(@event.id)
+    response = @user.restoreEvent(@event.id)
+    response.should equal(true)
+    @event2 = Event.where(:id => @event.id)[0]
+    @event2.canceled.should equal(false)
+  end
+
+  it 'restoreEvent should return false if a user tried restoring an event that does not exist in the db' do
+    @user = User.getUser('testUser')
+    @user.cancelEvent(@event.id)
+    @event.delete
+    response = @user.restoreEvent(@event.id)
+    response.should equal(false)
+  end
+
+  it 'restoreEvent should return false if a user tries restoring an event they do not own' do
+    @user2 = User.create(:email => "email2@email.com", :facebook_id => 'testUser2', :firstname => 'Red', :lastname => 'Pin')
+    @user.cancelEvent(@event.id)
+    response = @user2.restoreEvent(@event.id)
+    response.should equal(false)
+    @event2 = Event.where(:id => @event.id)[0]
+    @event2.canceled.should equal(true)
+  end
+
 end

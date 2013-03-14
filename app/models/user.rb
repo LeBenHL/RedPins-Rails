@@ -116,4 +116,26 @@ class User < ActiveRecord::Base
     end
     return true
   end
+
+  def cancelEvent(event_id)
+    begin
+      @event = Event.find(event_id)
+      return false unless @event.user_id == self.id
+      @event.update_attribute(:canceled, true)
+    rescue => ex
+      return false
+    end
+    return true
+  end
+
+  def restoreEvent(event_id)
+    begin
+      @event = Event.find(event_id)
+      return false unless @event.user_id == self.id
+      @event.update_attribute(:canceled, false)
+    rescue => ex
+      return false
+    end
+    return true
+  end
 end

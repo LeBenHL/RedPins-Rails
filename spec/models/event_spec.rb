@@ -9,8 +9,9 @@
 #  start_time :datetime
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  user_id    :integer
 #  end_time   :datetime
+#  user_id    :integer
+#  canceled   :boolean          default(FALSE), not null
 #
 
 require 'spec_helper'
