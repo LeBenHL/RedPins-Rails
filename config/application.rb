@@ -66,6 +66,7 @@ module RedPins
     ERR_BAD_EMAIL = -3
     ERR_BAD_FACEBOOK_ID = -4
     ERR_USER_LIKE_EVENT = -8
+    ERR_USER_POST_COMMENT = -10
     
     # EVENT ERROR CODES
     ERR_BAD_TITLE = -5
