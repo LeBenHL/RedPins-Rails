@@ -22,6 +22,8 @@ class User < ActiveRecord::Base
   has_many :events, :through => :likes
   has_many :comments
   has_many :events, :through => :comments
+  has_many :bookmarks
+  has_many :events, :through => :bookmarks
 
   def self.login(facebook_id)
     @user = User.where(:facebook_id => facebook_id)[0]

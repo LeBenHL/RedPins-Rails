@@ -23,6 +23,8 @@ class Event < ActiveRecord::Base
   has_many :users, :through => :likes
   has_many :comments
   has_many :users, :through => :comments
+  has_many :bookmarks
+  has_many :events, :through => :bookmarks
   
   def self.add(title, start_time, end_time, location, url = "")
     begin

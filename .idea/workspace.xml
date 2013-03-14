@@ -32,28 +32,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="users_controller.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/users_controller.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="104" selection-start="467" selection-end="467" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="users_controller_spec.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/spec/controllers/users_controller_spec.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="49" column="66" selection-start="2905" selection-end="2946" vertical-scroll-proportion="42.692307">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="routes.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/routes.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="52" selection-start="574" selection-end="574" vertical-scroll-proportion="0.0">
+            <state line="19" column="52" selection-start="616" selection-end="616" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -71,7 +53,7 @@
       <file leaf-file-name="user.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/user.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="53" column="100" selection-start="1876" selection-end="1876" vertical-scroll-proportion="0.0">
+            <state line="24" column="0" selection-start="794" selection-end="858" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -80,25 +62,43 @@
       <file leaf-file-name="events_helper_spec.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spec/helpers/events_helper_spec.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="89" selection-start="495" selection-end="495" vertical-scroll-proportion="0.0">
+            <state line="15" column="48" selection-start="406" selection-end="406" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="event.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="bookmark.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/bookmark.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="2" selection-start="318" selection-end="318" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="like.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/like.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="19" column="81" selection-start="389" selection-end="620" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="event.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/event.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="57" column="66" selection-start="1895" selection-end="1895" vertical-scroll-proportion="0.0">
+            <state line="31" column="54" selection-start="1031" selection-end="1031" vertical-scroll-proportion="0.33628318">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="events_controller.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="events_controller.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/events_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="152" selection-start="840" selection-end="840" vertical-scroll-proportion="0.51391864">
+            <state line="25" column="136" selection-start="680" selection-end="680" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -116,7 +116,7 @@
       <file leaf-file-name="event_spec.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spec/models/event_spec.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="52" column="0" selection-start="2581" selection-end="2885" vertical-scroll-proportion="0.0">
+            <state line="52" column="0" selection-start="2628" selection-end="2932" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -132,29 +132,29 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/spec/helpers/likes_helper_spec.rb" />
         <option value="$PROJECT_DIR$/db/migrate/20130314045600_create_comments.rb" />
         <option value="$PROJECT_DIR$/spec/controllers/comments_controller_spec.rb" />
         <option value="$PROJECT_DIR$/db/migrate/20130314060929_add_name_to_users.rb" />
         <option value="$PROJECT_DIR$/config/application.rb" />
-        <option value="$PROJECT_DIR$/app/models/user.rb" />
         <option value="$PROJECT_DIR$/spec/controllers/users_controller_spec.rb" />
         <option value="$PROJECT_DIR$/app/controllers/users_controller.rb" />
         <option value="$PROJECT_DIR$/spec/models/user_spec.rb" />
-        <option value="$PROJECT_DIR$/spec/helpers/events_helper_spec.rb" />
         <option value="$PROJECT_DIR$/app/models/comment.rb" />
-        <option value="$PROJECT_DIR$/app/models/event.rb" />
         <option value="$PROJECT_DIR$/spec/models/event_spec.rb" />
         <option value="$PROJECT_DIR$/spec/controllers/events_controller_spec.rb" />
         <option value="$PROJECT_DIR$/app/controllers/events_controller.rb" />
         <option value="$PROJECT_DIR$/config/routes.rb" />
+        <option value="$PROJECT_DIR$/spec/helpers/events_helper_spec.rb" />
+        <option value="$PROJECT_DIR$/app/models/bookmark.rb" />
+        <option value="$PROJECT_DIR$/app/models/user.rb" />
+        <option value="$PROJECT_DIR$/app/models/event.rb" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1920" />
+    <option name="y" value="22" />
     <option name="width" value="1920" />
-    <option name="height" value="1080" />
+    <option name="height" value="1028" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -600,7 +600,7 @@
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="ToolWindowManager">
-    <frame x="-1920" y="0" width="1920" height="1080" extended-state="0" />
+    <frame x="0" y="22" width="1920" height="1028" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -682,26 +682,12 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="ruby-line">
           <url>file://$PROJECT_DIR$/app/models/event.rb</url>
-          <line>43</line>
+          <line>45</line>
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/spec/models/like_spec.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spec/helpers/likes_helper_spec.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="0" selection-start="342" selection-end="398" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/db/migrate/20130312230823_fix_event_time.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="4" column="110" selection-start="154" selection-end="154" vertical-scroll-proportion="0.0">
@@ -746,7 +732,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/spec/models/event_spec.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="0" selection-start="2581" selection-end="2885" vertical-scroll-proportion="0.0">
+        <state line="52" column="0" selection-start="2628" selection-end="2932" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -754,27 +740,6 @@
     <entry file="file://$PROJECT_DIR$/app/models/comment.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="60" selection-start="408" selection-end="408" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spec/helpers/events_helper_spec.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="89" selection-start="495" selection-end="495" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/user.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="100" selection-start="1876" selection-end="1876" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/event.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="66" selection-start="1895" selection-end="1895" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -788,14 +753,49 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/config/routes.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="52" selection-start="574" selection-end="574" vertical-scroll-proportion="0.0">
+        <state line="19" column="52" selection-start="616" selection-end="616" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/events_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="152" selection-start="840" selection-end="840" vertical-scroll-proportion="0.51391864">
+        <state line="25" column="136" selection-start="680" selection-end="680" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spec/helpers/events_helper_spec.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="48" selection-start="406" selection-end="406" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/bookmark.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="2" selection-start="318" selection-end="318" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/user.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="0" selection-start="794" selection-end="858" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/like.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="81" selection-start="389" selection-end="620" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/event.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="54" selection-start="1031" selection-end="1031" vertical-scroll-proportion="0.33628318">
           <folding />
         </state>
       </provider>

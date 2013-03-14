@@ -1,5 +1,8 @@
 RedPins::Application.routes.draw do
 
+  resources :bookmarks
+
+
   resources :comments
 
 
