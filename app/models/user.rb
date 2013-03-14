@@ -16,6 +16,8 @@ class User < ActiveRecord::Base
   attr_accessible :email, :facebook_id, :id, :firstname, :lastname
   validates :email, :presence => true, :uniqueness => true, :email => true
   validates :facebook_id, :presence => true, :uniqueness => true
+  validates :firstname, :presence => true
+  validates :lastname, :presence => true
   has_many :likes
   has_many :events, :through => :likes
   has_many :comments
@@ -30,9 +32,9 @@ class User < ActiveRecord::Base
     end
   end
 
-  def self.add(email, facebook_id)
+  def self.add(email, facebook_id, firstname, lastname)
     begin
-      @user = User.create!(:email => email, :facebook_id => facebook_id)
+      @user = User.create!(:email => email, :facebook_id => facebook_id, :firstname => firstname, :lastname => lastname)
     rescue => ex
       message = ex.message
       case
@@ -46,6 +48,8 @@ class User < ActiveRecord::Base
           return RedPins::Application::ERR_USER_EXISTS
         when message =~ /Facebook can't be blank/i
           return RedPins::Application::ERR_BAD_FACEBOOK_ID
+        else
+          return RedPins::Application::ERR_USER_CREATION
       end
     end
     return RedPins::Application::SUCCESS

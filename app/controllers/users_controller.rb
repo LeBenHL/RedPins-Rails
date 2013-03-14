@@ -16,7 +16,7 @@ class UsersController < ApplicationController
 
   # POST /users/add
   def add
-    response = User.add(params['email'], params['facebook_id'])
+    response = User.add(params['email'], params['facebook_id'], params['firstname'], params['lastname'])
     @hash = {}
     if response > 0
       @hash[:errCode] = response
