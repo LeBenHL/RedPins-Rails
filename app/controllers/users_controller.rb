@@ -145,4 +145,44 @@ class UsersController < ApplicationController
     end
   end
 
+  # POST /users/cancelEvent
+  def cancelEvent
+    response = User.login(params['facebook_id'])
+    @hash = {}
+    if response > 0
+      @user = User.getUser(params['facebook_id'])
+      response = @user.cancelEvent(params['event_id'])
+      if response
+        @hash[:errCode] = RedPins::Application::SUCCESS
+      else
+        @hash[:errCode] = RedPins::Application::ERR_USER_CANCEL_EVENT
+      end
+    else
+      @hash[:errCode] = response
+    end
+    respond_to do |format|
+      format.json { render :json => @hash }
+    end
+  end
+
+  # POST /users/restoreEvent
+  def restoreEvent
+    response = User.login(params['facebook_id'])
+    @hash = {}
+    if response > 0
+      @user = User.getUser(params['facebook_id'])
+      response = @user.restoreEvent(params['event_id'])
+      if response
+        @hash[:errCode] = RedPins::Application::SUCCESS
+      else
+        @hash[:errCode] = RedPins::Application::ERR_USER_RESTORE_EVENT
+      end
+    else
+      @hash[:errCode] = response
+    end
+    respond_to do |format|
+      format.json { render :json => @hash }
+    end
+  end
+
 end

@@ -258,4 +258,79 @@ describe UsersController do
 
   end
 
+
+  describe 'Post #cancelEvent', :type => :request do
+    before(:each) do
+      @user = User.create(:email => "email@email.com", :facebook_id => 'testUser', :firstname => 'Red', :lastname => 'Pin')
+      @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com', :user_id => @user.id)
+      @user2 = User.create(:email => "email2@email.com", :facebook_id => 'testUser2', :firstname => 'Red', :lastname => 'Pin')
+    end
+
+    it 'should return SUCCESS when event is successfully canceled' do
+      params = { event_id: @event.id, facebook_id: 'testUser'}
+      post '/users/cancelEvent.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::SUCCESS
+    end
+
+    it 'should return ERR_USER_CANCEL_EVENT when user attempts to cancel an event that does not exist in the db' do
+      params = { event_id: 100, facebook_id: 'testUser'}
+      post '/users/cancelEvent.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::ERR_USER_CANCEL_EVENT
+    end
+
+    it 'should return ERR_NO_USER_EXISTS when a user cancel an event but user w/ facebook_id, {FACEBOOK_ID} does not exist in the database' do
+      params = { event_id: @event.id, facebook_id: 'testUser3'}
+      post '/users/cancelEvent.json', params.to_json, { 'CONTENT_TYPE' => 'application/json'}
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::ERR_NO_USER_EXISTS
+    end
+
+    it 'should return ERR_USER_CANCEL_EVENT when a user attempts to cancel an event that they do not own' do
+      params = { event_id: @event.id, facebook_id: 'testUser2'}
+      post '/users/cancelEvent.json', params.to_json, { 'CONTENT_TYPE' => 'application/json'}
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::ERR_USER_CANCEL_EVENT
+    end
+
+  end
+
+  describe 'Post #restoreEvent', :type => :request do
+    before(:each) do
+      @user = User.create(:email => "email@email.com", :facebook_id => 'testUser', :firstname => 'Red', :lastname => 'Pin')
+      @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com', :user_id => @user.id)
+      @user2 = User.create(:email => "email2@email.com", :facebook_id => 'testUser2', :firstname => 'Red', :lastname => 'Pin')
+    end
+
+    it 'should return SUCCESS when event is successfully restored' do
+      params = { event_id: @event.id, facebook_id: 'testUser'}
+      post '/users/restoreEvent.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::SUCCESS
+    end
+
+    it 'should return ERR_USER_RESTORE_EVENT when user attempts to restore an event that does not exist in the db' do
+      params = { event_id: 100, facebook_id: 'testUser'}
+      post '/users/restoreEvent.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::ERR_USER_RESTORE_EVENT
+    end
+
+    it 'should return ERR_NO_USER_EXISTS when a user restore an event but user w/ facebook_id, {FACEBOOK_ID} does not exist in the database' do
+      params = { event_id: @event.id, facebook_id: 'testUser3'}
+      post '/users/restoreEvent.json', params.to_json, { 'CONTENT_TYPE' => 'application/json'}
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::ERR_NO_USER_EXISTS
+    end
+
+    it 'should return ERR_USER_RESTORE_EVENT when a user attempts to restore an event that they do not own' do
+      params = { event_id: @event.id, facebook_id: 'testUser2'}
+      post '/users/restoreEvent.json', params.to_json, { 'CONTENT_TYPE' => 'application/json'}
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::ERR_USER_RESTORE_EVENT
+    end
+
+  end
+
 end
