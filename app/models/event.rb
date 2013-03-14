@@ -9,7 +9,7 @@
 #  start_time :datetime
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  user_id    :string(255)
+#  user_id    :integer
 #  end_time   :datetime
 #
 
@@ -29,9 +29,9 @@ class Event < ActiveRecord::Base
   has_many :bookmarks
   has_many :events, :through => :bookmarks
   
-  def self.add(title, start_time, end_time, location, url = "")
+  def self.add(title, start_time, end_time, location, user_id, url = "")
     begin
-      @event = Event.create!(:title => title, :start_time => start_time, :end_time => end_time, :location => location, :url => url)
+      @event = Event.create!(:title => title, :start_time => start_time, :end_time => end_time, :location => location, :url => url, :user_id => user_id)
     rescue => exception
       message = exception.message
       case
@@ -43,6 +43,8 @@ class Event < ActiveRecord::Base
           return RedPins::Application::ERR_BAD_START_TIME
         when message =~ /End time can't be blank/i
           return RedPins::Application::ERR_BAD_END_TIME
+        else
+          return RedPins::Application::ERR_EVENT_CREATION
       end
     end
     return RedPins::Application::SUCCESS
