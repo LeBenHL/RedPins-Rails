@@ -15,11 +15,6 @@
 
 require 'spec_helper'
 
-SUCCESS = 1
-ERR_BAD_TITLE = -5
-ERR_BAD_TIME = -6
-ERR_BAD_LOCATION = -7
-
 describe Event do
   before(:each) do
     @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com')
@@ -27,12 +22,12 @@ describe Event do
 
   it 'adds an event into the database with URL' do
     response = Event.add('test event1', DateTime.new(2013,4,1), "berkeley", "google.com")
-    expect(response).to eq(SUCCESS)
+    expect(response).to eq(RedPins::Application::SUCCESS)
   end
   
   it 'adds an event into the database without URL' do
     response = Event.add('test event2', DateTime.new(2013,3,9), "san jose, ca")
-    expect(response).to eq(SUCCESS)
+    expect(response).to eq(RedPins::Application::SUCCESS)
   end
 
   it 'knows how many likes and dislikes it has' do

@@ -85,4 +85,24 @@ class UsersController < ApplicationController
     end
   end
 
+  # POST /users/postComment
+  def postComment
+    response = User.login(params['facebook_id'])
+    @hash = {}
+    if response > 0
+      @user = User.getUser(params['facebook_id'])
+      response = @user.postComment(params['event_id'], params['comment'])
+      if response
+        @hash[:errCode] = RedPins::Application::SUCCESS
+      else
+        @hash[:errCode] = RedPins::Application::ERR_USER_POST_COMMENT
+      end
+    else
+      @hash[:errCode] = response
+    end
+    respond_to do |format|
+      format.json { render :json => @hash }
+    end
+  end
+
 end

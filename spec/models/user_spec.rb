@@ -11,12 +11,6 @@
 
 require 'spec_helper'
 
-SUCCESS = 1
-ERR_NO_USER_EXISTS = -1
-ERR_USER_EXISTS = -2
-ERR_BAD_EMAIL = -3
-ERR_BAD_FACEBOOK_ID = -4
-
 describe User do
   before(:each) do
     @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com')
@@ -24,32 +18,32 @@ describe User do
   end
 
   it 'adds a user into the database' do
-    expect(@response).to eq(SUCCESS)
+    expect(@response).to eq(RedPins::Application::SUCCESS)
   end
 
   it 'refuses to add a user with duplicate email' do
     response = User.add('email@email.com', 'anotherTestUser')
-    expect(response).to eq(ERR_USER_EXISTS)
+    expect(response).to eq(RedPins::Application::ERR_USER_EXISTS)
   end
 
   it 'refuses to add a user with a duplicate facebook id' do
     response = User.add('newEmail@email.com', 'testUser')
-    expect(response).to eq(ERR_USER_EXISTS)
+    expect(response).to eq(RedPins::Application::ERR_USER_EXISTS)
   end
 
   it 'refuses to add a user with an invalid email' do
     response = User.add('fakeEmail', 'testUser')
-    expect(response).to eq(ERR_BAD_EMAIL)
+    expect(response).to eq(RedPins::Application::ERR_BAD_EMAIL)
   end
 
   it 'returns SUCCESS when user logins with a proper facebook id' do
     response = User.login('testUser')
-    expect(response).to eq(SUCCESS)
+    expect(response).to eq(RedPins::Application::SUCCESS)
   end
 
   it 'fails when user logins with a facebook id not recognized in the DB' do
     response = User.login('anotherTestUser')
-    expect(response).to eq(ERR_NO_USER_EXISTS)
+    expect(response).to eq(RedPins::Application::ERR_NO_USER_EXISTS)
   end
 
   it 'users can like events' do

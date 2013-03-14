@@ -2,9 +2,6 @@ require 'spec_helper'
 
 describe EventsController do
 
-  ERR_NO_EVENT_EXISTS = -9
-
-
   describe 'Post #getRatings?', :type => :request do
     before(:each) do
       @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com')
@@ -24,7 +21,7 @@ describe EventsController do
       params = { event_id: @event.id }
       post '/events/getRatings.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
       parsed_body = JSON.parse(response.body)
-      parsed_body['errCode'].should equal(SUCCESS)
+      parsed_body['errCode'].should equal(RedPins::Application::SUCCESS)
       parsed_body['likes'].should equal(3)
       parsed_body['dislikes'].should equal(2)
     end
@@ -34,7 +31,7 @@ describe EventsController do
       params = { event_id: 100 }
       post '/events/getRatings.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
       parsed_body = JSON.parse(response.body)
-      parsed_body['errCode'].should equal(ERR_NO_EVENT_EXISTS)
+      parsed_body['errCode'].should equal(RedPins::Application::ERR_NO_EVENT_EXISTS)
     end
 
   end
