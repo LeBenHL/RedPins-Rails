@@ -36,8 +36,10 @@ class Event < ActiveRecord::Base
           return RedPins::Application::ERR_BAD_TITLE
         when message =~ /Location can't be blank/i
           return RedPins::Application::ERR_BAD_LOCATION
-        when message =~ /Time can't be blank/i
-          return RedPins::Application::ERR_BAD_TIME
+        when message =~ /Start time can't be blank/i
+          return RedPins::Application::ERR_BAD_START_TIME
+        when message =~ /End time can't be blank/i
+          return RedPins::Application::ERR_BAD_END_TIME
       end
     end
     return RedPins::Application::SUCCESS

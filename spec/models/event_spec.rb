@@ -29,6 +29,11 @@ describe Event do
     response = Event.add('test event2', DateTime.new(2013,3,9), DateTime.new(2015,1,9), "san jose, ca")
     expect(response).to eq(RedPins::Application::SUCCESS)
   end
+  
+  it 'adds an event with the same start date and end date' do
+    response = Event.add('testevent3', DateTime.new(2013,1,2), DateTime.new(2013,1,2), "texas")
+    response.should equal(RedPins::Application::SUCCESS)
+  end
 
   it 'knows how many likes and dislikes it has' do
     @user1 = User.create(:email => 'email1@email.com', :facebook_id => 'testUser1', :firstname => 'Red', :lastname => 'Pin')

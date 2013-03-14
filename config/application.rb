@@ -72,8 +72,9 @@ module RedPins
     
     # EVENT ERROR CODES
     ERR_BAD_TITLE = -5
-    ERR_BAD_TIME = -6
-    ERR_BAD_LOCATION = -7
+    ERR_BAD_START_TIME = -6
+    ERR_BAD_END_TIME = -7
+    ERR_BAD_LOCATION = -8
     ERR_NO_EVENT_EXISTS = -9
     
   end
