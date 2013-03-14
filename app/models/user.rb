@@ -89,7 +89,16 @@ class User < ActiveRecord::Base
 
   def postComment(event_id, comment)
     begin
-      @like = Comment.create!(:user_id => self.id, :event_id => event_id, :comment => comment)
+      @comment = Comment.create!(:user_id => self.id, :event_id => event_id, :comment => comment)
+    rescue => ex
+      return false
+    end
+    return true
+  end
+
+  def bookmarkEvent(event_id)
+    begin
+      @bookmark = Bookmark.create!(:user_id => self.id, :event_id => event_id)
     rescue => ex
       return false
     end

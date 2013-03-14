@@ -66,6 +66,14 @@ describe User do
     @like.like.should equal(false)
   end
 
+  it 'users cannot like and dislike events multiple times' do
+    @user = User.getUser('testUser')
+    response = @user.likeEvent(@event.id, false)
+    response.should equal(true)
+    response = @user.likeEvent(@event_id, true)
+    response.should equal(false)
+  end
+
   it 'users cannot like events that do not exist' do
     @user = User.getUser('testUser')
     response = @user.likeEvent(100, true)
@@ -139,6 +147,28 @@ describe User do
   it 'postComment should return false if a user tried commenting an event that does not exist in the db' do
     @user = User.getUser('testUser')
     response = @user.postComment(100, "I LOVE THIS EVENT")
+    response.should equal(false)
+  end
+
+  it 'bookmarkEvent should return true if a bookmark was successfully created between a user and event' do
+    @user = User.getUser('testUser')
+    response = @user.bookmarkEvent(@event.id)
+    @bookmark = Bookmark.where(:user_id => @user.id, :event_id => @event.id)[0]
+    @bookmark.should_not be_nil
+    response.should equal(true)
+  end
+
+  it 'bookmarkEvent should return false if a user tried bookmarking an event that does not exist in the db' do
+    @user = User.getUser('testUser')
+    response = @user.bookmarkEvent(100)
+    response.should equal(false)
+  end
+
+  it 'Users should not be able to bookmark the same event twice' do
+    @user = User.getUser('testUser')
+    response = @user.bookmarkEvent(@event.id)
+    response.should equal(true)
+    response = @user.bookmarkEvent(@event.id)
     response.should equal(false)
   end
 
