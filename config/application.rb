@@ -77,6 +77,7 @@ module RedPins
     ERR_BAD_END_TIME = -7
     ERR_BAD_LOCATION = -8
     ERR_NO_EVENT_EXISTS = -9
+    ERR_EVENT_CREATION = -14
     
   end
 end
