@@ -16,7 +16,7 @@ require 'spec_helper'
 describe User do
   before(:each) do
     @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com')
-    @response = User.add('email@email.com', 'testUser')
+    @response = User.add('email@email.com', 'testUser', 'Red', 'Pin')
   end
 
   it 'adds a user into the database' do
@@ -24,17 +24,17 @@ describe User do
   end
 
   it 'refuses to add a user with duplicate email' do
-    response = User.add('email@email.com', 'anotherTestUser')
+    response = User.add('email@email.com', 'anotherTestUser','Red', 'Pin')
     expect(response).to eq(RedPins::Application::ERR_USER_EXISTS)
   end
 
   it 'refuses to add a user with a duplicate facebook id' do
-    response = User.add('newEmail@email.com', 'testUser')
+    response = User.add('newEmail@email.com', 'testUser','Red', 'Pin')
     expect(response).to eq(RedPins::Application::ERR_USER_EXISTS)
   end
 
   it 'refuses to add a user with an invalid email' do
-    response = User.add('fakeEmail', 'testUser')
+    response = User.add('fakeEmail', 'testUser','Red', 'Pin')
     expect(response).to eq(RedPins::Application::ERR_BAD_EMAIL)
   end
 
