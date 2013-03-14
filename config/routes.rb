@@ -16,6 +16,8 @@ RedPins::Application.routes.draw do
   match '/users/alreadyLikedEvent' => 'Users#likeEvent?', :via => :post
   match '/users/postComment' => 'Users#postComment', :via => :post
   match '/users/deleteEvent' => 'Users#deleteEvent', :via => :post
+  match '/users/cancelEvent' => 'Users#cancelEvent', :via => :post
+  match '/users/restoreEvent' => 'Users#restoreEvent', :via => :post
   match '/users/bookmarkEvent' => 'Users#bookmarkEvent', :via => :post
   match '/events/getRatings' => 'Events#getRatings', :via => :post
   match '/events/getComments' => 'Events#getComments', :via => :post
