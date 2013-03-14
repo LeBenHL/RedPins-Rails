@@ -59,8 +59,8 @@ describe UsersController do
 
   describe 'Post #likeEvent', :type => :request do
     before(:each) do
-      @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com')
       @user = User.create(:email => "email@email.com", :facebook_id => 'testUser', :firstname => 'Red', :lastname => 'Pin')
+      @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com', :user_id => @user.id)
     end
 
     it 'should return SUCCESS when a user likes an event that actually exists' do
@@ -96,8 +96,8 @@ describe UsersController do
 
   describe 'Post #removeLike', :type => :request do
     before(:each) do
-      @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com')
       @user = User.create(:email => "email@email.com", :facebook_id => 'testUser', :firstname => 'Red', :lastname => 'Pin')
+      @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com', :user_id => @user.id)
     end
 
     it 'should return SUCCESS when a user removes a like for an event succesfully' do
@@ -126,8 +126,8 @@ describe UsersController do
 
   describe 'Post #likeEvent?', :type => :request do
     before(:each) do
-      @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com')
       @user = User.create(:email => "email@email.com", :facebook_id => 'testUser', :firstname => 'Red', :lastname => 'Pin')
+      @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com', :user_id => @user.id)
     end
     it 'alreadyLikedEvent return TRUE if user already liked/disliked an event' do
       @like = Like.create(:event_id => @event.id, :user_id => @user.id, :like => true)
@@ -157,8 +157,8 @@ describe UsersController do
 
   describe 'Post #postComment', :type => :request do
     before(:each) do
-      @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com')
       @user = User.create(:email => "email@email.com", :facebook_id => 'testUser', :firstname => 'Red', :lastname => 'Pin')
+      @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com', :user_id => @user.id)
     end
 
     it 'should return SUCCESS when comment is successfully posted' do
@@ -186,8 +186,8 @@ describe UsersController do
 
   describe 'Post #bookmarkEvent', :type => :request do
     before(:each) do
-      @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com')
       @user = User.create(:email => "email@email.com", :facebook_id => 'testUser', :firstname => 'Red', :lastname => 'Pin')
+      @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com', :user_id => @user.id)
     end
 
     it 'should return SUCCESS when bookmark is successfully created' do
@@ -217,6 +217,43 @@ describe UsersController do
       post '/users/bookmarkEvent.json', params.to_json, { 'CONTENT_TYPE' => 'application/json'}
       parsed_body = JSON.parse(response.body)
       parsed_body['errCode'].should == RedPins::Application::ERR_USER_BOOKMARK
+    end
+
+  end
+
+  describe 'Post #deleteEvent', :type => :request do
+    before(:each) do
+      @user = User.create(:email => "email@email.com", :facebook_id => 'testUser', :firstname => 'Red', :lastname => 'Pin')
+      @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com', :user_id => @user.id)
+      @user2 = User.create(:email => "email2@email.com", :facebook_id => 'testUser2', :firstname => 'Red', :lastname => 'Pin')
+    end
+
+    it 'should return SUCCESS when event is successfully deleted' do
+      params = { event_id: @event.id, facebook_id: 'testUser'}
+      post '/users/deleteEvent.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::SUCCESS
+    end
+
+    it 'should return ERR_USER_DELETE_EVENT when user attempts to delete an event that does not exist in the db' do
+      params = { event_id: 100, facebook_id: 'testUser'}
+      post '/users/deleteEvent.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::ERR_USER_DELETE_EVENT
+    end
+
+    it 'should return ERR_NO_USER_EXISTS when a user deletes an event but user w/ facebook_id, {FACEBOOK_ID} does not exist in the database' do
+      params = { event_id: @event.id, facebook_id: 'testUser3'}
+      post '/users/deleteEvent.json', params.to_json, { 'CONTENT_TYPE' => 'application/json'}
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::ERR_NO_USER_EXISTS
+    end
+
+    it 'should return ERR_USER_DELETE_EVENT when a user attempts to delete an event that they do not own' do
+      params = { event_id: @event.id, facebook_id: 'testUser2'}
+      post '/users/deleteEvent.json', params.to_json, { 'CONTENT_TYPE' => 'application/json'}
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::ERR_USER_DELETE_EVENT
     end
 
   end

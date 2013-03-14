@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
   validates :facebook_id, :presence => true, :uniqueness => true
   validates :firstname, :presence => true
   validates :lastname, :presence => true
+  has_many :created_events, :class_name => 'Event'
   has_many :likes
   has_many :events, :through => :likes
   has_many :comments
@@ -99,6 +100,17 @@ class User < ActiveRecord::Base
   def bookmarkEvent(event_id)
     begin
       @bookmark = Bookmark.create!(:user_id => self.id, :event_id => event_id)
+    rescue => ex
+      return false
+    end
+    return true
+  end
+
+  def deleteEvent(event_id)
+    begin
+      @event = Event.find(event_id)
+      return false unless @event.user_id == self.id
+      @event.delete
     rescue => ex
       return false
     end

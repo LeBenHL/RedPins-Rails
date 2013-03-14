@@ -4,7 +4,8 @@ describe EventsController do
 
   describe 'Post #getRatings?', :type => :request do
     before(:each) do
-      @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com')
+      @user = User.create(:email => 'email@email.com', :facebook_id => 'testUser', :firstname => 'Red', :lastname => 'Pin')
+      @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com', :user_id => @user.id)
     end
 
     it 'should return the correct amount of likes an dislikes it has' do
