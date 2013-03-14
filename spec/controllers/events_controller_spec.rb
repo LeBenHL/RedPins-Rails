@@ -34,6 +34,30 @@ describe EventsController do
       parsed_body['errCode'].should equal(RedPins::Application::ERR_NO_EVENT_EXISTS)
     end
 
+    it 'should return all the comments associated to an event' do
+      @user1 = User.create(:email => 'email1@email.com', :facebook_id => 'testUser1', :firstname => 'Red', :lastname => 'Pin')
+      @user2 = User.create(:email => 'email2@email.com', :facebook_id => 'testUser2', :firstname => 'Red', :lastname => 'Pin')
+      @user3 = User.create(:email => 'email3@email.com', :facebook_id => 'testUser3', :firstname => 'Red', :lastname => 'Pin')
+      @user1.postComment(@event.id, 'I LOVE THIS EVENT')
+      @user1.postComment(@event.id, 'I HATE THIS EVENT')
+      @user2.postComment(@event.id, 'WOW SO BIPOLAR')
+      @user2.postComment(@event.id, 'REDPIN USERS HIGH INTELLIGENCE')
+      @user3.postComment(@event.id, 'WOW GUYS JUST LEAVE PLEASE BEFORE BAN')
+      params = { event_id: @event.id }
+      post '/events/getComments.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should equal(RedPins::Application::SUCCESS)
+      parsed_body['comments'].length.should equal(5)
+    end
+
+
+    it 'should return ERR_NO_EVENT_EXISTS if we ask for a list of comments of a event that does not exist in the database' do
+      params = { event_id: 100 }
+      post '/events/getComments.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should equal(RedPins::Application::ERR_NO_EVENT_EXISTS)
+    end
+
   end
 
 end

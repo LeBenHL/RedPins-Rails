@@ -46,4 +46,17 @@ describe Event do
     ratings[:dislikes].should equal(2)
   end
 
+  it 'returns all comments associated with it' do
+    @user1 = User.create(:email => 'email1@email.com', :facebook_id => 'testUser1', :firstname => 'Red', :lastname => 'Pin')
+    @user2 = User.create(:email => 'email2@email.com', :facebook_id => 'testUser2', :firstname => 'Red', :lastname => 'Pin')
+    @user3 = User.create(:email => 'email3@email.com', :facebook_id => 'testUser3', :firstname => 'Red', :lastname => 'Pin')
+    @user1.postComment(@event.id, 'I LOVE THIS EVENT')
+    @user1.postComment(@event.id, 'I HATE THIS EVENT')
+    @user2.postComment(@event.id, 'WOW SO BIPOLAR')
+    @user2.postComment(@event.id, 'REDPIN USERS HIGH INTELLIGENCE')
+    @user3.postComment(@event.id, 'WOW GUYS JUST LEAVE PLEASE BEFORE BAN')
+    commentsArray = @event.getComments
+    commentsArray.length.should equal(5)
+  end
+
 end
