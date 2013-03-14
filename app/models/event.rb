@@ -14,7 +14,7 @@
 #
 
 class Event < ActiveRecord::Base
-  attr_accessible :location, :time, :title, :url, :user_id, :start_time, :end_time
+  attr_accessible :location, :title, :url, :user_id, :start_time, :end_time
   validates :title, :presence => true
   validates :start_time, :presence => true
   validates :end_time, :presence => true
