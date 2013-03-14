@@ -21,6 +21,8 @@ class Event < ActiveRecord::Base
   validates :location, :presence => true
   has_many :likes
   has_many :users, :through => :likes
+  has_many :comments
+  has_many :users, :through => :comments
   
   def self.add(title, start_time, end_time, location, url = "")
     begin

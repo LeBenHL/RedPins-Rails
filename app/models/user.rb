@@ -14,7 +14,10 @@ class User < ActiveRecord::Base
   attr_accessible :email, :facebook_id, :id
   validates :email, :presence => true, :uniqueness => true, :email => true
   validates :facebook_id, :presence => true, :uniqueness => true
+  has_many :likes
   has_many :events, :through => :likes
+  has_many :comments
+  has_many :events, :through => :comments
 
   def self.login(facebook_id)
     @user = User.where(:facebook_id => facebook_id)[0]
@@ -73,6 +76,15 @@ class User < ActiveRecord::Base
     @like = Like.where(:user_id => self.id, :event_id => event_id)[0]
     return false if @like.nil?
     @like.delete
+    return true
+  end
+
+  def postComment(event_id, comment)
+    begin
+      @like = Comment.create!(:user_id => self.id, :event_id => event_id, :comment => comment)
+    rescue => ex
+      return false
+    end
     return true
   end
 end
