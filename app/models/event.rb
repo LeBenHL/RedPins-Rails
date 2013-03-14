@@ -19,6 +19,7 @@ class Event < ActiveRecord::Base
   validates :start_time, :presence => true
   validates :end_time, :presence => true
   validates :location, :presence => true
+  belongs_to :event_creator, :class_name => 'User'
   has_many :likes
   has_many :users, :through => :likes
   has_many :comments

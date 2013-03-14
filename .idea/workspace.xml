@@ -41,10 +41,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="user.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="user.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/models/user.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="98" column="19" selection-start="2935" selection-end="2935" vertical-scroll-proportion="0.0">
+            <state line="27" column="65" selection-start="910" selection-end="910" vertical-scroll-proportion="0.45918366">
               <folding />
             </state>
           </provider>
@@ -77,10 +77,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="bookmarks_controller_spec.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="bookmarks_controller_spec.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spec/controllers/bookmarks_controller_spec.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="57" selection-start="1089" selection-end="1089" vertical-scroll-proportion="0.39115646">
+            <state line="23" column="24" selection-start="1089" selection-end="1089" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -116,7 +116,7 @@
       <file leaf-file-name="event.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/event.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="63" column="5" selection-start="2020" selection-end="2023" vertical-scroll-proportion="0.0">
+            <state line="21" column="27" selection-start="643" selection-end="643" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -140,14 +140,14 @@
         <option value="$PROJECT_DIR$/app/controllers/events_controller.rb" />
         <option value="$PROJECT_DIR$/spec/helpers/events_helper_spec.rb" />
         <option value="$PROJECT_DIR$/app/models/bookmark.rb" />
-        <option value="$PROJECT_DIR$/app/models/event.rb" />
-        <option value="$PROJECT_DIR$/app/models/user.rb" />
         <option value="$PROJECT_DIR$/config/application.rb" />
         <option value="$PROJECT_DIR$/config/routes.rb" />
         <option value="$PROJECT_DIR$/spec/models/user_spec.rb" />
         <option value="$PROJECT_DIR$/spec/controllers/users_controller_spec.rb" />
         <option value="$PROJECT_DIR$/app/controllers/users_controller.rb" />
         <option value="$PROJECT_DIR$/spec/controllers/bookmarks_controller_spec.rb" />
+        <option value="$PROJECT_DIR$/app/models/event.rb" />
+        <option value="$PROJECT_DIR$/app/models/user.rb" />
       </list>
     </option>
   </component>
@@ -682,7 +682,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="ruby-line">
           <url>file://$PROJECT_DIR$/app/models/event.rb</url>
-          <line>45</line>
+          <line>46</line>
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -737,13 +737,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/event.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="63" column="5" selection-start="2020" selection-end="2023" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/routes.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="112" selection-start="105" selection-end="105" vertical-scroll-proportion="0.0">
@@ -772,13 +765,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/user.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="98" column="19" selection-start="2935" selection-end="2935" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/spec/controllers/users_controller_spec.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="116" column="78" selection-start="6967" selection-end="6967" vertical-scroll-proportion="0.0">
@@ -795,7 +781,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/spec/controllers/bookmarks_controller_spec.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="57" selection-start="1089" selection-end="1089" vertical-scroll-proportion="0.39115646">
+        <state line="23" column="24" selection-start="1089" selection-end="1089" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/event.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="27" selection-start="643" selection-end="643" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/user.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="65" selection-start="910" selection-end="910" vertical-scroll-proportion="0.45918366">
           <folding />
         </state>
       </provider>

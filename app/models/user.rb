@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
   validates :facebook_id, :presence => true, :uniqueness => true
   validates :firstname, :presence => true
   validates :lastname, :presence => true
+  has_many :created_events, :class_name => 'Event'
   has_many :likes
   has_many :events, :through => :likes
   has_many :comments
