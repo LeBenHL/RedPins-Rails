@@ -9,7 +9,7 @@
 #  start_time :datetime
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  user_id    :string(255)
+#  user_id    :integer
 #  end_time   :datetime
 #
 
@@ -22,12 +22,12 @@ describe Event do
   end
 
   it 'adds an event into the database with URL' do
-    response = Event.add('test event1', DateTime.new(2013,4,1), DateTime.new(2013,4,4),"berkeley", "google.com")
+    response = Event.add('test event1', DateTime.new(2013,4,1), DateTime.new(2013,4,4),"berkeley", @user.id, "google.com")
     expect(response).to eq(RedPins::Application::SUCCESS)
   end
   
   it 'adds an event into the database without URL' do
-    response = Event.add('test event2', DateTime.new(2013,3,9), DateTime.new(2015,1,9), "san jose, ca")
+    response = Event.add('test event2', DateTime.new(2013,3,9), DateTime.new(2015,1,9), "san jose, ca",  @user.id)
     expect(response).to eq(RedPins::Application::SUCCESS)
   end
 
