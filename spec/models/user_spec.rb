@@ -15,8 +15,9 @@ require 'spec_helper'
 
 describe User do
   before(:each) do
-    @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com')
     @response = User.add('email@email.com', 'testUser', 'Red', 'Pin')
+    @user = User.where(:facebook_id => 'testUser')[0]
+    @event = Event.create!(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com', :user_id => @user.id)
   end
 
   it 'adds a user into the database' do
