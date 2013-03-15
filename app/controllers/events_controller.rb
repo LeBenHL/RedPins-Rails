@@ -33,25 +33,25 @@ class EventsController < ApplicationController
 
   # POST /events/search
   def search
-    #   response = User.login(params['facebook_id'])
+    response = User.login(params['facebook_id'])
     @hash = {}
-    # if response > 0
-    #  @user = User.getUser(params['facebook_id'])
-    #  @hash[:errCode] = RedPins::Application::SUCCESS
+    if response > 0
+      @user = User.getUser(params['facebook_id'])
+      @hash[:errCode] = RedPins::Application::SUCCESS
     @events = Event.find(:all, :limit => 10)
     event_list = []
     @events.each do |event|
-        #  attributes = event.attributes
-        #    if event.user_id == @user.id
-        #  attributes[:owner] = true
-        #else
-        # attributes[:owner] = false
-        #end
+        attributes = event.attributes
+        if event.user_id == @user.id
+          attributes[:owner] = true
+        else
+          attributes[:owner] = false
+        end
       event_list.push(event.attributes)
-        #  end
+      end
        @hash[:events] = event_list
-    # else
-    #  @hash[:errCode] = response
+    else
+      @hash[:errCode] = response
     end
     respond_to do |format|
       format.json { render :json => @hash }
@@ -60,32 +60,25 @@ class EventsController < ApplicationController
 
   # POST /events/getEvent
   def getEvent
-    #  response = User.login(params['facebook_id'])
+    response = User.login(params['facebook_id'])
     @hash = {}
-    begin
-      @event = Event.find(params['event_id'])
-      @hash[:errCode] = RedPins::Application::SUCCESS
-      @hash[:event] = @event.attributes
-    rescue
-      @hash[:errCode] = RedPins::Application::ERR_NO_EVENT_EXISTS
-
-    #   if response > 0
-      #   @user = User.getUser(params['facebook_id'])
-      #   begin
-        #     @event = Event.find(params['event_id'])
-        #  @hash[:errCode] = RedPins::Application::SUCCESS
-        #    attributes = @event.attributes
-        #    if @event.user_id == @user.id
-          #      attributes[:owner] = true
-          #     else
-          #  attributes[:owner] = false
-          #        end
-        #     @hash[:event] = attributes
-        #    rescue
-        #    @hash[:errCode] = RedPins::Application::ERR_NO_EVENT_EXISTS
-        #end
-      #else
-      #      @hash[:errCode] = response
+    if response > 0
+      @user = User.getUser(params['facebook_id'])
+      begin
+        @event = Event.find(params['event_id'])
+        @hash[:errCode] = RedPins::Application::SUCCESS
+        attributes = @event.attributes
+        if @event.user_id == @user.id
+          attributes[:owner] = true
+        else
+          attributes[:owner] = false
+        end
+        @hash[:event] = attributes
+      rescue
+        @hash[:errCode] = RedPins::Application::ERR_NO_EVENT_EXISTS
+      end
+    else
+      @hash[:errCode] = response
     end
     respond_to do |format|
       format.json { render :json => @hash }
