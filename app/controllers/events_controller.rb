@@ -38,18 +38,18 @@ class EventsController < ApplicationController
     if response > 0
       @user = User.getUser(params['facebook_id'])
       @hash[:errCode] = RedPins::Application::SUCCESS
-    @events = Event.find(:all, :limit => 10)
-    event_list = []
-    @events.each do |event|
+      @events = Event.find(:all, :limit => 10)
+      event_list = []
+      @events.each do |event|
         attributes = event.attributes
         if event.user_id == @user.id
           attributes[:owner] = true
         else
           attributes[:owner] = false
         end
-      event_list.push(event.attributes)
+        event_list.push(attributes)
       end
-       @hash[:events] = event_list
+      @hash[:events] = event_list
     else
       @hash[:errCode] = response
     end
