@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130314233124) do
+ActiveRecord::Schema.define(:version => 20130315040025) do
 
   create_table "bookmarks", :force => true do |t|
     t.integer  "user_id"
@@ -39,6 +39,8 @@ ActiveRecord::Schema.define(:version => 20130314233124) do
     t.datetime "end_time"
     t.integer  "user_id"
     t.boolean  "canceled",   :default => false, :null => false
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   create_table "likes", :force => true do |t|

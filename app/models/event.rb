@@ -20,8 +20,6 @@ class Event < ActiveRecord::Base
   validates :start_time, :presence => true
   validates :end_time, :presence => true
   validates :location, :presence => true
-  validates :latitude, :presence => true
-  validates :longitude, :presence => true
   validates :user_id, :presence => true
   belongs_to :creator, :class_name => 'User', :foreign_key => "user_id"
   validates :creator, :presence => true
@@ -32,7 +30,7 @@ class Event < ActiveRecord::Base
   has_many :bookmarks
   has_many :events, :through => :bookmarks
   
-  def self.add(title, start_time, end_time, location, user_id, url = "")
+  def self.add(title, start_time, end_time, location, user_id, url = "", latitude = 360, longitude = 360)
     begin
       @event = Event.create!(:title => title, :start_time => start_time, :end_time => end_time, :location => location, :url => url, :user_id => user_id)
     rescue => exception
