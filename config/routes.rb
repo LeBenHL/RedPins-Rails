@@ -22,6 +22,8 @@ RedPins::Application.routes.draw do
   match '/events/search' =>  'Events#search', :via => :post   #TODO REMOVE LATER WHEN WE GET CONTACT W/ JERRY CODE
   match '/events/getRatings' => 'Events#getRatings', :via => :post
   match '/events/getComments' => 'Events#getComments', :via => :post
+  match '/events/getEvent' => 'Events#getEvent', :via => :post
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
