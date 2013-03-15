@@ -17,7 +17,7 @@ RedPins::Application.routes.draw do
   match '/users/postComment' => 'Users#postComment', :via => :post
   match '/users/deleteEvent' => 'Users#deleteEvent', :via => :post
   match '/users/cancelEvent' => 'Users#cancelEvent', :via => :post
-  match '/users/restoreEvent' => 'Users#restoreEvent', :via => :posts
+  match '/users/restoreEvent' => 'Users#restoreEvent', :via => :post
   match '/users/bookmarkEvent' => 'Users#bookmarkEvent', :via => :post
   match '/events/search' =>  'Events#search', :via => :post   #TODO REMOVE LATER WHEN WE GET CONTACT W/ JERRY CODE
   match '/events/getRatings' => 'Events#getRatings', :via => :post

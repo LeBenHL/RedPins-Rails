@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe EventsController do
 
-  describe 'Post #getRatings?', :type => :request do
+  describe 'Post #getRatings', :type => :request do
     before(:each) do
       @user = User.create(:email => 'email@email.com', :facebook_id => 'testUser', :firstname => 'Red', :lastname => 'Pin')
       @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com', :user_id => @user.id)
@@ -34,6 +34,13 @@ describe EventsController do
       parsed_body = JSON.parse(response.body)
       parsed_body['errCode'].should equal(RedPins::Application::ERR_NO_EVENT_EXISTS)
     end
+  end
+
+  describe 'Post #getComments', :type => :request do
+    before(:each) do
+      @user = User.create(:email => 'email@email.com', :facebook_id => 'testUser', :firstname => 'Red', :lastname => 'Pin')
+      @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com', :user_id => @user.id)
+    end
 
     it 'should return all the comments associated to an event' do
       @user1 = User.create(:email => 'email1@email.com', :facebook_id => 'testUser1', :firstname => 'Red', :lastname => 'Pin')
@@ -55,6 +62,30 @@ describe EventsController do
     it 'should return ERR_NO_EVENT_EXISTS if we ask for a list of comments of a event that does not exist in the database' do
       params = { event_id: 100 }
       post '/events/getComments.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should equal(RedPins::Application::ERR_NO_EVENT_EXISTS)
+    end
+
+  end
+
+  describe 'Post #getEvent', :type => :request do
+    before(:each) do
+      @user = User.create(:email => 'email@email.com', :facebook_id => 'testUser', :firstname => 'Red', :lastname => 'Pin')
+      @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com', :user_id => @user.id)
+    end
+
+    it 'should return SUCCESS if retrieve a valid event' do
+      params = { event_id: @event.id }
+      post '/events/getEvent.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should equal(RedPins::Application::SUCCESS)
+      parsed_body['event']['id'].should equal(@event.id)
+    end
+
+
+    it 'should return ERR_NO_EVENT_EXISTS if we ask for an event that does not exist in the database' do
+      params = { event_id: 100 }
+      post '/events/getEvent.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
       parsed_body = JSON.parse(response.body)
       parsed_body['errCode'].should equal(RedPins::Application::ERR_NO_EVENT_EXISTS)
     end
