@@ -49,7 +49,7 @@ class EventsController < ApplicationController
         #end
       event_list.push(event.attributes)
         #  end
-    #   @hash[:events] = event_list
+       @hash[:events] = event_list
     # else
     #  @hash[:errCode] = response
     end
