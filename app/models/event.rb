@@ -32,7 +32,7 @@ class Event < ActiveRecord::Base
   
   def self.add(title, start_time, end_time, location, user_id, url = "", latitude = 360, longitude = 360)
     begin
-      @event = Event.create!(:title => title, :start_time => start_time, :end_time => end_time, :location => location, :url => url, :user_id => user_id)
+      @event = Event.create!(:title => title, :start_time => start_time, :end_time => end_time, :location => location, :user_id => user_id, :url => url, :latitude => latitude, :longitude => longitude)
     rescue => exception
       message = exception.message
       case
