@@ -43,8 +43,18 @@ describe Event do
   end
   
   it 'refuses to add an event without a title' do
-    response = Event.add('', DateTime.new(2013,1,2), DateTime.new(2013,1,2), "virginia", @user.id)
+    response = Event.add('', DateTime.new(2013,1,9), DateTime.new(2013,1,9), "virginia", @user.id)
     response.should equal(RedPins::Application::ERR_BAD_TITLE)
+  end
+  
+  it 'refuses to add an event without a start time' do
+    response = Event.add('OTG', "", DateTime.new(2013,1,9), "south pole", @user.id)
+    response.should equal(RedPins::Application::ERR_BAD_START_TIME)
+  end
+  
+  it 'refuses to add an event without an end time' do
+    response = Event.add('OTG', DateTime.new(2013,4,10), "", "south pole", @user.id)
+    response.should equal(RedPins::Application::ERR_BAD_END_TIME)
   end
 
   it 'knows how many likes and dislikes it has' do
