@@ -36,6 +36,16 @@ describe Event do
     response = Event.add('testevent3', DateTime.new(2013,1,2), DateTime.new(2013,1,2), "texas", @user.id)
     response.should equal(RedPins::Application::SUCCESS)
   end
+  
+  it 'refuses to add an event without a location' do
+    response = Event.add('testevent4', DateTime.new(2013,1,2), DateTime.new(2013,1,2), "", @user.id)
+    response.should equal(RedPins::Application::ERR_BAD_LOCATION)
+  end
+  
+  it 'refuses to add an event without a title' do
+    response = Event.add('', DateTime.new(2013,1,2), DateTime.new(2013,1,2), "virginia", @user.id)
+    response.should equal(RedPins::Application::ERR_BAD_TITLE)
+  end
 
   it 'knows how many likes and dislikes it has' do
     @user1 = User.create(:email => 'email1@email.com', :facebook_id => 'testUser1', :firstname => 'Red', :lastname => 'Pin')

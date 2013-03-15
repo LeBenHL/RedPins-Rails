@@ -59,27 +59,25 @@ module RedPins
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
-    # USER ERROR CODES
+    # ERROR CODES
     SUCCESS = 1
     ERR_NO_USER_EXISTS = -1
     ERR_USER_EXISTS = -2
     ERR_BAD_EMAIL = -3
     ERR_BAD_FACEBOOK_ID = -4
-    ERR_USER_LIKE_EVENT = -8
-    ERR_USER_POST_COMMENT = -10
-    ERR_USER_CREATION = -11
-    ERR_USER_BOOKMARK = -12
-    ERR_USER_DELETE_EVENT = -13
-    ERR_USER_CANCEL_EVENT = -15
-    ERR_USER_RESTORE_EVENT = -16
-    
-    # EVENT ERROR CODES
-    ERR_BAD_TITLE = -5
-    ERR_BAD_START_TIME = -6
-    ERR_BAD_END_TIME = -7
-    ERR_BAD_LOCATION = -8
-    ERR_NO_EVENT_EXISTS = -9
-    ERR_EVENT_CREATION = -14
-    
+    ERR_USER_LIKE_EVENT = -5
+    ERR_USER_POST_COMMENT = -6
+    ERR_USER_CREATION = -7
+    ERR_USER_BOOKMARK = -8
+    ERR_USER_DELETE_EVENT = -9
+    ERR_USER_CANCEL_EVENT = -10
+    ERR_USER_RESTORE_EVENT = -11
+
+    ERR_BAD_TITLE = -12
+    ERR_BAD_START_TIME = -13
+    ERR_BAD_END_TIME = -14
+    ERR_BAD_LOCATION = -15
+    ERR_NO_EVENT_EXISTS = -16
+    ERR_EVENT_CREATION = -17
   end
 end
