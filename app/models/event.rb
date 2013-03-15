@@ -15,11 +15,13 @@
 #
 
 class Event < ActiveRecord::Base
-  attr_accessible :location, :title, :url, :user_id, :start_time, :end_time, :canceled
+  attr_accessible :location, :latitude, :longitude, :title, :url, :user_id, :start_time, :end_time, :canceled
   validates :title, :presence => true
   validates :start_time, :presence => true
   validates :end_time, :presence => true
   validates :location, :presence => true
+  validates :latitude, :presence => true
+  validates :longitude, :presence => true
   validates :user_id, :presence => true
   belongs_to :creator, :class_name => 'User', :foreign_key => "user_id"
   validates :creator, :presence => true
