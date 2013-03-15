@@ -34,12 +34,7 @@ class UsersController < ApplicationController
     @hash = {}
     if response > 0
       @user = User.getUser(params['facebook_id'])
-      response = @user.likeEvent(params['event_id'], params['like'])
-      if response
-        @hash[:errCode] = RedPins::Application::SUCCESS
-      else
-        @hash[:errCode] = RedPins::Application::ERR_USER_LIKE_EVENT
-      end
+      @hash[:errCode] = @user.likeEvent(params['event_id'], params['like'])
     else
       @hash[:errCode] = response
     end
@@ -54,12 +49,7 @@ class UsersController < ApplicationController
     @hash = {}
     if response > 0
       @user = User.getUser(params['facebook_id'])
-      response = @user.removeLike(params['event_id'])
-      if response
-        @hash[:errCode] = RedPins::Application::SUCCESS
-      else
-        @hash[:errCode] = RedPins::Application::ERR_USER_LIKE_EVENT
-      end
+      @hash[:errCode] = @user.removeLike(params['event_id'])
     else
       @hash[:errCode] = response
     end
@@ -91,12 +81,7 @@ class UsersController < ApplicationController
     @hash = {}
     if response > 0
       @user = User.getUser(params['facebook_id'])
-      response = @user.postComment(params['event_id'], params['comment'])
-      if response
-        @hash[:errCode] = RedPins::Application::SUCCESS
-      else
-        @hash[:errCode] = RedPins::Application::ERR_USER_POST_COMMENT
-      end
+      @hash[:errCode] = @user.postComment(params['event_id'], params['comment'])
     else
       @hash[:errCode] = response
     end
@@ -111,12 +96,7 @@ class UsersController < ApplicationController
     @hash = {}
     if response > 0
       @user = User.getUser(params['facebook_id'])
-      response = @user.bookmarkEvent(params['event_id'])
-      if response
-        @hash[:errCode] = RedPins::Application::SUCCESS
-      else
-        @hash[:errCode] = RedPins::Application::ERR_USER_BOOKMARK
-      end
+      @hash[:errCode] = @user.bookmarkEvent(params['event_id'])
     else
       @hash[:errCode] = response
     end
@@ -131,12 +111,7 @@ class UsersController < ApplicationController
     @hash = {}
     if response > 0
       @user = User.getUser(params['facebook_id'])
-      response = @user.deleteEvent(params['event_id'])
-      if response
-        @hash[:errCode] = RedPins::Application::SUCCESS
-      else
-        @hash[:errCode] = RedPins::Application::ERR_USER_DELETE_EVENT
-      end
+      @hash[:errCode] = @user.deleteEvent(params['event_id'])
     else
       @hash[:errCode] = response
     end
@@ -151,12 +126,7 @@ class UsersController < ApplicationController
     @hash = {}
     if response > 0
       @user = User.getUser(params['facebook_id'])
-      response = @user.cancelEvent(params['event_id'])
-      if response
-        @hash[:errCode] = RedPins::Application::SUCCESS
-      else
-        @hash[:errCode] = RedPins::Application::ERR_USER_CANCEL_EVENT
-      end
+      @hash[:errCode] = @user.cancelEvent(params['event_id'])
     else
       @hash[:errCode] = response
     end
@@ -171,12 +141,7 @@ class UsersController < ApplicationController
     @hash = {}
     if response > 0
       @user = User.getUser(params['facebook_id'])
-      response = @user.restoreEvent(params['event_id'])
-      if response
-        @hash[:errCode] = RedPins::Application::SUCCESS
-      else
-        @hash[:errCode] = RedPins::Application::ERR_USER_RESTORE_EVENT
-      end
+      @hash[:errCode] = @user.restoreEvent(params['event_id'])
     else
       @hash[:errCode] = response
     end

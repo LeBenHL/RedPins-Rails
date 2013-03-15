@@ -52,7 +52,7 @@ describe User do
   it 'users can like events' do
     @user = User.getUser('testUser')
     response = @user.likeEvent(@event.id, true)
-    response.should equal(true)
+    response.should equal(RedPins::Application::SUCCESS)
     @like = Like.where(:user_id => @user.id, :event_id => @event.id)[0]
     @like.should_not be_nil
     @like.like.should equal(true)
@@ -61,7 +61,7 @@ describe User do
   it 'users can dislike events' do
     @user = User.getUser('testUser')
     response = @user.likeEvent(@event.id, false)
-    response.should equal(true)
+    response.should equal(RedPins::Application::SUCCESS)
     @like = Like.where(:user_id => @user.id, :event_id => @event.id)[0]
     @like.should_not be_nil
     @like.like.should equal(false)
@@ -70,21 +70,21 @@ describe User do
   it 'users cannot like and dislike events multiple times' do
     @user = User.getUser('testUser')
     response = @user.likeEvent(@event.id, false)
-    response.should equal(true)
+    response.should equal(RedPins::Application::SUCCESS)
     response = @user.likeEvent(@event_id, true)
-    response.should equal(false)
+    response.should equal(RedPins::Application::ERR_USER_LIKE_EVENT)
   end
 
   it 'users cannot like events that do not exist' do
     @user = User.getUser('testUser')
     response = @user.likeEvent(100, true)
-    response.should equal(false)
+    response.should equal(RedPins::Application::ERR_USER_LIKE_EVENT)
   end
 
   it 'likeEvent? returns true if user has rated an event before' do
     @user = User.getUser('testUser')
     response = @user.likeEvent(@event.id, true)
-    response.should equal(true)
+    response.should equal(RedPins::Application::SUCCESS)
     @user.likeEvent?(@event.id).should equal(true)
   end
 
@@ -126,7 +126,7 @@ describe User do
     @like = Like.where(:user_id => @user.id, :event_id => @event.id)[0]
     @like.should_not be_nil
     response = @user.removeLike(@event.id)
-    response.should equal(true)
+    response.should equal(RedPins::Application::SUCCESS)
     @like = Like.where(:user_id => @user.id, :event_id => @event.id)[0]
     @like.should be_nil
   end
@@ -134,7 +134,7 @@ describe User do
   it 'removeLike should return false if user has not rating event before uet' do
     @user = User.getUser('testUser')
     response = @user.removeLike(@event.id)
-    response.should equal(false)
+    response.should equal(RedPins::Application::ERR_USER_LIKE_EVENT)
   end
 
   it 'postComment should return true if a comment was successfully posted to an event' do
@@ -142,13 +142,13 @@ describe User do
     response = @user.postComment(@event.id, "I LOVE THIS EVENT")
     @comment = Comment.where(:user_id => @user.id, :event_id => @event.id)[0]
     @comment.should_not be_nil
-    response.should equal(true)
+    response.should equal(RedPins::Application::SUCCESS)
   end
 
   it 'postComment should return false if a user tried commenting an event that does not exist in the db' do
     @user = User.getUser('testUser')
     response = @user.postComment(100, "I LOVE THIS EVENT")
-    response.should equal(false)
+    response.should equal(RedPins::Application::ERR_USER_POST_COMMENT)
   end
 
   it 'bookmarkEvent should return true if a bookmark was successfully created between a user and event' do
@@ -156,27 +156,27 @@ describe User do
     response = @user.bookmarkEvent(@event.id)
     @bookmark = Bookmark.where(:user_id => @user.id, :event_id => @event.id)[0]
     @bookmark.should_not be_nil
-    response.should equal(true)
+    response.should equal(RedPins::Application::SUCCESS)
   end
 
   it 'bookmarkEvent should return false if a user tried bookmarking an event that does not exist in the db' do
     @user = User.getUser('testUser')
     response = @user.bookmarkEvent(100)
-    response.should equal(false)
+    response.should equal(RedPins::Application::ERR_USER_BOOKMARK)
   end
 
   it 'users should not be able to bookmark the same event twice' do
     @user = User.getUser('testUser')
     response = @user.bookmarkEvent(@event.id)
-    response.should equal(true)
+    response.should equal(RedPins::Application::SUCCESS)
     response = @user.bookmarkEvent(@event.id)
-    response.should equal(false)
+    response.should equal(RedPins::Application::ERR_USER_BOOKMARK)
   end
 
   it 'deleteEvent should return true if deletion was successful' do
     @user = User.getUser('testUser')
     response = @user.deleteEvent(@event.id)
-    response.should equal(true)
+    response.should equal(RedPins::Application::SUCCESS)
     @event2 = Event.where(:id => @event.id)[0]
     @event2.should be_nil
   end
@@ -184,13 +184,13 @@ describe User do
   it 'deleteEvent should return false if a user tried deleting an event that does not exist in the db' do
     @user = User.getUser('testUser')
     response = @user.deleteEvent(100)
-    response.should equal(false)
+    response.should equal(RedPins::Application::ERR_USER_DELETE_EVENT)
   end
 
   it 'deleteEvent should return false if a user tries deleting an event they do not own' do
     @user2 = User.create(:email => "email2@email.com", :facebook_id => 'testUser2', :firstname => 'Red', :lastname => 'Pin')
     response = @user2.deleteEvent(@event.id)
-    response.should equal(false)
+    response.should equal(RedPins::Application::ERR_USER_DELETE_EVENT)
     @event2 = Event.where(:id => @event.id)[0]
     @event2.should_not be_nil
   end
@@ -198,7 +198,7 @@ describe User do
   it 'cancelEvent should return true if canceling was successful' do
     @user = User.getUser('testUser')
     response = @user.cancelEvent(@event.id)
-    response.should equal(true)
+    response.should equal(RedPins::Application::SUCCESS)
     @event2 = Event.where(:id => @event.id)[0]
     @event2.canceled.should equal(true)
   end
@@ -206,13 +206,13 @@ describe User do
   it 'cancelEvent should return false if a user tried canceling an event that does not exist in the db' do
     @user = User.getUser('testUser')
     response = @user.cancelEvent(100)
-    response.should equal(false)
+    response.should equal(RedPins::Application::ERR_USER_CANCEL_EVENT)
   end
 
   it 'cancelEvent should return false if a user tries canceling an event they do not own' do
     @user2 = User.create(:email => "email2@email.com", :facebook_id => 'testUser2', :firstname => 'Red', :lastname => 'Pin')
     response = @user2.cancelEvent(@event.id)
-    response.should equal(false)
+    response.should equal(RedPins::Application::ERR_USER_CANCEL_EVENT)
     @event2 = Event.where(:id => @event.id)[0]
     @event2.canceled.should equal(false)
   end
@@ -221,7 +221,7 @@ describe User do
     @user = User.getUser('testUser')
     @user.cancelEvent(@event.id)
     response = @user.restoreEvent(@event.id)
-    response.should equal(true)
+    response.should equal(RedPins::Application::SUCCESS)
     @event2 = Event.where(:id => @event.id)[0]
     @event2.canceled.should equal(false)
   end
@@ -231,14 +231,14 @@ describe User do
     @user.cancelEvent(@event.id)
     @event.delete
     response = @user.restoreEvent(@event.id)
-    response.should equal(false)
+    response.should equal(RedPins::Application::ERR_USER_RESTORE_EVENT)
   end
 
   it 'restoreEvent should return false if a user tries restoring an event they do not own' do
     @user2 = User.create(:email => "email2@email.com", :facebook_id => 'testUser2', :firstname => 'Red', :lastname => 'Pin')
     @user.cancelEvent(@event.id)
     response = @user2.restoreEvent(@event.id)
-    response.should equal(false)
+    response.should equal(RedPins::Application::ERR_USER_RESTORE_EVENT)
     @event2 = Event.where(:id => @event.id)[0]
     @event2.canceled.should equal(true)
   end

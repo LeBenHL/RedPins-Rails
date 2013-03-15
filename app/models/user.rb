@@ -66,9 +66,9 @@ class User < ActiveRecord::Base
     begin
       @like = Like.create!(:user_id => self.id, :event_id => event_id, :like => like)
     rescue => ex
-      return false
+      return RedPins::Application::ERR_USER_LIKE_EVENT
     end
-    return true
+    return RedPins::Application::SUCCESS
   end
 
   def likeEvent?(event_id)
@@ -83,59 +83,59 @@ class User < ActiveRecord::Base
 
   def removeLike(event_id)
     @like = Like.where(:user_id => self.id, :event_id => event_id)[0]
-    return false if @like.nil?
+    return RedPins::Application::ERR_USER_LIKE_EVENT if @like.nil?
     @like.delete
-    return true
+    return RedPins::Application::SUCCESS
   end
 
   def postComment(event_id, comment)
     begin
       @comment = Comment.create!(:user_id => self.id, :event_id => event_id, :comment => comment)
     rescue => ex
-      return false
+      return RedPins::Application::ERR_USER_POST_COMMENT
     end
-    return true
+    return RedPins::Application::SUCCESS
   end
 
   def bookmarkEvent(event_id)
     begin
       @bookmark = Bookmark.create!(:user_id => self.id, :event_id => event_id)
     rescue => ex
-      return false
+      return RedPins::Application::ERR_USER_BOOKMARK
     end
-    return true
+    return RedPins::Application::SUCCESS
   end
 
   def deleteEvent(event_id)
     begin
       @event = Event.find(event_id)
-      return false unless @event.user_id == self.id
+      return RedPins::Application::ERR_USER_DELETE_EVENT unless @event.user_id == self.id
       @event.delete
     rescue => ex
-      return false
+      return RedPins::Application::ERR_USER_DELETE_EVENT
     end
-    return true
+    return RedPins::Application::SUCCESS
   end
 
   def cancelEvent(event_id)
     begin
       @event = Event.find(event_id)
-      return false unless @event.user_id == self.id
+      return RedPins::Application::ERR_USER_CANCEL_EVENT unless @event.user_id == self.id
       @event.update_attribute(:canceled, true)
     rescue => ex
-      return false
+      return RedPins::Application::ERR_USER_CANCEL_EVENT
     end
-    return true
+    return RedPins::Application::SUCCESS
   end
 
   def restoreEvent(event_id)
     begin
       @event = Event.find(event_id)
-      return false unless @event.user_id == self.id
+      return RedPins::Application::ERR_USER_RESTORE_EVENT unless @event.user_id == self.id
       @event.update_attribute(:canceled, false)
     rescue => ex
-      return false
+      return RedPins::Application::ERR_USER_RESTORE_EVENT
     end
-    return true
+    return RedPins::Application::SUCCESS
   end
 end
