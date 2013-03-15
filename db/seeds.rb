@@ -41,6 +41,52 @@
     @event10 = Event.create(title: "Dead Poet's Society Meeting'", start_time: DateTime.new(2013,5,10), end_time: DateTime.new(2013,5,11),
                            location: "2100 Durant Ave.", user_id: @user5.id, url: 'www.google.com', latitude: 36.04, longitude: -121.96)
 
+    @user1.likeEvent(@event1.id, true)
+    @user1.likeEvent(@event2.id, true)
+    @user1.likeEvent(@event3.id, false)
+    @user1.likeEvent(@event4.id, false)
+    @user1.likeEvent(@event7.id, false)
+
+    @user2.likeEvent(@event1.id, true)
+    @user2.likeEvent(@event4.id, false)
+    @user2.likeEvent(@event6.id, true)
+    @user2.likeEvent(@event7.id, true)
+    @user2.likeEvent(@event10.id, false)
+
+    @user3.likeEvent(@event1.id, true)
+    @user3.likeEvent(@event3.id, true)
+    @user3.likeEvent(@event4.id, false)
+    @user3.likeEvent(@event6.id, true)
+    @user3.likeEvent(@event9.id, true)
+
+    @user4.likeEvent(@event1.id, false)
+    @user4.likeEvent(@event4.id, false)
+    @user4.likeEvent(@event5.id, false)
+    @user4.likeEvent(@event7.id, false)
+    @user4.likeEvent(@event9.id, false)
+
+    @user5.likeEvent(@event2.id, true)
+    @user5.likeEvent(@event4.id, true)
+    @user5.likeEvent(@event6.id, true)
+    @user5.likeEvent(@event8.id, true)
+    @user5.likeEvent(@event10.id, true)
+
+    @user1.bookmarkEvent(@event2.id)
+    @user1.bookmarkEvent(@event6.id)
+
+    @user2.bookmarkEvent(@event5.id)
+    @user2.bookmarkEvent(@event7.id)
+
+    @user3.bookmarkEvent(@event4.id)
+    @user3.bookmarkEvent(@event8.id)
+
+    @user4.bookmarkEvent(@event3.id)
+    @user4.bookmarkEvent(@event9.id)
+
+    @user5.bookmarkEvent(@event1.id)
+    @user5.bookmarkEvent(@event10.id)
+
+
 
 
 
