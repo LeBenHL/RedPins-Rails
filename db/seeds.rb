@@ -6,7 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
     @user1 = User.create(email: 'benle@gmail.com', facebook_id: 1, firstname: 'Ben', lastname: 'Le')
-    @user2 = User.create(email: 'jerrychen@gmail.com', facebook_id: 1, firstname: 'Jerry', lastname: 'Chen')
+    @user2 = User.create(email: 'jerrychen@gmail.com', facebook_id: 2, firstname: 'Jerry', lastname: 'Chen')
     @user3 = User.create(email: 'andylee@gmail.com', facebook_id: 3, firstname: 'Andy', lastname: 'Lee')
     @user4 = User.create(email: 'ericcheong@gmail.com', facebook_id: 4, firstname: 'Eric', lastname: 'Cheong')
     @user5 = User.create(email: 'victorchang@gmail.com', facebook_id: 5, firstname: 'Victor', lastname: 'Chang')
@@ -85,6 +85,36 @@
 
     @user5.bookmarkEvent(@event1.id)
     @user5.bookmarkEvent(@event10.id)
+
+    @user1.postComment(@event1.id, 'I LOVE BIRTHDAY CAKE')
+    @user1.postComment(@event2.id, 'PLEASE BRING FOOD')
+    @user1.postComment(@event3.id, 'THERE IS NO PARKING ANYWHERE HERE. YOU NEED TO WAIT 15 MINUTES BEFORE A SPOT OPENS UP')
+    @user1.postComment(@event4.id, 'FOOD IS TERRIBLE')
+    @user1.postComment(@event7.id, 'EATING SANDWHICHES GOOD.')
+
+    @user2.postComment(@event1.id, 'HAPPY BIRTHDAY VICTOR')
+    @user2.postComment(@event4.id, 'WHERE IS THIS GOING TO BE AGAIN')
+    @user2.postComment(@event6.id, 'EXPENSIVE FOOD')
+    @user2.postComment(@event7.id, 'I LOVE TO HOTBOX')
+    @user2.postComment(@event10.id, 'SO DA HIPSTER')
+
+    @user3.postComment(@event1.id, 'WHEN IS THE SURPRISE PARTY?')
+    @user3.postComment(@event3.id, 'BURGERS OR HOTDOGS')
+    @user3.postComment(@event4.id, 'IS THIS A POTLUCK?')
+    @user3.postComment(@event6.id, 'THIS FOOD SO DA EXPENSIVE')
+    @user3.postComment(@event9.id, 'DANCE DANCE DANCE DANCE EVERYBODY')
+
+    @user4.postComment(@event1.id, 'WOW VICTOR CAN SEE THIS BRO')
+    @user4.postComment(@event4.id, 'YAY EVERYONE IS GOING TO ANDYS THING')
+    @user4.postComment(@event5.id, 'WHAT ARE YOU LECTURING ABOUT')
+    @user4.postComment(@event7.id, 'WHAT THE HECK IS THIS EVENT')
+    @user4.postComment(@event9.id, 'SHOW ME YOUR MOVES')
+
+    @user5.postComment(@event2.id, 'I LOVE YOU BEN')
+    @user5.postComment(@event4.id, 'I HATE YOU ANDY')
+    @user5.postComment(@event6.id, 'I LOVE TRUCK FOOD')
+    @user5.postComment(@event8.id, 'I LOVE COLORS')
+    @user5.postComment(@event10.id, 'I LOVE ROBIN WILLIAMS')
 
 
 
