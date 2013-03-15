@@ -12,6 +12,8 @@
 #  end_time   :datetime
 #  user_id    :integer
 #  canceled   :boolean          default(FALSE), not null
+#  latitude   :float
+#  longitude  :float
 #
 
 require 'spec_helper'
