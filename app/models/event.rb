@@ -32,9 +32,10 @@ class Event < ActiveRecord::Base
   has_many :bookmarks
   has_many :events, :through => :bookmarks
   
-  def self.add(title, start_time, end_time, location, user_id, url = "", latitude = 360, longitude = 360)
+  def self.add(title, start_time, end_time, location, facebook_id, url = "", latitude = 360, longitude = 360)
     begin
-      @event = Event.create!(:title => title, :start_time => start_time, :end_time => end_time, :location => location, :user_id => user_id, :url => url, :latitude => latitude, :longitude => longitude)
+      @creator = User.find_by_facebook_id(facebook_id)
+      @event = Event.create!(:title => title, :start_time => start_time, :end_time => end_time, :location => location, :user_id => @creator['id'], :url => url, :latitude => latitude, :longitude => longitude)
     rescue => exception
       message = exception.message
       case
@@ -47,6 +48,7 @@ class Event < ActiveRecord::Base
         when message =~ /End time can't be blank/i
           return RedPins::Application::ERR_BAD_END_TIME
         else
+          return message
           return RedPins::Application::ERR_EVENT_CREATION
       end
     end

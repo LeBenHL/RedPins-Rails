@@ -15,6 +15,19 @@ class EventsController < ApplicationController
     end
   end
 
+  # POST /events/add
+  def add
+    response = User.login(params['facebook_id'])
+    @hash = {:errCode => response}
+    if response > 0
+      @event = Event.add(params['title'], params['start_time'], params['end_time'], params['location'], params['facebook_id'], params['url'], params['latitude'], params['longitude'])
+      @hash[:errCode] = @event
+    end
+    respond_to do |format|
+      format.json { render :json => @hash }
+    end
+  end
+
   # POST /events/getComments
   def getComments
     begin
