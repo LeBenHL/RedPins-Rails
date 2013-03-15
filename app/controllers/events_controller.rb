@@ -33,25 +33,25 @@ class EventsController < ApplicationController
 
   # POST /events/search
   def search
-    response = User.login(params['facebook_id'])
+    #   response = User.login(params['facebook_id'])
     @hash = {}
-    if response > 0
-      @user = User.getUser(params['facebook_id'])
+    # if response > 0
+    #  @user = User.getUser(params['facebook_id'])
       @hash[:errCode] = RedPins::Application::SUCCESS
       @events = Event.find(:all, :limit => 10)
       event_list = []
       @events.each do |event|
         attributes = event.attributes
-        if event.user_id == @user.id
-          attributes[:owner] = true
-        else
+        #    if event.user_id == @user.id
+        #  attributes[:owner] = true
+        #else
           attributes[:owner] = false
-        end
+        #end
         event_list.push(attributes)
       end
       @hash[:events] = event_list
-    else
-      @hash[:errCode] = response
+    # else
+    #  @hash[:errCode] = response
     end
     respond_to do |format|
       format.json { render :json => @hash }
