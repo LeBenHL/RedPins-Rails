@@ -12,9 +12,12 @@
 #
 
 require 'valid_email'
+require 'net/https'
+require 'json'
+
 class User < ActiveRecord::Base
   attr_accessible :email, :facebook_id, :id, :firstname, :lastname
-  validates :email, :presence => true, :uniqueness => true, :email => true
+  validates :email, :presence => true, :email => true
   validates :facebook_id, :presence => true, :uniqueness => true
   validates :firstname, :presence => true
   validates :lastname, :presence => true
@@ -26,10 +29,10 @@ class User < ActiveRecord::Base
   has_many :bookmarks
   has_many :events, :through => :bookmarks
 
-  def self.login(facebook_id)
+  def self.login(facebook_id, session_token)
     @user = User.where(:facebook_id => facebook_id)[0]
     if @user
-      return RedPins::Application::SUCCESS
+      return self.verify(facebook_id, session_token)
     else
       return RedPins::Application::ERR_NO_USER_EXISTS
     end
@@ -45,8 +48,6 @@ class User < ActiveRecord::Base
           return RedPins::Application::ERR_BAD_EMAIL
         when message =~ /Email is invalid/i
           return RedPins::Application::ERR_BAD_EMAIL
-        when message =~ /Email has already been taken/i
-          return RedPins::Application::ERR_USER_EXISTS
         when message =~ /Facebook has already been taken/i
           return RedPins::Application::ERR_USER_EXISTS
         when message =~ /Facebook can't be blank/i
@@ -60,6 +61,30 @@ class User < ActiveRecord::Base
 
   def self.getUser(facebook_id)
     return User.where(:facebook_id => facebook_id)[0]
+  end
+
+  def self.verify(facebook_id, session_token)
+    url = 'https://graph.facebook.com/oauth/access_token?client_id=' + RedPins::Application::APP_ID + '&client_secret=' + RedPins::Application::APP_SECRET + '&grant_type=client_credentials'
+    fb_access_token_url = URI.parse(URI.encode(url))
+    https = Net::HTTP.new(fb_access_token_url.host, fb_access_token_url.port)
+    https.use_ssl = true
+    https.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    resp = https.request_get(fb_access_token_url.path + '?' +
+                                            fb_access_token_url.query)
+    access_token = resp.body.split('=')[1]
+    url = 'https://graph.facebook.com/debug_token?input_token=' + session_token + '&access_token=' + access_token
+    debug_token_url = URI.parse(URI.encode(url))
+    https = Net::HTTP.new(debug_token_url.host, debug_token_url.port)
+    https.use_ssl = true
+    https.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    resp = https.request_get(debug_token_url.path + '?' +
+                                 debug_token_url.query)
+    json = JSON.parse(resp.body)
+    if json['data']['user_id'].to_s == facebook_id
+      return RedPins::Application::SUCCESS
+    else
+      return RedPins::Application::ERR_USER_VERIFICATION
+    end
   end
 
   def likeEvent(event_id, like)
