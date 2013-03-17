@@ -73,4 +73,21 @@ class Event < ActiveRecord::Base
     return commentsArray
   end
   
+  def searchByEvent(text)
+    eventsArray = []
+    self.title.each do |eventName|
+      hash = {}
+      hash[:title] = eventName.title
+      hash[:facebook_id] = eventName.user.facebook_id
+      hash[:created_at] = eventName.created_at
+      hash[:firstname] = eventName.user.firstname
+      hash[:lastname] = eventName.user.lastname
+      hash[:comment] = eventName.comment
+      if eventName == text
+        eventsArray.push(hash)
+      end
+    end
+    return eventsArray
+  end
+  
 end
