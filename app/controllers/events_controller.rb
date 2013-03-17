@@ -33,7 +33,7 @@ class EventsController < ApplicationController
 
   # POST /events/search
   def search
-    response = User.login(params['facebook_id'])
+    response = User.login(params['facebook_id'], params['session_token'])
     @hash = {}
     if response > 0
       @user = User.getUser(params['facebook_id'])
@@ -60,7 +60,7 @@ class EventsController < ApplicationController
 
   # POST /events/getEvent
   def getEvent
-    response = User.login(params['facebook_id'])
+    response = User.login(params['facebook_id'], params['session_token'])
     @hash = {}
     if response > 0
       @user = User.getUser(params['facebook_id'])

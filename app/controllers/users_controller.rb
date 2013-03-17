@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 
   # POST /users/login
   def login
-    response = User.login(params['facebook_id'])
+    response = User.login(params['facebook_id'], params['session_token'])
     @hash = {}
     if response > 0
       @hash[:errCode] = response
@@ -16,10 +16,10 @@ class UsersController < ApplicationController
 
   # POST /users/add
   def add
-    response = User.add(params['email'], params['facebook_id'], params['firstname'], params['lastname'])
+    response = User.verify(params['facebook_id'], params['session_token'])
     @hash = {}
     if response > 0
-      @hash[:errCode] = response
+      @hash[:errCode] = User.add(params['email'], params['facebook_id'], params['firstname'], params['lastname'])
     else
       @hash[:errCode] = response
     end
@@ -30,7 +30,7 @@ class UsersController < ApplicationController
 
   # POST /users/likeEvent
   def likeEvent
-    response = User.login(params['facebook_id'])
+    response = User.login(params['facebook_id'], params['session_token'])
     @hash = {}
     if response > 0
       @user = User.getUser(params['facebook_id'])
@@ -45,7 +45,7 @@ class UsersController < ApplicationController
 
   # POST /users/removeLike
   def removeLike
-    response = User.login(params['facebook_id'])
+    response = User.login(params['facebook_id'], params['session_token'])
     @hash = {}
     if response > 0
       @user = User.getUser(params['facebook_id'])
@@ -60,7 +60,7 @@ class UsersController < ApplicationController
 
   # POST /users/alreadyLikedEvent
   def likeEvent?
-    response = User.login(params['facebook_id'])
+    response = User.login(params['facebook_id'], params['session_token'])
     @hash = {}
     if response > 0
       @user = User.getUser(params['facebook_id'])
@@ -77,7 +77,7 @@ class UsersController < ApplicationController
 
   # POST /users/postComment
   def postComment
-    response = User.login(params['facebook_id'])
+    response = User.login(params['facebook_id'], params['session_token'])
     @hash = {}
     if response > 0
       @user = User.getUser(params['facebook_id'])
@@ -92,7 +92,7 @@ class UsersController < ApplicationController
 
   # POST /users/bookmarkEvent
   def bookmarkEvent
-    response = User.login(params['facebook_id'])
+    response = User.login(params['facebook_id'], params['session_token'])
     @hash = {}
     if response > 0
       @user = User.getUser(params['facebook_id'])
@@ -107,7 +107,7 @@ class UsersController < ApplicationController
 
   # POST /users/deleteEvent
   def deleteEvent
-    response = User.login(params['facebook_id'])
+    response = User.login(params['facebook_id'], params['session_token'])
     @hash = {}
     if response > 0
       @user = User.getUser(params['facebook_id'])
@@ -122,7 +122,7 @@ class UsersController < ApplicationController
 
   # POST /users/cancelEvent
   def cancelEvent
-    response = User.login(params['facebook_id'])
+    response = User.login(params['facebook_id'], params['session_token'])
     @hash = {}
     if response > 0
       @user = User.getUser(params['facebook_id'])
@@ -137,7 +137,7 @@ class UsersController < ApplicationController
 
   # POST /users/restoreEvent
   def restoreEvent
-    response = User.login(params['facebook_id'])
+    response = User.login(params['facebook_id'], params['session_token'])
     @hash = {}
     if response > 0
       @user = User.getUser(params['facebook_id'])

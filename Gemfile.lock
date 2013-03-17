@@ -135,6 +135,7 @@ DEPENDENCIES
   annotate (>= 2.5.0)
   coffee-rails (~> 3.2.1)
   jquery-rails
+  json
   paperclip (~> 3.0)
   pg
   rails (= 3.2.9)
