@@ -85,5 +85,9 @@ class Event < ActiveRecord::Base
       hash[:comment] = eventName.comment
       if eventName == text
         eventsArray.push(hash)
+      end
+    end
     return eventsArray
+  end
+  
 end

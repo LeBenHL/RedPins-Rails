@@ -4,7 +4,7 @@ class SearchController < ApplicationController
   
   # POST /events/search
   def search
-    @events = Event.find(:title == )
+    @events = Event.find(:title == "query")
     @hash = {}
     
     event_list = []
@@ -16,4 +16,5 @@ class SearchController < ApplicationController
       format.json { render :json => @hash }
     end
   end
-    
+
+end
