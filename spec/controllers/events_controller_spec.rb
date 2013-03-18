@@ -134,6 +134,7 @@ describe EventsController do
       post '/events/search.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json'}
       parsed_body = JSON.parse(response.body)
       parsed_body['errCode'].should equal(RedPins::Application::SUCCESS)
+      puts parsed_body['events'][0]['title'].should eq(@event.title)
     end
     
     it 'should not return an event that does not exist' do
