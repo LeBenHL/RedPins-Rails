@@ -34,6 +34,7 @@ class EventsController < ApplicationController
   # POST /events/search
   def search
     response = User.login(params['facebook_id'], params['session_token'])
+    @query = params['query']
     @hash = {}
     if response > 0
       @user = User.getUser(params['facebook_id'])
@@ -47,7 +48,9 @@ class EventsController < ApplicationController
         else
           attributes[:owner] = false
         end
-        event_list.push(attributes)
+        if event.title.include? @query
+          event_list.push(attributes)
+        end
       end
       @hash[:events] = event_list
     else

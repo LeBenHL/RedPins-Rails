@@ -15,6 +15,7 @@
 /tmp
 
 /config/database.yml
+config/database.yml
 .DS_Store
 
 redpins_development

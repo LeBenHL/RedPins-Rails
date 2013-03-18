@@ -7,8 +7,7 @@ describe EventsController do
     @session_token2 = 'BAAEw2AGE0JYBAESZAmjhyg27dAxFAd9ZCU385zVMUdZAF3mgkZCCVOb23hZCXQvvYtukcv1REFDTcTJJjP9OjlsqLsgDFoznMu4UZCEpxZBOH1IOoelZAPwU'
   end
 
-
-  describe 'Post #getRatings', :type => :request do
+  describe 'Event #getRatings', :type => :request do
     before(:each) do
       @user = User.create(:email => 'email@email.com', :facebook_id => '100000450230611', :firstname => 'Red', :lastname => 'Pin')
       @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com', :user_id => @user.id)
@@ -42,7 +41,7 @@ describe EventsController do
     end
   end
 
-  describe 'Post #getComments', :type => :request do
+  describe 'Event #getComments', :type => :request do
     before(:each) do
       @user = User.create(:email => 'email@email.com', :facebook_id => '100000450230611', :firstname => 'Red', :lastname => 'Pin')
       @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com', :user_id => @user.id)
@@ -74,7 +73,7 @@ describe EventsController do
 
   end
 
-  describe 'Post #getEvent', :type => :request do
+  describe 'Event #getEvent', :type => :request do
     before(:each) do
       @user1 = User.create(:email => 'email1@email.com', :facebook_id => '100000450230611', :firstname => 'Red', :lastname => 'Pin')
       @user2 = User.create(:email => 'email2@email.com', :facebook_id => '668095230', :firstname => 'Red', :lastname => 'Pin')
@@ -119,6 +118,29 @@ describe EventsController do
       post '/events/getEvent.json', params.to_json, { 'CONTENT_TYPE' => 'application/json'}
       parsed_body = JSON.parse(response.body)
       parsed_body['errCode'].should equal(RedPins::Application::ERR_USER_VERIFICATION)
+    end
+
+  end
+  
+  describe 'Event #search', :type => :request do
+    before(:each) do
+      @user = User.create(:email => 'email@email.com', :facebook_id => 'testUser', :firstname => 'Red', :lastname => 'Pin')
+      @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com', :user_id => @user.id)
+      @event2 = Event.create(:title => 'DIFFERENT', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.diff.com', :user_id => @user.id)
+    end
+
+    it 'should return the proper events given an event title query' do
+      params = { facebook_id: 'testUser', query: 'new' }
+      post '/events/search.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json'}
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should equal(RedPins::Application::SUCCESS)
+    end
+    
+    it 'should not return an event that does not exist' do
+      params = { facebook_id: 'testUser', query: 'nothing' }
+      post '/events/search.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json'}
+      parsed_body = JSON.parse(response.body)
+      parsed_body['events'].should be_empty
     end
 
   end
