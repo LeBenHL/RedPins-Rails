@@ -124,22 +124,23 @@ describe EventsController do
   
   describe 'Event #search', :type => :request do
     before(:each) do
-      @user = User.create(:email => 'email@email.com', :facebook_id => 'testUser', :firstname => 'Red', :lastname => 'Pin')
+      @user = User.create(:email => 'email@email.com', :facebook_id => '100000450230611', :firstname => 'Red', :lastname => 'Pin')
       @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com', :user_id => @user.id)
       @event2 = Event.create(:title => 'DIFFERENT', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.diff.com', :user_id => @user.id)
     end
 
     it 'should return the proper events given an event title query' do
-      params = { facebook_id: 'testUser', query: 'new' }
+      params = { facebook_id: '100000450230611', session_token: @session_token, query: 'new' }
       post '/events/search.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json'}
       parsed_body = JSON.parse(response.body)
       parsed_body['errCode'].should equal(RedPins::Application::SUCCESS)
     end
     
     it 'should not return an event that does not exist' do
-      params = { facebook_id: 'testUser', query: 'nothing' }
+      params = { facebook_id: '100000450230611', session_token: @session_token, query: 'nothing' }
       post '/events/search.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json'}
       parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should equal(RedPins::Application::SUCCESS)
       parsed_body['events'].should be_empty
     end
 
