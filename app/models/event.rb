@@ -48,7 +48,6 @@ class Event < ActiveRecord::Base
         when message =~ /End time can't be blank/i
           return RedPins::Application::ERR_BAD_END_TIME
         else
-          return message
           return RedPins::Application::ERR_EVENT_CREATION
       end
     end
