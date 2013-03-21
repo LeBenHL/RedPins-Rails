@@ -17,6 +17,9 @@ end
 gem "paperclip", "~> 3.0"
 gem 'simplecov', :require => false, :group => :test
 gem 'multi_json', "~> 1.6.1"
+gem 'geokit'
+gem 'sunspot_rails'
+gem 'sunspot_solr'
 
 # Gems used only for assets and not required
 # in production environments by default.

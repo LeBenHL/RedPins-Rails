@@ -3,7 +3,7 @@
 # Table name: events
 #
 #  id         :integer          not null, primary key
-#  title      :string(255)
+#  title      :text
 #  url        :string(255)
 #  location   :string(255)
 #  start_time :datetime
@@ -18,6 +18,11 @@
 
 class Event < ActiveRecord::Base
   attr_accessible :location, :latitude, :longitude, :title, :url, :user_id, :start_time, :end_time, :canceled
+  acts_as_mappable :default_units => :miles,
+                   :default_formula => :sphere,
+                   :distance_field_name => :distance,
+                   :lat_column_name => :latitude,
+                   :lng_column_name => :longitude
   validates :title, :presence => true
   validates :start_time, :presence => true
   validates :end_time, :presence => true
