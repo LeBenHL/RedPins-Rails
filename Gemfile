@@ -17,7 +17,7 @@ end
 gem "paperclip", "~> 3.0"
 gem 'simplecov', :require => false, :group => :test
 gem 'multi_json', "~> 1.6.1"
-gem 'geokit'
+gem 'geocoder'
 gem 'sunspot_rails'
 gem 'sunspot_solr'
 

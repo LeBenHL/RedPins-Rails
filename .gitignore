@@ -24,3 +24,9 @@ redpins_testing
 Gemfile.lock
 
 coverage
+
+config/sunspot.yml
+solr
+log/sunspot-solr-development.log.lck
+sunspot-solr.pid
+install
