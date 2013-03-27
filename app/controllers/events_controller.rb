@@ -45,6 +45,7 @@ class EventsController < ApplicationController
   end
 
   # POST /events/search
+=begin
   def search
     response = User.login(params['facebook_id'], params['session_token'])
     @query = params['query']
@@ -66,6 +67,24 @@ class EventsController < ApplicationController
         end
       end
       @hash[:events] = event_list
+    else
+      @hash[:errCode] = response
+    end
+    respond_to do |format|
+      format.json { render :json => @hash }
+    end
+  end
+=end
+
+  def search
+    response = User.login(params['facebook_id'], params['session_token'])
+    @query = params['query']
+    @hash = {}
+    if response > 0
+      @user = User.getUser(params['facebook_id'])
+      @hash[:errCode] = RedPins::Application::SUCCESS
+      @events = Event.searchEvents(params['search_query'], params['location_query'], @user.id, params['page'])
+      @hash[:events] = @events
     else
       @hash[:errCode] = response
     end

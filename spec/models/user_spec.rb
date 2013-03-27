@@ -14,6 +14,7 @@
 require 'spec_helper'
 
 describe User do
+
   before(:each) do
     @session_token = 'AAAEw2AGE0JYBAMc6qqcvAIDr28wPOCskrV3O2ZAB0GpTe2ddPFddIfUKN8JtkrY50afZCimIXv6w1YNhKl4SlEnrmDB10di7a3ZB9jMLagPRaIiPwhP'
     @response = User.add('email@email.com', '100000450230611', 'Red', 'Pin')

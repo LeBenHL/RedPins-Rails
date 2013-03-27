@@ -27,6 +27,6 @@ coverage
 
 config/sunspot.yml
 solr
-log/sunspot-solr-development.log.lck
+log/*
 sunspot-solr.pid
 install
