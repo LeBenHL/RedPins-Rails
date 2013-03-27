@@ -2,27 +2,36 @@
 #
 # Table name: events
 #
-#  id         :integer          not null, primary key
-#  title      :text
-#  url        :string(255)
-#  location   :string(255)
-#  start_time :datetime
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  end_time   :datetime
-#  user_id    :integer
-#  canceled   :boolean          default(FALSE), not null
-#  latitude   :float
-#  longitude  :float
+#  id          :integer          not null, primary key
+#  title       :text
+#  url         :string(255)
+#  location    :string(255)
+#  start_time  :datetime
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  end_time    :datetime
+#  user_id     :integer
+#  canceled    :boolean          default(FALSE), not null
+#  latitude    :float
+#  longitude   :float
+#  description :text
 #
 
 class Event < ActiveRecord::Base
   attr_accessible :location, :latitude, :longitude, :title, :url, :user_id, :start_time, :end_time, :canceled
-  acts_as_mappable :default_units => :miles,
-                   :default_formula => :sphere,
-                   :distance_field_name => :distance,
-                   :lat_column_name => :latitude,
-                   :lng_column_name => :longitude
+  geocoded_by :location
+  after_validation :geocode
+  searchable do
+    text :title
+    text :description
+    text :comments do
+      comments.map { |comment| comment.comment}
+    end
+    time :start_time, :end_time, :created_at, :updated_at
+    integer :user_id
+    boolean :canceled
+    latlon(:location) { Sunspot::Util::Coordinates.new(latitude, longitude) }
+  end
   validates :title, :presence => true
   validates :start_time, :presence => true
   validates :end_time, :presence => true
@@ -59,6 +68,30 @@ class Event < ActiveRecord::Base
     return RedPins::Application::SUCCESS
   end
 
+  def self.searchEvents(search_query, location_query, user_id, page = 1)
+    coords = Geocoder.coordinates(location_query)
+    events = Event.search do
+      fulltext search_query do
+        boost_fields :title  => 3.0
+        boost_fields :description => 2.0
+      end
+      with(:canceled, false)
+      with(:location).in_radius(coords[0], coords[1], 10)
+      paginate :page => page, :per_page => 20
+    end
+    event_list = []
+    events.results.each do |event|
+      attributes = event.attributes
+      if event.user_id == user_id
+        attributes[:owner] = true
+      else
+        attributes[:owner] = false
+      end
+      event_list.push(attributes)
+    end
+    return event_list
+  end
+
   def getRatings
     likes = self.likes.where(:like => true).count
     dislikes = self.likes.where(:like => false).count
@@ -78,7 +111,8 @@ class Event < ActiveRecord::Base
     end
     return commentsArray
   end
-  
+
+=begin
   def searchByEvent(text)
     eventsArray = []
     self.title.each do |eventName|
@@ -95,5 +129,6 @@ class Event < ActiveRecord::Base
     end
     return eventsArray
   end
+=end
   
 end
