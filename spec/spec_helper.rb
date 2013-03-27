@@ -39,3 +39,43 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
 end
+
+Geocoder::Configuration.lookup = :test
+
+Geocoder::Lookup::Test.add_stub(
+    "Berkeley", [
+        {
+            'latitude'     => 37.8717,
+            'longitude'    => -122.2728,
+            'address'      => 'Berkeley, CA, USA',
+            'state'        => 'California',
+            'state_code'   => 'CA',
+            'country'      => 'United States',
+            'country_code' => 'US'
+        }
+    ]
+)
+
+$original_sunspot_session = Sunspot.session
+Sunspot.session = Sunspot::Rails::StubSessionProxy.new($original_sunspot_session)
+
+module SolrSpecHelper
+
+  def solr_setup
+    unless $sunspot
+      $sunspot = Sunspot::Rails::Server.new
+
+      pid = fork do
+        STDERR.reopen('/dev/null')
+        STDOUT.reopen('/dev/null')
+        $sunspot.run
+      end
+      # shut down the Solr server
+      at_exit { Process.kill('TERM', pid) }
+      # wait for solr to start
+      sleep 5
+    end
+
+    Sunspot.session = $original_sunspot_session
+  end
+end
