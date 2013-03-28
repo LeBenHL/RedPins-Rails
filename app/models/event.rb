@@ -68,8 +68,7 @@ class Event < ActiveRecord::Base
     return RedPins::Application::SUCCESS
   end
 
-  def self.searchEvents(search_query, location_query, user_id, page = 1)
-    coords = Geocoder.coordinates(location_query)
+  def self.searchEvents(search_query, coords, user_id, page = 1)
     events = Event.search do
       fulltext search_query do
         boost_fields :title  => 3.0

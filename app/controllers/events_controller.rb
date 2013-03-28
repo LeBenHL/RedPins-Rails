@@ -83,7 +83,27 @@ class EventsController < ApplicationController
     if response > 0
       @user = User.getUser(params['facebook_id'])
       @hash[:errCode] = RedPins::Application::SUCCESS
-      @events = Event.searchEvents(params['search_query'], params['location_query'], @user.id, params['page'])
+      coords = Geocoder.coordinates(params['location_query'])
+      @events = Event.searchEvents(params['search_query'], coords, @user.id, params['page'])
+      @hash[:events] = @events
+    else
+      @hash[:errCode] = response
+    end
+    respond_to do |format|
+      format.json { render :json => @hash }
+    end
+  end
+
+  # POST /events/searchViaCoordinates
+  def searchViaCoordinates
+    response = User.login(params['facebook_id'], params['session_token'])
+    @query = params['query']
+    @hash = {}
+    if response > 0
+      @user = User.getUser(params['facebook_id'])
+      @hash[:errCode] = RedPins::Application::SUCCESS
+      coords = [params['latitude'], params['longitude']]
+      @events = Event.searchEvents(params['search_query'], coords, @user.id, params['page'])
       @hash[:events] = @events
     else
       @hash[:errCode] = response
