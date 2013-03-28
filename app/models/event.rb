@@ -18,7 +18,7 @@
 #
 
 class Event < ActiveRecord::Base
-  attr_accessible :location, :latitude, :longitude, :title, :url, :user_id, :start_time, :end_time, :canceled
+  attr_accessible :location, :latitude, :longitude, :title, :url, :user_id, :start_time, :end_time, :canceled, :description
   geocoded_by :location
   after_validation :geocode
   searchable do
