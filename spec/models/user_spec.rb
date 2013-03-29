@@ -36,6 +36,16 @@ describe User do
     expect(response).to eq(RedPins::Application::ERR_BAD_EMAIL)
   end
 
+  it 'refuses to add a user with a empty email' do
+    response = User.add('', '100000450230611','Red', 'Pin')
+    expect(response).to eq(RedPins::Application::ERR_BAD_EMAIL)
+  end
+
+  it 'refuses to add a user with a empty facebook_id' do
+    response = User.add('newEmail@email.com', '','Red', 'Pin')
+    expect(response).to eq(RedPins::Application::ERR_BAD_FACEBOOK_ID)
+  end
+
   it 'returns SUCCESS when user logins with a proper facebook id' do
     response = User.login('100000450230611', @session_token)
     expect(response).to eq(RedPins::Application::SUCCESS)
