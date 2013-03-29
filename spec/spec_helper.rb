@@ -58,6 +58,32 @@ Geocoder::Lookup::Test.add_stub(
 )
 
 Geocoder::Lookup::Test.add_stub(
+    "San Francisco", [
+        {
+            'latitude'     => 37.7749295,
+            'longitude'    => -122.4194155,
+            'address'      => 'San Francisco, CA, USA',
+            'state'        => 'California',
+            'state_code'   => 'CA',
+            'country'      => 'United States',
+            'country_code' => 'US'
+        }
+    ]
+
+)
+
+Geocoder::Lookup::Test.add_stub(
+    "North Pole", [
+        {
+            'latitude'     => 90,
+            'longitude'    => 120,
+            'address'      => 'North Pole'
+        }
+    ]
+
+)
+
+Geocoder::Lookup::Test.add_stub(
     [37.8717, -122.2728], [
         {
             'latitude'     => 37.8717,
@@ -72,8 +98,8 @@ Geocoder::Lookup::Test.add_stub(
 
 )
 
-$original_sunspot_session = Sunspot.session
-Sunspot.session = Sunspot::Rails::StubSessionProxy.new($original_sunspot_session)
+#$original_sunspot_session = Sunspot.session
+#Sunspot.session = Sunspot::Rails::StubSessionProxy.new($original_sunspot_session)
 
 module SolrSpecHelper
 

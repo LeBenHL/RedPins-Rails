@@ -22,6 +22,10 @@ describe User do
     @event = Event.create!(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com', :user_id => @user.id)
   end
 
+  after(:all) do
+    Event.remove_all_from_index!
+  end
+
   it 'adds a user into the database' do
     expect(@response).to eq(RedPins::Application::SUCCESS)
   end
