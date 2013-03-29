@@ -54,6 +54,22 @@ Geocoder::Lookup::Test.add_stub(
             'country_code' => 'US'
         }
     ]
+
+)
+
+Geocoder::Lookup::Test.add_stub(
+    [37.8717, -122.2728], [
+        {
+            'latitude'     => 37.8717,
+            'longitude'    => -122.2728,
+            'address'      => 'Berkeley, CA, USA',
+            'state'        => 'California',
+            'state_code'   => 'CA',
+            'country'      => 'United States',
+            'country_code' => 'US'
+        }
+    ]
+
 )
 
 $original_sunspot_session = Sunspot.session

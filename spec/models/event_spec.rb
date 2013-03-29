@@ -61,6 +61,16 @@ describe Event do
     response.should equal(RedPins::Application::ERR_BAD_END_TIME)
   end
 
+  it 'geocodes the event when it is added' do
+    @event.latitude.should eq(37.8717)
+    @event.longitude.should eq(-122.2728)
+  end
+
+  it 'reverse geocodes the event when it is added' do
+    @event2 = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :latitude => 37.8717, :longitude => -122.2728, :url => 'www.thEvent.com', :user_id => @user.id)
+    @event2.location.should eq('Berkeley, CA, USA')
+  end
+
   it 'knows how many likes and dislikes it has' do
     @user1 = User.create(:email => 'email1@email.com', :facebook_id => 'testUser1', :firstname => 'Red', :lastname => 'Pin')
     @user2 = User.create(:email => 'email2@email.com', :facebook_id => 'testUser2', :firstname => 'Red', :lastname => 'Pin')
