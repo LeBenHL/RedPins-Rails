@@ -12,34 +12,49 @@
     @user5 = User.create(email: 'victorchang@gmail.com', facebook_id: 5, firstname: 'Victor', lastname: 'Chang')
 
     @event1 = Event.create(title: "Victor's Party", start_time: DateTime.new(2010,9,8), end_time: DateTime.new(2010,9,10),
-                          location: "2540 Regent St.", user_id: @user5.id, url: 'www.google.com', latitude: 37.86356, longitude: -122.25787, description: "It's Victor's birthday!")
+                          location: "2540 Regent St. Berkeley, CA", user_id: @user5.id, url: 'www.google.com', description: "It's Victor's birthday!")
 
     @event2 = Event.create(title: "Ben's Bash'", start_time: DateTime.new(2012,12,2), end_time: DateTime.new(2012,12,3),
-                           location: "2530 Hillegass Ave.", user_id: @user1.id, url: 'www.google.com', latitude: 37.86418, longitude: -122.25677, description: "Ben's birthday is coming up. Remember to bring presents!")
+                           location: "2530 Hillegass Ave. Berkeley, CA", user_id: @user1.id, url: 'www.google.com', description: "Ben's birthday is coming up. Remember to bring presents!")
 
     @event3 = Event.create(title: "Eric's BBQ'", start_time: DateTime.new(2013,3,13), end_time: DateTime.new(2013,3,14),
-                           location: "2520 College Ave.", user_id: @user4.id, url: 'www.google.com', latitude: 37.86483, longitude: -122.25420, description: "Meat, Steaks, Korean BBQ. No Vegatables needed. This is a man party.")
+                           location: "2520 College Ave. Berkeley, CA", user_id: @user4.id, url: 'www.google.com', description: "Meat, Steaks, Korean BBQ. No Vegatables needed. This is a man party.")
 
     @event4 = Event.create(title: "Andy's Picnic'", start_time: DateTime.new(2013,2,13), end_time: DateTime.new(2013,2,14),
-                           location: "2200 Fulton St..", user_id: @user3.id, url: 'www.google.com', latitude: 37.86967, longitude: -122.26588, description: "Wine, cheese, sun, and good friends. Come everybody! It'll be a great day with great weather!")
+                           location: "2200 Fulton St. Berkeley, CA", user_id: @user3.id, url: 'www.google.com', description: "Wine, cheese, sun, and good friends. Come everybody! It'll be a great day with great weather!")
 
     @event5 = Event.create(title: "Jerry's Lecture'", start_time: DateTime.new(2013,4,3), end_time: DateTime.new(2013,4,4),
-                           location: "2300 Oxford St..", user_id: @user2.id, url: 'www.google.com', latitude: 37.86872, longitude: -122.26628, description: "Jerry is teaching CS170. Come if you need help with algorithms")
+                           location: "2300 Oxford St. Berkeley, CA", user_id: @user2.id, url: 'www.google.com', description: "Jerry is teaching CS170. Come if you need help with algorithms")
 
     @event6 = Event.create(title: "Off The Grid", start_time: DateTime.new(2013,4,27), end_time: DateTime.new(2013,4,28),
-                           location: "2450 Haste St..", user_id: @user1.id, url: 'www.google.com', latitude: 37.86595, longitude: -122.25908, description: "Great food! Though super expensive as fuck. I hope Korean Tacos are there!")
+                           location: "2450 Haste St. Berkeley, CA", user_id: @user1.id, url: 'www.google.com', description: "Great food! Though super expensive as fuck. I hope Korean Tacos are there!")
 
     @event7 = Event.create(title: "Hippie Celebration", start_time: DateTime.new(2013,4,30), end_time: DateTime.new(2013,5,1),
-                           location: "2400 Bowditch Ave..", user_id: @user2.id, url: 'www.google.com', latitude: 37.86720, longitude: -122.25654, description: "We are going to bake brownies. Bring other greens if you want.")
+                           location: "2400 Bowditch Ave. Berkeley, CA", user_id: @user2.id, url: 'www.google.com', description: "We are going to bake brownies. Bring other greens if you want.")
 
     @event8 = Event.create(title: "Holi Party", start_time: DateTime.new(2013,1,11), end_time: DateTime.new(2013,1,12),
-                           location: "UC Berkeley.", user_id: @user3.id, url: 'www.google.com', latitude: 37.86948, longitude: -122.25969, description: "Holi Celebration at Berkeley! Buy your colors at the table this week!")
+                           location: "UC Berkeley. Berkeley, CA", user_id: @user3.id, url: 'www.google.com', description: "Holi Celebration at Berkeley! Buy your colors at the table this week!")
 
     @event9 = Event.create(title: "Danceworks Workshop", start_time: DateTime.new(2013,2,16), end_time: DateTime.new(2013,2,17),
-                           location: "Lower Sproul", user_id: @user4.id, url: 'www.google.com', latitude: 37.86911, longitude: -122.26030, description: "We will be teaching Hip hop and Korean Pop right here on Sproul!")
+                           location: "Lower Sproul. Berkeley, CA", user_id: @user4.id, url: 'www.google.com', description: "We will be teaching Hip hop and Korean Pop right here on Sproul!")
 
     @event10 = Event.create(title: "Dead Poet's Society Meeting'", start_time: DateTime.new(2013,5,10), end_time: DateTime.new(2013,5,11),
-                           location: "2100 Durant Ave.", user_id: @user5.id, url: 'www.google.com', latitude: 37.86669, longitude: -122.26759, description: "Read poetry. Speak poetry. Breathe poetry.")
+                           location: "2100 Durant Ave.", user_id: @user5.id, url: 'www.google.com', description: "Read poetry. Speak poetry. Breathe poetry.")
+
+    @event11 = Event.create(title: "Union Street's 22nd Annual Spring Celebration & Easter Parade", start_time: DateTime.new(2013,3,31), end_time: DateTime.new(2013,3,31),
+                           location: "Union Street San Francisco, CA", user_id: @user1.id, url: 'www.google.com', description: "The 22nd annual event celebrates the diverse community of San Francisco and features some of Union Street's best restaurants in an outdoor bistro setting. A variety of children's and family activities are the focus of the event including; inflatable bouncies, kids' rides and games, a climbing wall, a petting zoo, a pony ride and entertainment from some of the Bay Area's best musicians. For the past 20 years the event has been known as the Biggest Little Parade in San Francisco.")
+
+    @event12 = Event.create(title: "City Arts and Lectures presents Sheryl Sandberg In conversation with Condoleezza Rice", start_time: DateTime.new(2013,4,1), end_time: DateTime.new(2013,4,1),
+                           location: "Nourse Theatre San Francisco, CA", user_id: @user2.id, url: 'www.google.com', description: "Sheryl Sandberg is Chief Operating Officer at Facebook. She oversees the firm's business operations including sales, marketing, business development, legal, human resources, public policy and communications. Prior to Facebook, Sheryl was vice president of Global Online Sales and Operations at Google, where she built and managed online sales for advertising and publishing and operations for consumer products worldwide. She was also instrumental in launching Google.org, Google's philanthropic arm.")
+
+    @event13 = Event.create(title: "Treasure Island Flea Boutique Pop-Up Inside ~ Easter Show", start_time: DateTime.new(2013,3,30), end_time: DateTime.new(2013,3,30),
+                           location: "Treasure Island Great Lawn San Francisco, CA", user_id: @user3.id, url: 'www.google.com', description: "Treasure Island Flea Boutique Easter Weekend Pop-Up Show.")
+
+    @event14 = Event.create(title: "Amazing Urban Scavenger Hunt in San Francisco", start_time: DateTime.new(2013,3,28), end_time: DateTime.new(2013,3,28),
+                           location: "Yerba Buena Park San Francisco, CA", user_id: @user4.id, url: 'www.google.com', description: "Experience San Francisco in a whole new way on this scavenger hunt walking tour. Perfect for families, groups of friends and corporate team building activities.")
+
+    @event15 = Event.create(title: "Youn Sun Nah'", start_time: DateTime.new(2013,6,23), end_time: DateTime.new(2013,6,23),
+                            location: "Yoshi's San Francisco Live Music & Restaurant San Francisco, CA", user_id: @user5.id, url: 'www.google.com', description: "Youn Sun Nah is well regarded for her remarkable vocal prowess. The Korean jazz vocalist ability to present each song in her own unique style filled full of emotions and passion has consistently captured her audience in attentive silence, ending with roaring appreciation.")
 
     @user1.likeEvent(@event1.id, true)
     @user1.likeEvent(@event2.id, true)
