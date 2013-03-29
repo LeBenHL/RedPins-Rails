@@ -31,7 +31,7 @@ class Event < ActiveRecord::Base
     time :start_time, :end_time, :created_at, :updated_at
     integer :user_id
     boolean :canceled
-    latlon(:location) { Sunspot::Util::Coordinates.new(latitude, longitude) }
+    latlon(:coords) { Sunspot::Util::Coordinates.new(latitude, longitude) }
   end
   validates :title, :presence => true
   validates :location, :presence => true
@@ -57,7 +57,7 @@ class Event < ActiveRecord::Base
    end
   end
   
-  def self.add(title, start_time, end_time, location, facebook_id, url = "", latitude = 360, longitude = 360)
+  def self.add(title, start_time, end_time, location, facebook_id, url = "", latitude = 37.8717, longitude = -122.2728)
     begin
       @creator = User.find_by_facebook_id(facebook_id)
       @event = Event.create!(:title => title, :start_time => start_time, :end_time => end_time, :location => location, :user_id => @creator['id'], :url => url, :latitude => latitude, :longitude => longitude)
@@ -73,21 +73,22 @@ class Event < ActiveRecord::Base
         when message =~ /End time can't be blank/i
           return RedPins::Application::ERR_BAD_END_TIME
         else
+          print message
           return RedPins::Application::ERR_EVENT_CREATION
       end
     end
     return RedPins::Application::SUCCESS
   end
 
-  def self.searchEvents(search_query, coords, user_id, page = 1)
+  def self.searchEvents(search_query, coords, user_id, page = 1, per_page = 20)
     events = Event.search do
       fulltext search_query do
         boost_fields :title  => 3.0
         boost_fields :description => 2.0
       end
       with(:canceled, false)
-      with(:location).in_radius(coords[0], coords[1], 10)
-      paginate :page => page, :per_page => 20
+      with(:coords).in_radius(coords[0], coords[1], 10, :bbox => true)
+      paginate :page => page, :per_page => per_page
     end
     event_list = []
     events.results.each do |event|
@@ -99,7 +100,7 @@ class Event < ActiveRecord::Base
       end
       event_list.push(attributes)
     end
-    return event_list
+    return {:events => event_list, :next_page => events.results.next_page}
   end
 
   def getRatings
