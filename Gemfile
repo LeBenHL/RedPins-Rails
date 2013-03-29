@@ -18,7 +18,7 @@ gem "paperclip", "~> 3.0"
 gem 'simplecov', :require => false, :group => :test
 gem 'multi_json', "~> 1.6.1"
 gem 'geocoder',   '~> 1.1.4'
-gem 'sunspot_rails'
+gem 'sunspot_rails', '~> 1.3.0'
 gem 'sunspot_solr'
 
 # Gems used only for assets and not required
