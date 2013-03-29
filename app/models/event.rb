@@ -20,7 +20,8 @@
 class Event < ActiveRecord::Base
   attr_accessible :location, :latitude, :longitude, :title, :url, :user_id, :start_time, :end_time, :canceled, :description
   geocoded_by :location
-  after_validation :geocode
+  reverse_geocoded_by :latitude, :longitude, :address => :location
+  before_validation :check_before_geocode
   searchable do
     text :title
     text :description
@@ -33,9 +34,11 @@ class Event < ActiveRecord::Base
     latlon(:location) { Sunspot::Util::Coordinates.new(latitude, longitude) }
   end
   validates :title, :presence => true
+  validates :location, :presence => true
+  validates :latitude, :presence => true
+  validates :longitude, :presence => true
   validates :start_time, :presence => true
   validates :end_time, :presence => true
-  validates :location, :presence => true
   validates :user_id, :presence => true
   belongs_to :creator, :class_name => 'User', :foreign_key => "user_id"
   validates :creator, :presence => true
@@ -45,6 +48,14 @@ class Event < ActiveRecord::Base
   has_many :users, :through => :comments
   has_many :bookmarks
   has_many :events, :through => :bookmarks
+
+  def check_before_geocode
+   if self.location
+      geocode if self.latitude.nil? and self.longitude.nil?
+    else
+      reverse_geocode if self.location.nil?
+   end
+  end
   
   def self.add(title, start_time, end_time, location, facebook_id, url = "", latitude = 360, longitude = 360)
     begin
