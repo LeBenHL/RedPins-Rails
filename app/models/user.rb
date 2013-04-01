@@ -131,6 +131,16 @@ class User < ActiveRecord::Base
     return RedPins::Application::SUCCESS
   end
 
+  def removeBookmark(event_id)
+    begin
+      @bookmark = Bookmark.where(:user_id => self.id, :event_id => event_id)[0]
+      @bookmark.delete
+    rescue => ex
+      return RedPins::Application::ERR_USER_REMOVE_BOOKMARK
+    end
+    return RedPins::Application::SUCCESS
+  end
+
   def deleteEvent(event_id)
     begin
       @event = Event.find(event_id)

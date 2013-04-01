@@ -280,4 +280,20 @@ describe User do
     @event2.canceled.should equal(true)
   end
 
+  it 'removeBookmark should return SUCCESS if removing bookmark was successful' do
+    @user = User.getUser('100000450230611')
+    @bookmark = Bookmark.create(:user_id => @user.id, :event_id => @event.id)
+    @bookmark.should_not be_nil
+    response = @user.removeBookmark(@event.id)
+    response.should equal(RedPins::Application::SUCCESS)
+    @bookmark = Bookmark.where(:user_id => @user.id, :event_id => @event.id)
+    @event2.should be_nil
+  end
+
+  it 'removeBookmark should return ERR_USER_REMOVE_BOOKMARK if a user tried removing a bookmark that does not exist in the db' do
+    @user = User.getUser('100000450230611')
+    response = @user.removeBookmark(100)
+    response.should equal(RedPins::Application::ERR_USER_REMOVE_BOOKMARK)
+  end
+
 end
