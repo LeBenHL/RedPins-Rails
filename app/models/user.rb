@@ -22,12 +22,13 @@ class User < ActiveRecord::Base
   validates :firstname, :presence => true
   validates :lastname, :presence => true
   has_many :created_events, :class_name => 'Event'
-  has_many :likes
+  has_many :likes, :dependent => :destroy
   has_many :events, :through => :likes
-  has_many :comments
+  has_many :comments, :dependent => :destroy
   has_many :events, :through => :comments
-  has_many :bookmarks
+  has_many :bookmarks, :dependent => :destroy
   has_many :events, :through => :bookmarks
+  has_many :event_images, :dependent => :destroy
 
   def self.login(facebook_id, session_token)
     @user = User.where(:facebook_id => facebook_id)[0]
