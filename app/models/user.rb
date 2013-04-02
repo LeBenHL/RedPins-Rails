@@ -174,4 +174,13 @@ class User < ActiveRecord::Base
     end
     return RedPins::Application::SUCCESS
   end
+
+  def uploadPhoto(event_id, photo, caption = "")
+    begin
+      @event_image = EventImage.create!(:event_id => event_id, :user_id => self.id, :caption => caption, :photo => photo)
+    rescue => ex
+      return RedPins::Application::ERR_USER_UPLOAD_PHOTO
+    end
+    return RedPins::Application::SUCCESS
+  end
 end
