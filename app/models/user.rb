@@ -98,8 +98,8 @@ class User < ActiveRecord::Base
 
   def likeEvent?(event_id)
     @like = Like.where(:user_id => self.id, :event_id => event_id)[0]
-    return true unless @like.nil?
-    return false
+    return {:alreadyLikedEvent => true, :like => @like.like} unless @like.nil?
+    return {:alreadyLikedEvent => false}
   end
 
   def getRatingForEvent(event_id)

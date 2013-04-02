@@ -66,7 +66,10 @@ class UsersController < ApplicationController
       @user = User.getUser(params['facebook_id'])
       @hash[:errCode] = RedPins::Application::SUCCESS
       response = @user.likeEvent?(params['event_id'])
-      @hash[:alreadyLikedEvent] = response
+      @hash[:alreadyLikedEvent] = response[:alreadyLikedEvent]
+      if response[:alreadyLikedEvent]
+        @hash[:like] = response[:like]
+      end
     else
       @hash[:errCode] = response
     end
@@ -97,6 +100,21 @@ class UsersController < ApplicationController
     if response > 0
       @user = User.getUser(params['facebook_id'])
       @hash[:errCode] = @user.bookmarkEvent(params['event_id'])
+    else
+      @hash[:errCode] = response
+    end
+    respond_to do |format|
+      format.json { render :json => @hash }
+    end
+  end
+
+  # POST /users/removeBookmark
+  def removeBookmark
+    response = User.login(params['facebook_id'], params['session_token'])
+    @hash = {}
+    if response > 0
+      @user = User.getUser(params['facebook_id'])
+      @hash[:errCode] = @user.removeBookmark(params['event_id'])
     else
       @hash[:errCode] = response
     end

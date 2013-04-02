@@ -107,16 +107,28 @@ describe User do
     response.should equal(RedPins::Application::ERR_USER_LIKE_EVENT)
   end
 
-  it 'likeEvent? returns true if user has rated an event before' do
+  it 'likeEvent? confirms if user has rated an event before and he/she liked it' do
     @user = User.getUser('100000450230611')
     response = @user.likeEvent(@event.id, true)
     response.should equal(RedPins::Application::SUCCESS)
-    @user.likeEvent?(@event.id).should equal(true)
+    response = @user.likeEvent?(@event.id)
+    response[:alreadyLikedEvent].should equal(true)
+    response[:like].should equal(true)
+  end
+
+  it 'likeEvent? confirms if user has rated an event before and he/she doliked it' do
+    @user = User.getUser('100000450230611')
+    response = @user.likeEvent(@event.id, false)
+    response.should equal(RedPins::Application::SUCCESS)
+    response = @user.likeEvent?(@event.id)
+    response[:alreadyLikedEvent].should equal(true)
+    response[:like].should equal(false)
   end
 
   it 'likeEvent? returns false if user has not rated an event before' do
     @user = User.getUser('100000450230611')
-    @user.likeEvent?(@event.id).should equal(false)
+    response = @user.likeEvent?(@event.id)
+    response[:alreadyLikedEvent].should equal(false)
   end
 
   it 'getUser should return a user with the facebook_id if he/she exists' do

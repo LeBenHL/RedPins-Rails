@@ -411,4 +411,41 @@ describe UsersController do
 
   end
 
+  describe 'Post #removeBookmark', :type => :request do
+    before(:each) do
+      @user = User.create(:email => "email@email.com", :facebook_id => '100000450230611', :firstname => 'Red', :lastname => 'Pin')
+      @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com', :user_id => @user.id)
+      @bookmark = Bookmark.create(:user_id => @user.id, :event_id => @event.id)
+    end
+
+    it 'should return SUCCESS when bookmark is successfully removed' do
+      params = { event_id: @event.id, facebook_id: '100000450230611', :session_token => @session_token}
+      post '/users/removeBookmark.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::SUCCESS
+    end
+
+    it 'should return ERR_USER_REMOVE_BOOKMARK when user attempts to remove a bookmark that does not exist in the db' do
+      params = { event_id: 100, facebook_id: '100000450230611', :session_token => @session_token}
+      post '/users/removeBookmark.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::ERR_USER_REMOVE_BOOKMARK
+    end
+
+    it 'should return ERR_NO_USER_EXISTS when a user removes a bookmark but user w/ facebook_id, {FACEBOOK_ID} does not exist in the database' do
+      params = { event_id: @event.id, facebook_id: 'testUser3', :session_token => @session_token}
+      post '/users/removeBookmark.json', params.to_json, { 'CONTENT_TYPE' => 'application/json'}
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::ERR_NO_USER_EXISTS
+    end
+
+    it 'should return ERR_USER_VERIFICATION when a user attempts to remove a bookmark but the session_token does not belong to him/her' do
+      params = { event_id: @event.id, facebook_id: '100000450230611', :session_token => 'FAKETOKEN' }
+      post '/users/removeBookmark.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::ERR_USER_VERIFICATION
+    end
+
+  end
+
 end
