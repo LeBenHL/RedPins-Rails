@@ -154,13 +154,24 @@ describe UsersController do
       @user = User.create(:email => "email@email.com", :facebook_id => '100000450230611', :firstname => 'Red', :lastname => 'Pin')
       @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com', :user_id => @user.id)
     end
-    it 'alreadyLikedEvent return TRUE if user already liked/disliked an event' do
+    it 'alreadyLikedEvent return TRUE if user already liked/disliked an event and tell us that the user liked the event if he/she liked it' do
       @like = Like.create(:event_id => @event.id, :user_id => @user.id, :like => true)
       params = { event_id: @event.id, facebook_id: '100000450230611', :session_token => @session_token }
       post '/users/alreadyLikedEvent.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
       parsed_body = JSON.parse(response.body)
       parsed_body['errCode'].should == RedPins::Application::SUCCESS
       parsed_body['alreadyLikedEvent'].should == true
+      parsed_body['like'].should equal(true)
+    end
+
+    it 'alreadyLikedEvent return TRUE if user already liked/disliked an event and tell us that the user disliked the event if he/she disliked it' do
+      @like = Like.create(:event_id => @event.id, :user_id => @user.id, :like => false)
+      params = { event_id: @event.id, facebook_id: '100000450230611', :session_token => @session_token }
+      post '/users/alreadyLikedEvent.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::SUCCESS
+      parsed_body['alreadyLikedEvent'].should == true
+      parsed_body['like'].should equal(false)
     end
 
     it 'alreadyLikedEvent should return FALSE if user did not like/dislike the event' do
