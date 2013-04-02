@@ -161,7 +161,7 @@ describe UsersController do
       parsed_body = JSON.parse(response.body)
       parsed_body['errCode'].should == RedPins::Application::SUCCESS
       parsed_body['alreadyLikedEvent'].should == true
-      parsed_body['like'].should equal(true)
+      parsed_body['rating'].should equal(true)
     end
 
     it 'alreadyLikedEvent return TRUE if user already liked/disliked an event and tell us that the user disliked the event if he/she disliked it' do
@@ -171,7 +171,7 @@ describe UsersController do
       parsed_body = JSON.parse(response.body)
       parsed_body['errCode'].should == RedPins::Application::SUCCESS
       parsed_body['alreadyLikedEvent'].should == true
-      parsed_body['like'].should equal(false)
+      parsed_body['rating'].should equal(false)
     end
 
     it 'alreadyLikedEvent should return FALSE if user did not like/dislike the event' do
