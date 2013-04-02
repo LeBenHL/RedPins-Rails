@@ -15,7 +15,7 @@
 #
 
 class EventImage < ActiveRecord::Base
-  attr_accessible :caption, :event_id. :user_id
+  attr_accessible :caption, :event_id, :user_id
   belongs_to :event
   belongs_to :user
   has_attached_file :photo, :styles => { :thumbnail => "250x250>" }
