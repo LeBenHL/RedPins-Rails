@@ -42,12 +42,13 @@ class Event < ActiveRecord::Base
   validates :user_id, :presence => true
   belongs_to :creator, :class_name => 'User', :foreign_key => "user_id"
   validates :creator, :presence => true
-  has_many :likes
+  has_many :likes, :dependent => :destroy
   has_many :users, :through => :likes
-  has_many :comments
+  has_many :comments, :dependent => :destroy
   has_many :users, :through => :comments
-  has_many :bookmarks
+  has_many :bookmarks, :dependent => :destroy
   has_many :events, :through => :bookmarks
+  has_many :event_images, :dependent => :destroy
 
   def check_before_geocode
    if self.location

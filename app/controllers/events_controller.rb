@@ -78,6 +78,12 @@ class EventsController < ApplicationController
 
   def search
     coords = Geocoder.coordinates(params['location_query'])
+    if coords.nil?
+      respond_to do |format|
+        format.json { render :json => {:errCode => RedPins::Application::ERR_BAD_LOCATION} }
+      end
+      return
+    end
     params['latitude'] = coords[0]
     params['longitude'] = coords[1]
     self.searchViaCoordinates

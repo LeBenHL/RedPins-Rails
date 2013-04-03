@@ -107,16 +107,28 @@ describe User do
     response.should equal(RedPins::Application::ERR_USER_LIKE_EVENT)
   end
 
-  it 'likeEvent? returns true if user has rated an event before' do
+  it 'likeEvent? confirms if user has rated an event before and he/she liked it' do
     @user = User.getUser('100000450230611')
     response = @user.likeEvent(@event.id, true)
     response.should equal(RedPins::Application::SUCCESS)
-    @user.likeEvent?(@event.id).should equal(true)
+    response = @user.likeEvent?(@event.id)
+    response[:alreadyLikedEvent].should equal(true)
+    response[:like].should equal(true)
+  end
+
+  it 'likeEvent? confirms if user has rated an event before and he/she doliked it' do
+    @user = User.getUser('100000450230611')
+    response = @user.likeEvent(@event.id, false)
+    response.should equal(RedPins::Application::SUCCESS)
+    response = @user.likeEvent?(@event.id)
+    response[:alreadyLikedEvent].should equal(true)
+    response[:like].should equal(false)
   end
 
   it 'likeEvent? returns false if user has not rated an event before' do
     @user = User.getUser('100000450230611')
-    @user.likeEvent?(@event.id).should equal(false)
+    response = @user.likeEvent?(@event.id)
+    response[:alreadyLikedEvent].should equal(false)
   end
 
   it 'getUser should return a user with the facebook_id if he/she exists' do
@@ -294,6 +306,42 @@ describe User do
     @user = User.getUser('100000450230611')
     response = @user.removeBookmark(100)
     response.should equal(RedPins::Application::ERR_USER_REMOVE_BOOKMARK)
+  end
+
+  it 'uploadPhoto should return SUCCESS if upload was successful with correct caption' do
+    @user = User.getUser('100000450230611')
+    photo = File.new('public/testEventImage.jpg', 'rb')
+    caption = "This is the caption"
+    response = @user.uploadPhoto(@event.id, photo, caption)
+    response.should equal(RedPins::Application::SUCCESS)
+    @event_image = EventImage.where(:user_id => @user.id, :event_id => @event.id)[0]
+    @event_image.should_not be_nil
+    @event_image.photo.should_not be_nil
+    @event_image.caption.should eq(caption)
+  end
+
+  it 'uploadPhoto should return ERR_USER_UPLOAD if we upload to an event that does not exist in the db' do
+    @user = User.getUser('100000450230611')
+    photo = File.new('public/testEventImage.jpg', 'rb')
+    caption = "This is the caption"
+    response = @user.uploadPhoto(100, photo, caption)
+    response.should equal(RedPins::Application::ERR_USER_UPLOAD_PHOTO)
+  end
+
+  it 'uploadPhoto should return ERR_USER_UPLOAD if we upload a file that is not a photo' do
+    @user = User.getUser('100000450230611')
+    photo = File.new('public/404.html', 'rb')
+    caption = "This is the caption"
+    response = @user.uploadPhoto(@event.id, photo, caption)
+    response.should equal(RedPins::Application::ERR_USER_UPLOAD_PHOTO)
+  end
+
+  it 'uploadPhoto should return ERR_USER_UPLOAD if we upload a photo larger than 5MB' do
+    @user = User.getUser('100000450230611')
+    photo = File.new('public/extraLarge.jpg', 'rb')
+    caption = "This is the caption"
+    response = @user.uploadPhoto(@event.id, photo, caption)
+    response.should equal(RedPins::Application::ERR_USER_UPLOAD_PHOTO)
   end
 
 end

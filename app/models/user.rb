@@ -22,12 +22,13 @@ class User < ActiveRecord::Base
   validates :firstname, :presence => true
   validates :lastname, :presence => true
   has_many :created_events, :class_name => 'Event'
-  has_many :likes
+  has_many :likes, :dependent => :destroy
   has_many :events, :through => :likes
-  has_many :comments
+  has_many :comments, :dependent => :destroy
   has_many :events, :through => :comments
-  has_many :bookmarks
+  has_many :bookmarks, :dependent => :destroy
   has_many :events, :through => :bookmarks
+  has_many :event_images, :dependent => :destroy
 
   def self.login(facebook_id, session_token)
     @user = User.where(:facebook_id => facebook_id)[0]
@@ -98,8 +99,8 @@ class User < ActiveRecord::Base
 
   def likeEvent?(event_id)
     @like = Like.where(:user_id => self.id, :event_id => event_id)[0]
-    return true unless @like.nil?
-    return false
+    return {:alreadyLikedEvent => true, :like => @like.like} unless @like.nil?
+    return {:alreadyLikedEvent => false}
   end
 
   def getRatingForEvent(event_id)
@@ -170,6 +171,15 @@ class User < ActiveRecord::Base
       @event.update_attribute(:canceled, false)
     rescue => ex
       return RedPins::Application::ERR_USER_RESTORE_EVENT
+    end
+    return RedPins::Application::SUCCESS
+  end
+
+  def uploadPhoto(event_id, photo, caption = "")
+    begin
+      @event_image = EventImage.create!(:event_id => event_id, :user_id => self.id, :caption => caption, :photo => photo)
+    rescue => ex
+      return RedPins::Application::ERR_USER_UPLOAD_PHOTO
     end
     return RedPins::Application::SUCCESS
   end
