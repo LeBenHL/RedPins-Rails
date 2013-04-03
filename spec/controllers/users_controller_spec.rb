@@ -459,4 +459,63 @@ describe UsersController do
 
   end
 
+  describe 'Post #uploadPhoto', :type => :request do
+    before(:each) do
+      @user = User.create(:email => "email@email.com", :facebook_id => '100000450230611', :firstname => 'Red', :lastname => 'Pin')
+      @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com', :user_id => @user.id)
+    end
+
+    it 'should return SUCCESS when photo is successfully uploaded' do
+      photo = fixture_file_upload('/images/testEventImage.jpg', 'image/jpg')
+      params = { event_id: @event.id, facebook_id: '100000450230611', :session_token => @session_token, :photo => photo }
+      post '/users/uploadPhoto', params
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::SUCCESS
+      @event_image = EventImage.where(:user_id => @user.id, :event_id => @event.id)[0]
+      @event_image.should_not be_nil
+      @event_image.photo.should_not be_nil
+    end
+
+    it 'should return ERR_USER_UPLOAD_PHOTO if we upload to an event that does not exist in the db' do
+      photo = fixture_file_upload('/images/testEventImage.jpg', 'image/jpg')
+      params = { event_id: 100, facebook_id: '100000450230611', :session_token => @session_token, :photo => photo }
+      post '/users/uploadPhoto', params
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::ERR_USER_UPLOAD_PHOTO
+    end
+
+    it 'should return ERR_USER_UPLOAD_PHOTO if we upload a file that is not a photo' do
+      photo = fixture_file_upload('/images/404.html', 'text/html')
+      params = { event_id: @event.id, facebook_id: '100000450230611', :session_token => @session_token, :photo => photo }
+      post '/users/uploadPhoto', params
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::ERR_USER_UPLOAD_PHOTO
+    end
+
+    it 'should return ERR_USER_UPLOAD_PHOTO if we upload a photo larger than 5MB' do
+      photo = fixture_file_upload('/images/extraLarge.jpg', 'image/jpg')
+      params = { event_id: @event.id, facebook_id: '100000450230611', :session_token => @session_token, :photo => photo }
+      post '/users/uploadPhoto', params
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::ERR_USER_UPLOAD_PHOTO
+    end
+
+    it 'should return ERR_NO_USER_EXISTS when a user uploads a photo but user w/ facebook_id, {FACEBOOK_ID} does not exist in the database' do
+      photo = fixture_file_upload('/images/testEventImage.jpg', 'image/jpg')
+      params = { event_id: @event.id, facebook_id: 'testUser3', :session_token => @session_token, :photo => photo}
+      post '/users/uploadPhoto', params
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::ERR_NO_USER_EXISTS
+    end
+
+    it 'should return ERR_USER_VERIFICATION when a user uploads a photo but the session_token does not belong to him/her' do
+      photo = fixture_file_upload('/images/testEventImage.jpg', 'image/jpg')
+      params = { event_id: @event.id, facebook_id: '100000450230611', :session_token => 'FAKETOKEN', :photo => photo}
+      post '/users/uploadPhoto', params
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::ERR_USER_VERIFICATION
+    end
+
+  end
+
 end
