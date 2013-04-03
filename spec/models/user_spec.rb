@@ -320,7 +320,7 @@ describe User do
     @event_image.caption.should eq(caption)
   end
 
-  it 'uploadPhoto should return ERR_USER_UPLOAD if we upload to an event that does not exist in the db' do
+  it 'uploadPhoto should return ERR_USER_UPLOAD_PHOTO if we upload to an event that does not exist in the db' do
     @user = User.getUser('100000450230611')
     photo = File.new('public/testEventImage.jpg', 'rb')
     caption = "This is the caption"
@@ -328,7 +328,7 @@ describe User do
     response.should equal(RedPins::Application::ERR_USER_UPLOAD_PHOTO)
   end
 
-  it 'uploadPhoto should return ERR_USER_UPLOAD if we upload a file that is not a photo' do
+  it 'uploadPhoto should return ERR_USER_UPLOAD_PHOTO if we upload a file that is not a photo' do
     @user = User.getUser('100000450230611')
     photo = File.new('public/404.html', 'rb')
     caption = "This is the caption"
@@ -336,7 +336,7 @@ describe User do
     response.should equal(RedPins::Application::ERR_USER_UPLOAD_PHOTO)
   end
 
-  it 'uploadPhoto should return ERR_USER_UPLOAD if we upload a photo larger than 5MB' do
+  it 'uploadPhoto should return ERR_USER_UPLOAD_PHOTO if we upload a photo larger than 5MB' do
     @user = User.getUser('100000450230611')
     photo = File.new('public/extraLarge.jpg', 'rb')
     caption = "This is the caption"

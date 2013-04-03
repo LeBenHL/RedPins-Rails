@@ -170,4 +170,17 @@ class UsersController < ApplicationController
     end
   end
 
+  # POST /users/uploadPhoto
+  def uploadPhoto
+    response = User.login(params['facebook_id'], params['session_token'])
+    @hash = {}
+    if response > 0
+      @user = User.getUser(params['facebook_id'])
+      @hash[:errCode] = @user.uploadPhoto(params['event_id'], params['photo'])
+    else
+      @hash[:errCode] = response
+    end
+    render :json => @hash
+  end
+
 end
