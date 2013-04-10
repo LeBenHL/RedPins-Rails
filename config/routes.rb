@@ -21,6 +21,8 @@ RedPins::Application.routes.draw do
   match '/users/bookmarkEvent' => 'Users#bookmarkEvent', :via => :post
   match '/users/removeBookmark' => 'Users#removeBookmark', :via => :post
   match '/users/uploadPhoto'=> 'Users#uploadPhoto' , :via => :post
+  match '/users/getBookmarks'=> 'Users#getBookmarks' , :via => :post
+
   match '/events/search' =>  'Events#search', :via => :post   #TODO REMOVE LATER WHEN WE GET CONTACT W/ JERRY CODE
   match '/events/searchViaCoordinates' => 'Events#searchViaCoordinates', :via => :post
   match '/events/getRatings' => 'Events#getRatings', :via => :post

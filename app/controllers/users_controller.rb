@@ -183,4 +183,17 @@ class UsersController < ApplicationController
     render :json => @hash
   end
 
+  # POST /users/getBookmarks
+  def getBookmarks
+    response = User.login(params['facebook_id'], params['session_token'])
+    @hash = {}
+    if response > 0
+      @user = User.getUser(params['facebook_id'])
+      @hash = @user.getBookmarks(params['page'])
+    else
+      @hash[:errCode] = response
+    end
+    render :json => @hash
+  end
+
 end
