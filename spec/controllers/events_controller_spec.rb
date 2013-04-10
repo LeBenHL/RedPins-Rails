@@ -7,6 +7,10 @@ describe EventsController do
     @session_token2 = 'BAAEw2AGE0JYBAESZAmjhyg27dAxFAd9ZCU385zVMUdZAF3mgkZCCVOb23hZCXQvvYtukcv1REFDTcTJJjP9OjlsqLsgDFoznMu4UZCEpxZBOH1IOoelZAPwU'
   end
 
+  after(:all) do
+    Event.remove_all_from_index!
+  end
+
   describe 'Event #getRatings', :type => :request do
     before(:each) do
       @user = User.create(:email => 'email@email.com', :facebook_id => '100000450230611', :firstname => 'Red', :lastname => 'Pin')

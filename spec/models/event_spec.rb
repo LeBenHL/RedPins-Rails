@@ -28,6 +28,10 @@ describe Event do
     @event.should_not be_nil
   end
 
+  after(:all) do
+    Event.remove_all_from_index!
+  end
+
   it 'adds an event into the database with URL' do
     response = Event.add('test event1', DateTime.new(2013,4,1), DateTime.new(2013,4,4),"Berkeley", @user.facebook_id, "google.com")
     expect(response).to eq(RedPins::Application::SUCCESS)

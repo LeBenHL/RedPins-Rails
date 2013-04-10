@@ -7,6 +7,10 @@ describe UsersController do
     @session_token2 = 'BAAEw2AGE0JYBAESZAmjhyg27dAxFAd9ZCU385zVMUdZAF3mgkZCCVOb23hZCXQvvYtukcv1REFDTcTJJjP9OjlsqLsgDFoznMu4UZCEpxZBOH1IOoelZAPwU'
   end
 
+  after(:all) do
+    Event.remove_all_from_index!
+  end
+
   describe 'Post #add', :type => :request do
 
     it 'creates a user object' do
