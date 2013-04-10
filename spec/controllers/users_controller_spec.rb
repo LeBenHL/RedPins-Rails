@@ -474,6 +474,7 @@ describe UsersController do
       @event_image = EventImage.where(:user_id => @user.id, :event_id => @event.id)[0]
       @event_image.should_not be_nil
       @event_image.photo.should_not be_nil
+      @event.event_images.length.should eq(1)
     end
 
     it 'should return ERR_USER_UPLOAD_PHOTO if we upload to an event that does not exist in the db' do
@@ -482,6 +483,7 @@ describe UsersController do
       post '/users/uploadPhoto', params
       parsed_body = JSON.parse(response.body)
       parsed_body['errCode'].should == RedPins::Application::ERR_USER_UPLOAD_PHOTO
+      @event.event_images.length.should eq(0)
     end
 
     it 'should return ERR_USER_UPLOAD_PHOTO if we upload a file that is not a photo' do
@@ -490,6 +492,7 @@ describe UsersController do
       post '/users/uploadPhoto', params
       parsed_body = JSON.parse(response.body)
       parsed_body['errCode'].should == RedPins::Application::ERR_USER_UPLOAD_PHOTO
+      @event.event_images.length.should eq(0)
     end
 
     it 'should return ERR_USER_UPLOAD_PHOTO if we upload a photo larger than 5MB' do
@@ -498,6 +501,7 @@ describe UsersController do
       post '/users/uploadPhoto', params
       parsed_body = JSON.parse(response.body)
       parsed_body['errCode'].should == RedPins::Application::ERR_USER_UPLOAD_PHOTO
+      @event.event_images.length.should eq(0)
     end
 
     it 'should return ERR_NO_USER_EXISTS when a user uploads a photo but user w/ facebook_id, {FACEBOOK_ID} does not exist in the database' do
@@ -506,6 +510,7 @@ describe UsersController do
       post '/users/uploadPhoto', params
       parsed_body = JSON.parse(response.body)
       parsed_body['errCode'].should == RedPins::Application::ERR_NO_USER_EXISTS
+      @event.event_images.length.should eq(0)
     end
 
     it 'should return ERR_USER_VERIFICATION when a user uploads a photo but the session_token does not belong to him/her' do
@@ -514,6 +519,7 @@ describe UsersController do
       post '/users/uploadPhoto', params
       parsed_body = JSON.parse(response.body)
       parsed_body['errCode'].should == RedPins::Application::ERR_USER_VERIFICATION
+      @event.event_images.length.should eq(0)
     end
 
   end
