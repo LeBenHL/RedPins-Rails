@@ -210,4 +210,19 @@ class User < ActiveRecord::Base
       return {:errCode => RedPins::Application::ERR_USER_GET_BOOKMARKS}
     end
   end
+
+  def removeComment(comment_id)
+    begin
+      comment = Comment.find(comment_id)
+      if comment.user_id == self.id
+        comment.destroy
+        return RedPins::Application::SUCCESS
+      else
+        return RedPins::Application::ERR_USER_REMOVE_COMMENT
+      end
+    rescue => ex
+      return RedPins::Application::ERR_USER_REMOVE_COMMENT
+    end
+  end
+
 end

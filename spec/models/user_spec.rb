@@ -435,4 +435,40 @@ describe User do
 
   end
 
+  describe 'removeComment' do
+
+    before(:each) do
+      @user2 = User.create(email: 'benle@gmail.com', facebook_id: 1, firstname: 'Ben', lastname: 'Le')
+      @comment = Comment.create(:event_id => @event.id, :user_id => @user.id, :comment => "This is my comment");
+      @comment2 = Comment.create(:event_id => @event.id, :user_id => @user2.id, :comment => "Someone else's comment");
+    end
+
+    it 'should remove a comment if comment exists and it belongs to me' do
+      @comment.should_not be_nil
+      @comment2.should_not be_nil
+      response = @user.removeComment(@comment.id);
+      response.should eq(RedPins::Application::SUCCESS);
+      expect { Comment.find(@comment.id) }.to raise_error
+    end
+
+    it 'should not remove a comment if comment exists but belongs to someone else' do
+      @comment.should_not be_nil
+      @comment2.should_not be_nil
+      response = @user.removeComment(@comment2.id);
+      response.should eq(RedPins::Application::ERR_USER_REMOVE_COMMENT);
+      Comment.find(@comment.id).should_not be_nil
+      Comment.find(@comment2.id).should_not be_nil
+    end
+
+    it 'should return ERR_USER_REMOVE_COMMENT if comment does not exists at all' do
+      @comment.should_not be_nil
+      @comment2.should_not be_nil
+      response = @user.removeComment(100);
+      response.should eq(RedPins::Application::ERR_USER_REMOVE_COMMENT)
+      Comment.find(@comment.id).should_not be_nil
+      Comment.find(@comment2.id).should_not be_nil
+    end
+
+  end
+
 end
