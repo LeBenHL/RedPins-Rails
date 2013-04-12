@@ -95,6 +95,21 @@ class UsersController < ApplicationController
     end
   end
 
+  # POST /users/removeComment
+  def removeComment
+    response = User.login(params['facebook_id'], params['session_token'])
+    @hash = {}
+    if response > 0
+      @user = User.getUser(params['facebook_id'])
+      @hash[:errCode] = @user.removeComment(params['comment_id'])
+    else
+      @hash[:errCode] = response
+    end
+    respond_to do |format|
+      format.json { render :json => @hash }
+    end
+  end
+
   # POST /users/bookmarkEvent
   def bookmarkEvent
     response = User.login(params['facebook_id'], params['session_token'])

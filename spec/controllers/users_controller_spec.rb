@@ -249,6 +249,52 @@ describe UsersController do
 
   end
 
+  describe 'Post #postComment', :type => :request do
+    before(:each) do
+      @user = User.create(:email => "email@email.com", :facebook_id => '100000450230611', :firstname => 'Red', :lastname => 'Pin')
+      @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com', :user_id => @user.id)
+      @user2 = User.create(email: 'benle@gmail.com', facebook_id: 1, firstname: 'Ben', lastname: 'Le')
+      @comment = Comment.create(:event_id => @event.id, :user_id => @user.id, :comment => "This is my comment");
+      @comment2 = Comment.create(:event_id => @event.id, :user_id => @user2.id, :comment => "Someone else's comment");
+    end
+
+    it 'should return SUCCESS when comment is successfully deleted' do
+      params = { facebook_id: '100000450230611', :comment_id => @comment.id, :session_token => @session_token}
+      post '/users/removeComment.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::SUCCESS
+    end
+
+    it 'should return ERR_USER_REMOVE_COMMENT when user tries deleting a comment that is not theirs' do
+      params = { facebook_id: '100000450230611', :comment_id => @comment2.id , :session_token => @session_token}
+      post '/users/removeComment.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::ERR_USER_REMOVE_COMMENT
+    end
+
+    it 'should return ERR_USER_REMOVE_COMMENT when user tries deleting a comment that does not exist' do
+      params = { facebook_id: '100000450230611', :comment_id => 100 , :session_token => @session_token}
+      post '/users/removeComment.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::ERR_USER_REMOVE_COMMENT
+    end
+
+    it 'should return ERR_NO_USER_EXISTS when a user posts a comment but user w/ facebook_id, {FACEBOOK_ID} does not exist in the database' do
+      params = { facebook_id: 'testUser2', :comment_id => @comment.id, :session_token => @session_token}
+      post '/users/removeComment.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::ERR_NO_USER_EXISTS
+    end
+
+    it 'should return ERR_USER_VERIFICATION when a user attempts to post a comment but the session_token does not belong to him/her' do
+      params = { facebook_id: '100000450230611', :comment_id => @comment.id, :session_token => 'FAKETOKEN' }
+      post '/users/removeComment.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should == RedPins::Application::ERR_USER_VERIFICATION
+    end
+
+  end
+
   describe 'Post #bookmarkEvent', :type => :request do
     before(:each) do
       @user = User.create(:email => "email@email.com", :facebook_id => '100000450230611', :firstname => 'Red', :lastname => 'Pin')
