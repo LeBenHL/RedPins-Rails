@@ -114,6 +114,7 @@ class Event < ActiveRecord::Base
     commentsArray = []
     self.comments.each do |comment|
       hash = {}
+      hash[:comment_id] = comment.id
       hash[:facebook_id] = comment.user.facebook_id
       hash[:created_at] = comment.created_at
       hash[:firstname] = comment.user.firstname
