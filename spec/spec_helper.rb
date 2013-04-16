@@ -98,6 +98,16 @@ Geocoder::Lookup::Test.add_stub(
 
 )
 
+Geocoder::Lookup::Test.add_stub(
+    "Bad Location", [
+        {
+            'latitude' => nil,
+            'longitude' => nil
+        }
+    ]
+
+)
+
 #$original_sunspot_session = Sunspot.session
 #Sunspot.session = Sunspot::Rails::StubSessionProxy.new($original_sunspot_session)
 

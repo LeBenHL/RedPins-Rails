@@ -4,15 +4,15 @@
     <list default="true" id="94422650-4c77-48e2-a377-79c7b7bbae57" name="Default" comment="" />
     <ignored path="RedPins.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/application.rb" changelist="94422650-4c77-48e2-a377-79c7b7bbae57" time="1362352968974" ignored="false" />
-    <file path="/user_spec.rb" changelist="94422650-4c77-48e2-a377-79c7b7bbae57" time="1362353562107" ignored="false" />
-    <file path="/users_controller_spec.rb" changelist="94422650-4c77-48e2-a377-79c7b7bbae57" time="1362304820744" ignored="false" />
-    <file path="/user.rb" changelist="94422650-4c77-48e2-a377-79c7b7bbae57" time="1362353006964" ignored="false" />
-    <file path="/users_controller_test.rb" changelist="94422650-4c77-48e2-a377-79c7b7bbae57" time="1362300894241" ignored="false" />
-    <file path="/users_controller.rb" changelist="94422650-4c77-48e2-a377-79c7b7bbae57" time="1362299352201" ignored="false" />
-    <file path="/20130303074353_create_users.rb" changelist="94422650-4c77-48e2-a377-79c7b7bbae57" time="1362305067420" ignored="false" />
-    <file path="/Gemfile" changelist="94422650-4c77-48e2-a377-79c7b7bbae57" time="1362355946012" ignored="false" />
     <file path="/database.yml" changelist="94422650-4c77-48e2-a377-79c7b7bbae57" time="1362300138488" ignored="false" />
+    <file path="/Gemfile" changelist="94422650-4c77-48e2-a377-79c7b7bbae57" time="1362355946012" ignored="false" />
+    <file path="/20130303074353_create_users.rb" changelist="94422650-4c77-48e2-a377-79c7b7bbae57" time="1362305067420" ignored="false" />
+    <file path="/users_controller.rb" changelist="94422650-4c77-48e2-a377-79c7b7bbae57" time="1362299352201" ignored="false" />
+    <file path="/users_controller_test.rb" changelist="94422650-4c77-48e2-a377-79c7b7bbae57" time="1362300894241" ignored="false" />
+    <file path="/user.rb" changelist="94422650-4c77-48e2-a377-79c7b7bbae57" time="1362353006964" ignored="false" />
+    <file path="/users_controller_spec.rb" changelist="94422650-4c77-48e2-a377-79c7b7bbae57" time="1362304820744" ignored="false" />
+    <file path="/user_spec.rb" changelist="94422650-4c77-48e2-a377-79c7b7bbae57" time="1362353562107" ignored="false" />
+    <file path="/application.rb" changelist="94422650-4c77-48e2-a377-79c7b7bbae57" time="1362352968974" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,24 +32,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="user_spec.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/spec/models/user_spec.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="440" column="0" selection-start="20646" selection-end="20980" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="comment.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/models/comment.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="development.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/environments/development.rb">
           <provider selected="true" editor-type-id="text-editor">
@@ -62,7 +44,25 @@
       <file leaf-file-name="event_spec.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spec/models/event_spec.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="5" selection-start="945" selection-end="945" vertical-scroll-proportion="0.0">
+            <state line="223" column="0" selection-start="14576" selection-end="14753" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="spec_helper.rb" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/spec/spec_helper.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="99" column="96" selection-start="2875" selection-end="2875" vertical-scroll-proportion="0.33628318">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="events_controller_spec.rb" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/spec/controllers/events_controller_spec.rb">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="239" column="121" selection-start="18701" selection-end="18713" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -71,7 +71,7 @@
       <file leaf-file-name="events_controller.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/events_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="43" selection-start="1268" selection-end="1268" vertical-scroll-proportion="0.0">
+            <state line="70" column="74" selection-start="2016" selection-end="2016" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -86,28 +86,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="users_controller.rb" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/users_controller.rb">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="78" column="71" selection-start="2245" selection-end="2245" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="event.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/event.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="125" column="124" selection-start="4334" selection-end="4334" vertical-scroll-proportion="0.0">
+            <state line="89" column="77" selection-start="3197" selection-end="3197" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="schema.xml" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="schema.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/solr/conf/schema.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="63" column="122" selection-start="3178" selection-end="3178" vertical-scroll-proportion="0.33628318">
+            <state line="50" column="109" selection-start="2451" selection-end="2451" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -132,22 +123,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/Gemfile" />
         <option value="$PROJECT_DIR$/db/seeds.rb" />
         <option value="$PROJECT_DIR$/app/models/bookmark.rb" />
         <option value="$PROJECT_DIR$/app/controllers/events_controller.rb" />
         <option value="$PROJECT_DIR$/db/migrate/20130402061017_add_user_to_event_image.rb" />
         <option value="$PROJECT_DIR$/app/models/event_image.rb" />
-        <option value="$PROJECT_DIR$/spec/models/event_spec.rb" />
-        <option value="$PROJECT_DIR$/spec/controllers/events_controller_spec.rb" />
         <option value="$PROJECT_DIR$/config/application.rb" />
         <option value="$PROJECT_DIR$/spec/models/user_spec.rb" />
         <option value="$PROJECT_DIR$/app/models/user.rb" />
         <option value="$PROJECT_DIR$/config/routes.rb" />
         <option value="$PROJECT_DIR$/spec/controllers/users_controller_spec.rb" />
         <option value="$PROJECT_DIR$/app/controllers/users_controller.rb" />
-        <option value="$PROJECT_DIR$/app/models/event.rb" />
         <option value="$PROJECT_DIR$/solr/conf/schema.xml" />
+        <option value="$PROJECT_DIR$/app/models/event.rb" />
+        <option value="$PROJECT_DIR$/spec/models/event_spec.rb" />
+        <option value="$PROJECT_DIR$/spec/controllers/events_controller_spec.rb" />
+        <option value="$PROJECT_DIR$/spec/spec_helper.rb" />
       </list>
     </option>
   </component>
@@ -549,11 +540,11 @@
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="options.lastSelected" value="preferences.lookFeel" />
     <property name="recentsLimit" value="5" />
+    <property name="options.lastSelected" value="preferences.lookFeel" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../warmup" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -901,7 +892,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="ruby-line">
           <url>file://$PROJECT_DIR$/app/models/event.rb</url>
-          <line>106</line>
+          <line>116</line>
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -912,19 +903,9 @@
         <state line="14" column="18" selection-start="348" selection-end="348" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/spec/spec_helper.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="40" selection-start="1487" selection-end="1487" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/sunspot.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="10" column="21" selection-start="171" selection-end="171" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spec/controllers/events_controller_spec.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="255" column="50" selection-start="19702" selection-end="19702" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/config/application.rb">
@@ -937,36 +918,9 @@
         <state line="178" column="71" selection-start="6099" selection-end="6099" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/spec/models/user_spec.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="440" column="0" selection-start="20646" selection-end="20980" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/models/comment.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/environments/development.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="29" selection-start="932" selection-end="932" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spec/models/event_spec.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="5" selection-start="945" selection-end="945" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/events_controller.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="43" selection-start="1268" selection-end="1268" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/routes.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="47" selection-start="527" selection-end="527" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/users_controller.rb">
@@ -979,16 +933,61 @@
         <state line="278" column="82" selection-start="18911" selection-end="18911" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/event.rb">
+    <entry file="file://$PROJECT_DIR$/solr/conf/schema.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="125" column="124" selection-start="4334" selection-end="4334" vertical-scroll-proportion="0.0">
+        <state line="50" column="109" selection-start="2451" selection-end="2451" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/solr/conf/schema.xml">
+    <entry file="file://$PROJECT_DIR$/config/routes.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="63" column="122" selection-start="3178" selection-end="3178" vertical-scroll-proportion="0.33628318">
+        <state line="17" column="47" selection-start="527" selection-end="527" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spec/models/user_spec.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="440" column="0" selection-start="20646" selection-end="20980" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/environments/development.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="29" selection-start="932" selection-end="932" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/event.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="89" column="77" selection-start="3197" selection-end="3197" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/events_controller.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="70" column="74" selection-start="2016" selection-end="2016" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spec/models/event_spec.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="223" column="0" selection-start="14576" selection-end="14753" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spec/controllers/events_controller_spec.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="239" column="121" selection-start="18701" selection-end="18713" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spec/spec_helper.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="99" column="96" selection-start="2875" selection-end="2875" vertical-scroll-proportion="0.33628318">
           <folding />
         </state>
       </provider>

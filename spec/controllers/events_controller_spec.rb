@@ -226,6 +226,16 @@ describe EventsController do
       parsed_body['next_page'].should be_nil
     end
 
+    it 'returns SUCCESS and all results for "Everything"' do
+      params = { facebook_id: '100000450230611', session_token: @session_token, search_query: 'Everything', location_query: 'Berkeley', 'page' => 1}
+      post '/events/search.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json'}
+      parsed_body = JSON.parse(response.body)
+      parsed_body.should_not be_nil
+      parsed_body['errCode'].should equal(RedPins::Application::SUCCESS)
+      parsed_body['events'].length.should equal(10)
+      parsed_body['next_page'].should be_nil
+    end
+
     it 'returns ERR_BAD_LOCATION if we send a location query that does not make any sense' do
       params = { facebook_id: '100000450230611', session_token: @session_token, search_query: 'Korean', location_query: 'Bad Location', 'page' => 1}
       post '/events/search.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json'}
@@ -347,6 +357,16 @@ describe EventsController do
       parsed_body.should_not be_nil
       parsed_body['errCode'].should equal(RedPins::Application::SUCCESS)
       parsed_body['events'].length.should equal(0)
+      parsed_body['next_page'].should be_nil
+    end
+
+    it 'returns SUCCESS and all results for "Everything"' do
+      params = { facebook_id: '100000450230611', session_token: @session_token, search_query: 'Everything', latitude: 37.8717, longitude: -122.2728, 'page' => 1}
+      post '/events/searchViaCoordinates.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json'}
+      parsed_body = JSON.parse(response.body)
+      parsed_body.should_not be_nil
+      parsed_body['errCode'].should equal(RedPins::Application::SUCCESS)
+      parsed_body['events'].length.should equal(10)
       parsed_body['next_page'].should be_nil
     end
 

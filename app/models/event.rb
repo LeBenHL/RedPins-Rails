@@ -30,6 +30,7 @@ class Event < ActiveRecord::Base
     end
     time :start_time, :end_time, :created_at, :updated_at
     integer :user_id
+    float :rating
     boolean :canceled
     latlon(:coords) { Sunspot::Util::Coordinates.new(latitude, longitude) }
   end
@@ -57,6 +58,11 @@ class Event < ActiveRecord::Base
       reverse_geocode if self.location.nil?
    end
   end
+
+  def rating
+    likes = self.likes.where(:like => true).count
+    likes.to_f / self.likes.count
+  end
   
   def self.add(title, start_time, end_time, location, facebook_id, url = "", latitude = 37.8717, longitude = -122.2728)
     begin
@@ -81,11 +87,15 @@ class Event < ActiveRecord::Base
     return RedPins::Application::SUCCESS
   end
 
-  def self.searchEvents(search_query, coords, user_id, page = 1, per_page = 20)
+  def self.searchEvents(search_query, coords, user_id, page = 1, per_page = 10)
     events = Event.search do
-      fulltext search_query do
-        boost_fields :title  => 3.0
-        boost_fields :description => 2.0
+      if (search_query == "Everything")
+        order_by(:rating, :desc)
+      else
+        fulltext search_query do
+          boost_fields :title  => 3.0
+          boost_fields :description => 2.0
+        end
       end
       with(:canceled, false)
       with(:coords).in_radius(coords[0], coords[1], 10, :bbox => true)
