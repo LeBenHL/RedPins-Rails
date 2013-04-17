@@ -87,7 +87,7 @@ class Event < ActiveRecord::Base
     return RedPins::Application::SUCCESS
   end
 
-  def self.searchEvents(search_query, coords, user_id, page = 1, per_page = 20)
+  def self.searchEvents(search_query, coords, user_id, page = 1, per_page = 10)
     events = Event.search do
       if (search_query.downcase == "everything")
         order_by(:rating, :desc)

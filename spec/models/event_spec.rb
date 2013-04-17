@@ -222,8 +222,8 @@ describe Event do
     it 'returns all events if we ask for "Everything"' do
       sleep 2
       search = Event.searchEvents('Everything', Geocoder.coordinates('Berkeley'), @user1.id)
-      search[:events].count.should eq(11)
-      search[:next_page].should be_nil
+      search[:events].count.should eq(10)
+      search[:next_page].should_not be_nil
     end
   end
 
