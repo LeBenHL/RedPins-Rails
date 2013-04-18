@@ -313,7 +313,7 @@ describe User do
     photo = File.new('public/testEventImage.jpg', 'rb')
     caption = "This is the caption"
     response = @user.uploadPhoto(@event.id, photo, caption)
-    response.should equal(RedPins::Application::SUCCESS)
+    response[:errCode].should equal(RedPins::Application::SUCCESS)
     @event_image = EventImage.where(:user_id => @user.id, :event_id => @event.id)[0]
     @event_image.should_not be_nil
     @event_image.photo.should_not be_nil
@@ -326,7 +326,7 @@ describe User do
     photo = File.new('public/testEventImage.jpg', 'rb')
     caption = "This is the caption"
     response = @user.uploadPhoto(100, photo, caption)
-    response.should equal(RedPins::Application::ERR_USER_UPLOAD_PHOTO)
+    response[:errCode].should equal(RedPins::Application::ERR_USER_UPLOAD_PHOTO)
     @event.event_images.length.should eq(0)
   end
 
@@ -335,7 +335,7 @@ describe User do
     photo = File.new('public/404.html', 'rb')
     caption = "This is the caption"
     response = @user.uploadPhoto(@event.id, photo, caption)
-    response.should equal(RedPins::Application::ERR_USER_UPLOAD_PHOTO)
+    response[:errCode].should equal(RedPins::Application::ERR_USER_UPLOAD_PHOTO)
     @event.event_images.length.should eq(0)
   end
 
@@ -343,7 +343,7 @@ describe User do
     @user = User.getUser('100000450230611')
     photo = File.new('public/extraLarge.jpg', 'rb')
     caption = "This is the caption"
-    response = @user.uploadPhoto(@event.id, photo, caption)
+    response[:errCode] = @user.uploadPhoto(@event.id, photo, caption)
     response.should equal(RedPins::Application::ERR_USER_UPLOAD_PHOTO)
     @event.event_images.length.should eq(0)
   end

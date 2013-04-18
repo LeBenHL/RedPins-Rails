@@ -179,9 +179,9 @@ class User < ActiveRecord::Base
     begin
       @event_image = EventImage.create!(:event_id => event_id, :user_id => self.id, :caption => caption, :photo => photo)
     rescue => ex
-      return RedPins::Application::ERR_USER_UPLOAD_PHOTO
+      return {:errCode => RedPins::Application::ERR_USER_UPLOAD_PHOTO, :message => ex.message}
     end
-    return RedPins::Application::SUCCESS
+    return {:errCode => RedPins::Application::SUCCESS}
   end
 
   def getBookmarks(page = 1, per_page = 6)
