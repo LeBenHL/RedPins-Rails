@@ -386,4 +386,32 @@ describe EventsController do
 
   end
 
+  describe 'Event #getPhotos', :type => :request do
+    before(:each) do
+      @user = User.create(:email => 'email@email.com', :facebook_id => '100000450230611', :firstname => 'Red', :lastname => 'Pin')
+      @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com', :user_id => @user.id)
+      @photo1 =  File.new('spec/fixtures/images/testEventImage.jpg', 'rb')
+      @photo2 =  File.new('spec/fixtures/images/testEventImage2.jpg', 'rb')
+      @event_image = EventImage.create!(:event_id => @event.id, :user_id => @user.id, :caption => 'Picture 1', :photo => @photo1)
+      @event_image = EventImage.create!(:event_id => @event.id, :user_id => @user.id, :caption => 'Picture 2', :photo => @photo2)
+    end
+
+    it 'should return the urls of all photos associated to an event' do
+      params = { event_id: @event.id }
+      post '/events/getPhotos.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should equal(RedPins::Application::SUCCESS)
+      parsed_body['urls'].length.should equal(2)
+    end
+
+
+    it 'should return ERR_NO_EVENT_EXISTS if we ask for a list of photo urls of a event that does not exist in the database' do
+      params = { event_id: 100 }
+      post '/events/getPhotos.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should equal(RedPins::Application::ERR_NO_EVENT_EXISTS)
+    end
+
+  end
+
 end

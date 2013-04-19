@@ -44,6 +44,20 @@ class EventsController < ApplicationController
     end
   end
 
+  # POST /events/getPhotos
+  def getPhotos
+    begin
+      @event = Event.find(params['event_id'])
+      @hash = @event.getPhotos
+    rescue => ex
+      @hash = {}
+      @hash[:errCode] = RedPins::Application::ERR_NO_EVENT_EXISTS
+    end
+    respond_to do |format|
+      format.json { render :json => @hash }
+    end
+  end
+
   # POST /events/search
 =begin
   def search

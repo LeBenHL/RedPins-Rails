@@ -30,6 +30,7 @@ RedPins::Application.routes.draw do
   match '/events/getComments' => 'Events#getComments', :via => :post
   match '/events/getEvent' => 'Events#getEvent', :via => :post
   match '/events/add' => 'Events#add', :via => :post
+  match '/events/getPhotos' => 'Events#getPhotos', :via => :post
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

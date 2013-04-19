@@ -343,8 +343,8 @@ describe User do
     @user = User.getUser('100000450230611')
     photo = File.new('public/extraLarge.jpg', 'rb')
     caption = "This is the caption"
-    response[:errCode] = @user.uploadPhoto(@event.id, photo, caption)
-    response.should equal(RedPins::Application::ERR_USER_UPLOAD_PHOTO)
+    response = @user.uploadPhoto(@event.id, photo, caption)
+    response[:errCode].should equal(RedPins::Application::ERR_USER_UPLOAD_PHOTO)
     @event.event_images.length.should eq(0)
   end
 
