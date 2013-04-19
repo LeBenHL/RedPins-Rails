@@ -49,7 +49,10 @@ class UsersController < ApplicationController
     @hash = {}
     if response > 0
       @user = User.getUser(params['facebook_id'])
-      @hash[:errCode] = @user.removeLike(params['event_id'])
+      errCode = @user.removeLike(params['event_id'])
+      @event = Event.find(params['event_id'])
+      @hash = @event.getRatings
+      @hash[:errCode] = errCode
     else
       @hash[:errCode] = response
     end
