@@ -227,4 +227,27 @@ describe Event do
     end
   end
 
+  describe 'testing getPhotos' do
+    before(:each) do
+      @user1 = User.create(email: 'benle@gmail.com', facebook_id: 1, firstname: 'Ben', lastname: 'Le')
+      @event1 = Event.create(title: "Victor's Party", start_time: DateTime.new(2010,9,8), end_time: DateTime.new(2010,9,10),
+                             location: "2540 Regent St.", user_id: @user1.id, url: 'www.google.com', latitude: 37.86356, longitude: -122.25787, description: "It's Victor's birthday!")
+      @photo1 =  File.new('spec/fixtures/images/testEventImage.jpg', 'rb')
+      @photo2 =  File.new('spec/fixtures/images/testEventImage2.jpg', 'rb')
+      @event_image = EventImage.create!(:event_id => @event1.id, :user_id => @user1.id, :caption => 'Picture 1', :photo => @photo1)
+      @event_image = EventImage.create!(:event_id => @event1.id, :user_id => @user1.id, :caption => 'Picture 2', :photo => @photo2)
+    end
+
+    after(:all) do
+      Event.remove_all_from_index!
+    end
+
+    it 'should return an array of image URLs when call getPhotos for an event' do
+      photos = @event1.getPhotos
+      photos[:errCode].should eq(RedPins::Application::SUCCESS)
+      photos[:urls].length.should eq(2)
+    end
+
+  end
+
 end

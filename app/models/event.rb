@@ -135,6 +135,15 @@ class Event < ActiveRecord::Base
     return commentsArray
   end
 
+  def getPhotos
+    @images = EventImage.where(:event_id => self.id).order('created_at DESC')
+    urlArray = []
+    @images.each do |image|
+      urlArray.push(image.photo)
+    end
+    return {:errCode => RedPins::Application::SUCCESS, :urls => urlArray}
+  end
+
 =begin
   def searchByEvent(text)
     eventsArray = []

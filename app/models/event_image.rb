@@ -25,6 +25,6 @@ class EventImage < ActiveRecord::Base
   has_attached_file :photo, :styles => { :thumbnail => "250x250>" }
   validates_attachment_presence :photo
   validates_attachment_size :photo, :less_than => 5.megabytes
-  validates_attachment_content_type :photo, :content_type => /image/
+  #validates_attachment_content_type :photo, :content_type => /image/
 
 end
