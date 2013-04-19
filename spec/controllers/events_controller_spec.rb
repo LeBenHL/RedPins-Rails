@@ -45,6 +45,54 @@ describe EventsController do
     end
   end
 
+  describe 'Event #add', :type => :request do
+    before(:each) do
+      @user = User.create(:email => 'email@email.com', :facebook_id => '100000450230611', :firstname => 'Red', :lastname => 'Pin')
+    end
+
+    it 'should return SUCCESS upon creation of event' do
+      params = { facebook_id: @user.facebook_id, session_token: @session_token, title: "Test 001: New Event", start_time: "2013-06-09T10:11:31Z" , end_time: "2013-06-09T12:30:00Z", location: "Berkeley", url: "yelp.com" }
+      post '/events/add.json', params.to_json, {'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should equal(RedPins::Application::SUCCESS)
+    end
+
+    it 'should return ERR_BAD_TITLE when title is missing' do
+      params = { facebook_id: @user.facebook_id, session_token: @session_token, start_time: "2013-06-09T10:11:31Z" , end_time: "2013-06-09T12:30:00Z", location: "Berkeley", url: "yelp.com" }
+      post '/events/add.json', params.to_json, {'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should equal(RedPins::Application::ERR_BAD_TITLE)
+    end
+    
+    it 'should return ERR_BAD_START_TIME when start_time is invalid' do
+      params = { facebook_id: @user.facebook_id, session_token: @session_token, title: "Test 003: New Event", start_time: "" , end_time: "2013-06-09T12:30:00Z", location: "Berkeley", url: "yelp.com" }
+      post '/events/add.json', params.to_json, {'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should equal(RedPins::Application::ERR_BAD_START_TIME)
+    end
+
+    it 'should return ERR_BAD_END_TIME when end_time is invalid' do
+      params = { facebook_id: @user.facebook_id, session_token: @session_token, title: "Test 003: New Event", end_time: "" , start_time: "2013-06-09T12:30:00Z", location: "Berkeley", url: "yelp.com" }
+      post '/events/add.json', params.to_json, {'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should equal(RedPins::Application::ERR_BAD_END_TIME)
+    end
+
+    it 'should return ERR_BAD_LOCATION when location is missing' do
+      params = { facebook_id: @user.facebook_id, session_token: @session_token, title: "Test 003: New Event", start_time: "2013-06-08T12:00:00Z" , end_time: "2013-06-09T12:30:00Z", url: "yelp.com" }
+      post '/events/add.json', params.to_json, {'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should equal(RedPins::Application::ERR_BAD_LOCATION)
+    end
+
+    it 'should return ERR_EVENT_CREATION when location is invalid' do
+      params = { facebook_id: @user.facebook_id, session_token: @session_token, title: "Test 003: New Event", start_time: "2013-06-08T12:00:00Z" , end_time: "2013-06-09T12:30:00Z", location: "AZN GHETTO WONDERLAND", url: "yelp.com" }
+      post '/events/add.json', params.to_json, {'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should equal(RedPins::Application::ERR_EVENT_CREATION)
+    end
+  end
+
   describe 'Event #getComments', :type => :request do
     before(:each) do
       @user = User.create(:email => 'email@email.com', :facebook_id => '100000450230611', :firstname => 'Red', :lastname => 'Pin')

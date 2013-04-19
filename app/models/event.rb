@@ -64,10 +64,10 @@ class Event < ActiveRecord::Base
     likes.to_f / self.likes.count
   end
   
-  def self.add(title, start_time, end_time, location, facebook_id, url = "", latitude = 37.8717, longitude = -122.2728)
+  def self.add(title, start_time, end_time, location, facebook_id, url = "", latitude = 37.8717, longitude = -122.2728, description = "")
     begin
       @creator = User.find_by_facebook_id(facebook_id)
-      @event = Event.create!(:title => title, :start_time => start_time, :end_time => end_time, :location => location, :user_id => @creator['id'], :url => url, :latitude => latitude, :longitude => longitude)
+      @event = Event.create!(:title => title, :start_time => start_time, :end_time => end_time, :location => location, :user_id => @creator['id'], :url => url, :latitude => latitude, :longitude => longitude, :description => description)
     rescue => exception
       message = exception.message
       case
