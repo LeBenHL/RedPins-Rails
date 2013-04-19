@@ -8,7 +8,6 @@ development:
   database: redpins_development
   pool: 5
   timeout: 5000
-  username: ben
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -18,11 +17,9 @@ test:
   database: redpins_testing
   pool: 5
   timeout: 5000
-  username: ben
 
 production:
   adapter: postgreql
   database: redpins_production
   pool: 5
   timeout: 5000
-  username: ben
