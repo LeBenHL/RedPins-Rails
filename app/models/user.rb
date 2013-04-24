@@ -31,10 +31,14 @@ class User < ActiveRecord::Base
   has_many :event_images, :dependent => :destroy
 
   def self.login(facebook_id, session_token)
-    @user = User.where(:facebook_id => facebook_id)[0]
-    if @user
-      return self.verify(facebook_id, session_token)
-    else
+    begin
+      @user = User.where(:facebook_id => facebook_id)[0]
+      if @user
+        return self.verify(facebook_id, session_token)
+      else
+        return RedPins::Application::ERR_NO_USER_EXISTS
+      end
+    rescue => ex
       return RedPins::Application::ERR_NO_USER_EXISTS
     end
   end
