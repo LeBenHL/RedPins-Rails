@@ -79,18 +79,18 @@ class Event < ActiveRecord::Base
       message = exception.message
       case
         when message =~ /Title can't be blank/i
-          return RedPins::Application::ERR_BAD_TITLE
+          return {:errCode => RedPins::Application::ERR_BAD_TITLE}
         when message =~ /Location can't be blank/i
-          return RedPins::Application::ERR_BAD_LOCATION
+          return {:errCode => RedPins::Application::ERR_BAD_LOCATION}
         when message =~ /Start time can't be blank/i
-          return RedPins::Application::ERR_BAD_START_TIME
+          return {:errCode => RedPins::Application::ERR_BAD_START_TIME}
         when message =~ /End time can't be blank/i
-          return RedPins::Application::ERR_BAD_END_TIME
+          return {:errCode => RedPins::Application::ERR_BAD_END_TIME}
         else
-          return RedPins::Application::ERR_EVENT_CREATION
+          return {:errCode => RedPins::Application::ERR_EVENT_CREATION}
       end
     end
-    return RedPins::Application::SUCCESS
+    return {:errCode => RedPins::Application::SUCCESS, :event_id => @event.id}
   end
 
   def self.searchEvents(search_query, coords, user_id, page = 1, per_page = 10)

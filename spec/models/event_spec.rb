@@ -34,42 +34,42 @@ describe Event do
 
   it 'adds an event into the database with URL' do
     response = Event.add('test event1', DateTime.new(2013,4,1), DateTime.new(2013,4,4),"Berkeley", @user.facebook_id, "google.com")
-    expect(response).to eq(RedPins::Application::SUCCESS)
+    expect(response[:errCode]).to eq(RedPins::Application::SUCCESS)
   end
   
   it 'adds an event into the database without URL' do
     response = Event.add('test event2', DateTime.new(2013,3,9), DateTime.new(2015,1,9), "Berkeley",  @user.facebook_id)
-    expect(response).to eq(RedPins::Application::SUCCESS)
+    expect(response[:errCode]).to eq(RedPins::Application::SUCCESS)
   end
   
   it 'adds an event with the same start date and end date' do
     response = Event.add('testevent3', DateTime.new(2013,1,2), DateTime.new(2013,1,2), "Berkeley", @user.facebook_id)
-    response.should equal(RedPins::Application::SUCCESS)
+    response[:errCode].should equal(RedPins::Application::SUCCESS)
   end
   
   it 'refuses to add an event without a location' do
     response = Event.add('testevent4', DateTime.new(2013,1,2), DateTime.new(2013,1,2), "", @user.facebook_id)
-    response.should equal(RedPins::Application::ERR_BAD_LOCATION)
+    response[:errCode].should equal(RedPins::Application::ERR_BAD_LOCATION)
   end
   
   it 'refuses to add an event without a title' do
     response = Event.add('', DateTime.new(2013,1,9), DateTime.new(2013,1,9), "Berkeley", @user.facebook_id)
-    response.should equal(RedPins::Application::ERR_BAD_TITLE)
+    response[:errCode].should equal(RedPins::Application::ERR_BAD_TITLE)
   end
   
   it 'refuses to add an event without a start time' do
     response = Event.add('OTG', "", DateTime.new(2013,1,9), "Berkeley", @user.facebook_id)
-    response.should equal(RedPins::Application::ERR_BAD_START_TIME)
+    response[:errCode].should equal(RedPins::Application::ERR_BAD_START_TIME)
   end
   
   it 'refuses to add an event ending before it starts' do
     response = Event.add('OTG', DateTime.new(2013,4,10), DateTime.new(2013,4,4), "Berkeley", @user.facebook_id)
-    response.should equal(RedPins::Application::ERR_EVENT_CREATION)
+    response[:errCode].should equal(RedPins::Application::ERR_EVENT_CREATION)
   end
 
   it 'refuses to add an event without an end time' do
     response = Event.add('OTG', DateTime.new(2013,4,10), "", "Berkeley", @user.facebook_id)
-    response.should equal(RedPins::Application::ERR_BAD_END_TIME)
+    response[:errCode].should equal(RedPins::Application::ERR_BAD_END_TIME)
   end
 
   it 'geocodes the event when it is added' do
