@@ -62,6 +62,11 @@ describe Event do
     response.should equal(RedPins::Application::ERR_BAD_START_TIME)
   end
   
+  it 'refuses to add an event ending before it starts' do
+    response = Event.add('OTG', DateTime.new(2013,4,10), DateTime.new(2013,4,4), "Berkeley", @user.facebook_id)
+    response.should equal(RedPins::Application::ERR_EVENT_CREATION)
+  end
+
   it 'refuses to add an event without an end time' do
     response = Event.add('OTG', DateTime.new(2013,4,10), "", "Berkeley", @user.facebook_id)
     response.should equal(RedPins::Application::ERR_BAD_END_TIME)
