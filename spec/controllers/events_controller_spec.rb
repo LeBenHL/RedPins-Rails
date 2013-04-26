@@ -91,6 +91,13 @@ describe EventsController do
       parsed_body = JSON.parse(response.body)
       parsed_body['errCode'].should equal(RedPins::Application::ERR_EVENT_CREATION)
     end
+
+    it 'should return ERR_EVENT_CREATION when end time is before start time' do
+      params = { facebook_id: @user.facebook_id, session_token: @session_token, title: "Test 003: New Event", start_time: "2013-06-08T12:00:00Z" , end_time: "2013-06-07T12:30:00Z", location: "AZN GHETTO WONDERLAND", url: "yelp.com" }
+      post '/events/add.json', params.to_json, {'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      parsed_body = JSON.parse(response.body)
+      parsed_body['errCode'].should equal(RedPins::Application::ERR_EVENT_CREATION)
+    end
   end
 
   describe 'Event #getComments', :type => :request do
