@@ -43,6 +43,7 @@ class Event < ActiveRecord::Base
   validates :user_id, :presence => true
   belongs_to :creator, :class_name => 'User', :foreign_key => "user_id"
   validates :creator, :presence => true
+  validate :end_time_after_start_time
   has_many :likes, :dependent => :destroy
   has_many :users, :through => :likes
   has_many :comments, :dependent => :destroy
@@ -50,6 +51,12 @@ class Event < ActiveRecord::Base
   has_many :bookmarks, :dependent => :destroy
   has_many :events, :through => :bookmarks
   has_many :event_images, :dependent => :destroy
+
+  def end_time_after_start_time
+    if !self.end_time.blank? and !self.start_time.blank? and self.end_time < self.start_time
+      errors.add(:end_time, "Can't have event end at time before it starts'")
+    end
+  end
 
   def check_before_geocode
    if self.location
