@@ -18,7 +18,7 @@
 #
 
 class Event < ActiveRecord::Base
-  attr_accessible :location, :latitude, :longitude, :title, :url, :user_id, :start_time, :end_time, :canceled, :description
+  attr_accessible :location, :latitude, :longitude, :title, :url, :user_id, :start_time, :end_time, :canceled, :description, :id
   geocoded_by :location
   reverse_geocoded_by :latitude, :longitude, :address => :location
   before_validation :check_before_geocode
@@ -51,6 +51,8 @@ class Event < ActiveRecord::Base
   has_many :bookmarks, :dependent => :destroy
   has_many :events, :through => :bookmarks
   has_many :event_images, :dependent => :destroy
+  has_many :recent_events, :dependent => :destroy
+  has_many :users, :through => :recent_events
 
   def end_time_after_start_time
     if !self.end_time.blank? and !self.start_time.blank? and self.end_time < self.start_time

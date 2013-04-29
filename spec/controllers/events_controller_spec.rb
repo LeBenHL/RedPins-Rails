@@ -146,6 +146,8 @@ describe EventsController do
       parsed_body['errCode'].should equal(RedPins::Application::SUCCESS)
       parsed_body['event']['id'].should equal(@event.id)
       parsed_body['event']['owner'].should equal(true)
+      @log = RecentEvent.where(:user_id => User.getUser('100000450230611').id, :event_id => @event.id)[0]
+      @log.should_not be_nil
     end
 
     it 'should return SUCCESS if retrieve a valid event and set owner as false if non-owner of the event does the API call' do
@@ -155,6 +157,8 @@ describe EventsController do
       parsed_body['errCode'].should equal(RedPins::Application::SUCCESS)
       parsed_body['event']['id'].should equal(@event.id)
       parsed_body['event']['owner'].should equal(false)
+      @log = RecentEvent.where(:user_id => User.getUser('668095230').id, :event_id => @event.id)[0]
+      @log.should_not be_nil
     end
 
 

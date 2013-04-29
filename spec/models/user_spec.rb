@@ -471,4 +471,39 @@ describe User do
 
   end
 
+
+  describe 'logEvent' do
+
+    before(:each) do
+      @user1 = User.create(email: 'benle@gmail.com', facebook_id: 1, firstname: 'Ben', lastname: 'Le')
+      @event1 = Event.create(title: "Victor's Party", start_time: DateTime.new(2010,9,8), end_time: DateTime.new(2010,9,10),
+                             location: "2540 Regent St.", user_id: @user1.id, url: 'www.google.com', latitude: 37.86356, longitude: -122.25787, description: "It's Victor's birthday!")
+
+      @event2 = Event.create(title: "Ben's Bash'", start_time: DateTime.new(2012,12,2), end_time: DateTime.new(2012,12,3),
+                             location: "2530 Hillegass Ave.", user_id: @user1.id, url: 'www.google.com', latitude: 37.86418, longitude: -122.25677, description: "Ben's birthday is coming up. Remember to bring presents!")
+    end
+
+    it 'should Log both events when we ask to log them' do
+      @log1 = @user1.logEvent(@event1.id)
+      @log2 = @user1.logEvent(@event2.id)
+      @log1.should_not be_nil
+      @log2.should_not be_nil
+      @user1.recent_events.count.should eq(2)
+      RecentEvent.find(@log1.id).updated_at.should <  RecentEvent.find(@log2.id).updated_at
+    end
+
+    it 'should Log both events when we ask to log them and put event1 as more recent than event2 if we log event1 twice' do
+      @log1 = @user1.logEvent(@event1.id)
+      @log2 = @user1.logEvent(@event2.id)
+      @log3 = @user1.logEvent(@event1.id)
+      @log1.should_not be_nil
+      @log2.should_not be_nil
+      @log3.should_not be_nil
+      @user1.recent_events.count.should eq(2)
+      RecentEvent.find(@log1.id).updated_at.should >  RecentEvent.find(@log2.id).updated_at
+      RecentEvent.find(@log3.id).updated_at.should >  RecentEvent.find(@log2.id).updated_at
+    end
+
+  end
+
 end

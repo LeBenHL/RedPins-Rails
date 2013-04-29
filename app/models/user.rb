@@ -28,7 +28,9 @@ class User < ActiveRecord::Base
   has_many :events, :through => :comments
   has_many :bookmarks, :dependent => :destroy
   has_many :events, :through => :bookmarks
-  has_many :event_images, :dependent => :destroy
+  has_many :event_images
+  has_many :recent_events, :dependent => :destroy
+  has_many :events, :through => :recent_events
 
   def self.login(facebook_id, session_token)
     begin
@@ -226,6 +228,17 @@ class User < ActiveRecord::Base
       end
     rescue => ex
       return RedPins::Application::ERR_USER_REMOVE_COMMENT
+    end
+  end
+
+  def logEvent(event_id)
+    begin
+      @log = RecentEvent.where(:user_id => self.id, :event_id => event_id)[0]
+      @log.touch
+      return @log
+    rescue
+      @log = RecentEvent.create(:user_id => self.id, :event_id => event_id)
+      return @log
     end
   end
 

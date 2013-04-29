@@ -129,6 +129,7 @@ class EventsController < ApplicationController
       @user = User.getUser(params['facebook_id'])
       begin
         @event = Event.find(params['event_id'])
+        @user.logEvent(@event.id)
         @hash[:errCode] = RedPins::Application::SUCCESS
         attributes = @event.attributes
         if @event.user_id == @user.id
