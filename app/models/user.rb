@@ -242,4 +242,31 @@ class User < ActiveRecord::Base
     end
   end
 
+  def getRecentEvents(page = 1, per_page = 10)
+    begin
+      limit = per_page
+      offset = (page - 1) * per_page
+      logs = RecentEvent.where(:user_id => self.id).order("updated_at DESC").limit(limit).offset(offset)
+      events = []
+      logs.each do |log|
+        event = log.event
+        event_attributes = event.attributes
+        if event.user_id == self.id
+          event_attributes[:owner] = true
+        else
+          event_attributes[:owner] = false
+        end
+        events.push(event_attributes)
+      end
+      if self.recent_events.length > offset + limit
+        next_page = page + 1
+      else
+        next_page = nil
+      end
+      return {:errCode => RedPins::Application::SUCCESS, :events => events, :next_page => next_page}
+    rescue => ex
+      return {:errCode => RedPins::Application::ERR_USER_GET_RECENT_EVENTS}
+    end
+  end
+
 end
