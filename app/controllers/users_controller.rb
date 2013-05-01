@@ -227,4 +227,16 @@ class UsersController < ApplicationController
     render :json => @hash
   end
 
+  #POST /users/getSimpleRecommendations
+  def getSimpleRecommendations
+    response = User.login(params['facebook_id'], params['session_token'])
+    @hash = {}
+    if response > 0
+      @user = User.getUser(params['facebook_id'])
+      @hash = @user.getSimpleRecommendations()
+    else
+      @hash[:errCode] = response
+    end
+    render :json => @hash
+  end
 end
