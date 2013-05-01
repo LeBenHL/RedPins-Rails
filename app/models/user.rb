@@ -216,6 +216,32 @@ class User < ActiveRecord::Base
       return {:errCode => RedPins::Application::ERR_USER_GET_BOOKMARKS}
     end
   end
+  
+  def getMyEvents(page = 1, per_page = 6)
+    begin
+      limit = per_page
+      offset = (page - 1) * per_page
+      myEvents = Event.where(:user_id => self.id).order("created_at DESC").limit(limit).offset(offset)
+      events = []
+      myEvents.each do |myEvent|
+        event_attributes = myEvent.attributes
+        if myEvent.user_id == self.id
+          event_attributes[:owner] = true
+        else
+          event_attributes[:owner] = false
+        end
+        events.push(event_attributes)
+      end
+      if self.created_events.length > offset + limit
+        next_page = page + 1
+      else
+        next_page = nil
+      end
+      return {:errCode => RedPins::Application::SUCCESS, :myEvents => events, :next_myEvent_page => next_page}
+    rescue => ex
+      return {:errCode => RedPins::Application::ERR_USER_GET_MY_EVENTS}
+    end
+  end
 
   def removeComment(comment_id)
     begin
