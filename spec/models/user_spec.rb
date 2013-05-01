@@ -408,6 +408,7 @@ describe User do
         else
           attributes[:owner] = false
         end
+        attributes[:isPhoto] = false
         response[:events].should include(attributes)
       end
       response[:events].length.should eq(5)
@@ -427,6 +428,7 @@ describe User do
         else
           attributes[:owner] = false
         end
+        attributes[:isPhoto] = false
         response[:events].should include(attributes)
       end
       response[:events].length.should eq(5)
@@ -568,6 +570,7 @@ describe User do
         else
           attributes[:owner] = false
         end
+        attributes[:isPhoto] = false
         response[:events].should include(attributes)
       end
       response[:events].length.should eq(5)
@@ -586,6 +589,7 @@ describe User do
         else
           attributes[:owner] = false
         end
+        attributes[:isPhoto] = false
         response[:events].should include(attributes)
       end
       response[:events].length.should eq(5)

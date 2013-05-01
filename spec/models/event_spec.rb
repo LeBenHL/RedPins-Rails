@@ -178,15 +178,19 @@ describe Event do
       search = Event.searchEvents('Korean', Geocoder.coordinates('Berkeley'), @user1.id)
       event3 = @event3.attributes
       event3[:owner] = false
+      event3[:isPhoto] = false
       search[:events].should include(event3)
       event6 = @event6.attributes
       event6[:owner] = true
+      event6[:isPhoto] = false
       search[:events].should include(event6)
       event9 = @event9.attributes
       event9[:owner] = false
+      event9[:isPhoto] = false
       search[:events].should include(event9)
       event15 = @event15.attributes
       event15[:owner] = false
+      event15[:isPhoto] = false
       search[:events].should_not include(event15)
       search[:next_page].should be_nil
     end
@@ -196,15 +200,19 @@ describe Event do
       search = Event.searchEvents('Korean', Geocoder.coordinates('San Francisco'), @user1.id)
       event3 = @event3.attributes
       event3[:owner] = false
+      event3[:isPhoto] = false
       search[:events].should_not include(event3)
       event6 = @event6.attributes
       event6[:owner] = true
+      event6[:isPhoto] = false
       search[:events].should_not include(event6)
       event9 = @event9.attributes
       event9[:owner] = false
+      event9[:isPhoto] = false
       search.should_not include(event9)
       event15 = @event15.attributes
       event15[:owner] = false
+      event15[:isPhoto] = false
       search[:events].should include(event15)
       search[:next_page].should be_nil
     end

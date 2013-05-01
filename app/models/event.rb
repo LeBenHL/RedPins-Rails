@@ -117,6 +117,12 @@ class Event < ActiveRecord::Base
       else
         attributes[:owner] = false
       end
+      if event.event_images.count > 0
+        attributes[:isPhoto] = true
+        attributes[:photo] = event.event_images.order("created_at DESC")[0].photo.url(:thumbnail)
+      else
+        attributes[:isPhoto] = false
+      end
       event_list.push(attributes)
     end
     return {:events => event_list, :next_page => events.results.next_page}
