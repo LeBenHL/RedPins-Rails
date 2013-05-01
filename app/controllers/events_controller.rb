@@ -139,7 +139,7 @@ class EventsController < ApplicationController
         end
         if @event.event_images.count > 0
           attributes[:isPhoto] = true
-          attributes[:photo] = @event.event_images[0].photo.url(:thumbnail)
+          attributes[:photo] = @event.event_images.order("created_at DESC")[0].photo.url(:thumbnail)
         else
           attributes[:isPhoto] = false
         end

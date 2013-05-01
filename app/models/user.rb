@@ -206,7 +206,7 @@ class User < ActiveRecord::Base
         end
         if event.event_images.count > 0
           event_attributes[:isPhoto] = true
-          event_attributes[:photo] = event.event_images[0].photo.url(:thumbnail)
+          event_attributes[:photo] = event.event_images.order("created_at DESC")[0].photo.url(:thumbnail)
         else
           event_attributes[:isPhoto] = false
         end
@@ -264,7 +264,7 @@ class User < ActiveRecord::Base
         end
         if event.event_images.count > 0
           event_attributes[:isPhoto] = true
-          event_attributes[:photo] = event.event_images[0].photo.url(:thumbnail)
+          event_attributes[:photo] = event.event_images.order("created_at DESC")[0].photo.url(:thumbnail)
         else
           event_attributes[:isPhoto] = false
         end
