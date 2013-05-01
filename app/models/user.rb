@@ -204,6 +204,12 @@ class User < ActiveRecord::Base
         else
           event_attributes[:owner] = false
         end
+        if event.event_images.count > 0
+          event_attributes[:isPhoto] = true
+          event_attributes[:photo] = event.event_images[0].photo.url(:thumbnail)
+        else
+          event_attributes[:isPhoto] = false
+        end
         events.push(event_attributes)
       end
       if self.bookmarks.length > offset + limit
@@ -255,6 +261,12 @@ class User < ActiveRecord::Base
           event_attributes[:owner] = true
         else
           event_attributes[:owner] = false
+        end
+        if event.event_images.count > 0
+          event_attributes[:isPhoto] = true
+          event_attributes[:photo] = event.event_images[0].photo.url(:thumbnail)
+        else
+          event_attributes[:isPhoto] = false
         end
         events.push(event_attributes)
       end

@@ -137,6 +137,12 @@ class EventsController < ApplicationController
         else
           attributes[:owner] = false
         end
+        if @event.event_images.count > 0
+          attributes[:isPhoto] = true
+          attributes[:photo] = @event.event_images[0].photo.url(:thumbnail)
+        else
+          attributes[:isPhoto] = false
+        end
         @hash[:event] = attributes
       rescue
         @hash[:errCode] = RedPins::Application::ERR_NO_EVENT_EXISTS
