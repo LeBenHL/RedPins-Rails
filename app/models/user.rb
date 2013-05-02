@@ -198,6 +198,9 @@ class User < ActiveRecord::Base
       events = []
       bookmarks.each do |bookmark|
         event = bookmark.event
+        if event.nil?
+          next
+        end
         event_attributes = event.attributes
         if event.user_id == self.id
           event_attributes[:owner] = true
@@ -283,6 +286,9 @@ class User < ActiveRecord::Base
       events = []
       logs.each do |log|
         event = log.event
+        if event.nil?
+          next
+        end
         event_attributes = event.attributes
         if event.user_id == self.id
           event_attributes[:owner] = true
