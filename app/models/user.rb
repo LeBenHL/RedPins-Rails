@@ -319,7 +319,7 @@ class User < ActiveRecord::Base
     begin
       #likes = Like.where(:user_id => self.id)
       events = []
-      self.likes.each do |like|
+      self.likes.where(:like => true).each do |like|
         event = like.event
         if event.user_id != self.id
           events_recommended = Event.where(:user_id => event.user_id)

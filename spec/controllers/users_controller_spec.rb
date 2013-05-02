@@ -804,5 +804,24 @@ describe UsersController do
     end
     
   end
+  
+  describe 'Post #getSimpleRecommendations', :type => :request do
+    before(:each) do
+      @user = User.create(:email => "email@email.com", :facebook_id => '100000450230611', :firstname => 'Red', :lastname => 'Pin')
+    end
+    
+    it 'should respond appropriately with invalid session parameters' do
+      params = {facebook_id: '-9999', :session_token => 'fffffff'}
+      post '/users/getSimpleRecommendations.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      response.status.should == 200
+    end
+
+    it 'should respond appropriately with valid session parameters' do
+      params = {facebook_id: @user.facebook_id, :session_token => @session_token}
+      post '/users/getSimpleRecommendations.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
+      response.status.should == 200
+    end
+
+  end
 
 end

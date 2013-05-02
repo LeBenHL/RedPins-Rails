@@ -735,8 +735,15 @@ describe User do
       @event10 = Event.create(title: "Dead Poet's Society Meeting'", start_time: DateTime.new(2013,5,10), end_time: DateTime.new(2013,5,11),
                               location: "2100 Durant Ave.", user_id: @user5.id, url: 'www.google.com', latitude: 37.86669, longitude: -122.26759, description: "Read poetry. Speak poetry. Breathe poetry.")
 
-      #@user = User.getUser('100000450230611')
-      # like events created by you, user1, user4, user3, but not user2 and user5 
+      # events 1, 6 are created by user
+      # event 2 is created by user1
+      # events 3, 9 are created by user4
+      # events 4, 8 are created by user3
+      # event 5 is created by user2
+      # event 7 is created by user2
+      # event 10 is created by user5
+
+      # like events 1, 2, 3, 4
       response = @user.likeEvent(@event1.id, true)
       response.should equal(RedPins::Application::SUCCESS)
       response = @user.likeEvent(@event2.id, true)
@@ -745,14 +752,46 @@ describe User do
       response.should equal(RedPins::Application::SUCCESS)
       response = @user.likeEvent(@event4.id, true)
       response.should equal(RedPins::Application::SUCCESS)
+      
     end
 
-    it 'getSimpleRecommendations should return events 2, 3, 4, 8, 9' do
+    it 'getSimpleRecommendations: returns all events by the same creators of user liked events' do
+      # should return events 2, 3, 4, 8, 9
       response = @user.getSimpleRecommendations()
       response[:errCode].should eq(RedPins::Application::SUCCESS)
-      response[:events].length.should eq(5)
+      event_ids = []
+      response[:events].each do |event_recommended|
+        event_ids.push(event_recommended['id'])
+      end
+      event_ids.should =~ [@event2.id, @event3.id, @event4.id, @event8.id, @event9.id]
     end
 
+    it 'getSimpleRecommendations: excludes events that user dislikes' do
+      # should return events 2, 3, 4, 9 if user dislikes event 8
+      response = @user.likeEvent(@event8.id, false)
+      response.should equal(RedPins::Application::SUCCESS)
+      response = @user.getSimpleRecommendations()
+      response[:errCode].should eq(RedPins::Application::SUCCESS)
+      event_ids = []
+      response[:events].each do |event_recommended|
+        event_ids.push(event_recommended['id'])
+      end
+      # Recommending event 8 depends on user liking event 4, so event 4 remains
+      event_ids.should =~ [@event2.id, @event3.id, @event4.id, @event9.id]
+    end
+    it 'getSimpleRecommendations: if last liked event for a creator gets disliked, exclude all events by that creator' do
+      # should return events 2, 3, 9 if user dislikes event 4
+      response = @user.likeEvent(@event4.id, false)
+      response.should equal(RedPins::Application::SUCCESS)
+      response = @user.getSimpleRecommendations()
+      response[:errCode].should eq(RedPins::Application::SUCCESS)
+      event_ids = []
+      response[:events].each do |event_recommended|
+        event_ids.push(event_recommended['id'])
+      end
+      # Since event 8 depends on user liking event 4, event 8 is no longer recommended
+      event_ids.should =~ [@event2.id, @event3.id, @event9.id]
+    end
   end
 
 end
