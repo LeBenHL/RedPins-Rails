@@ -230,6 +230,24 @@ describe User do
     @event2.should be_nil
   end
 
+  it 'deleteEvent should destroy the associated bookmark' do
+    @user = User.getUser('100000450230611')
+    @bookmark = Bookmark.create(:event_id => @event.id, :user_id => @user.id)
+    @bookmark.should_not be_nil
+    response = @user.deleteEvent(@event.id)
+    response.should equal(RedPins::Application::SUCCESS)
+    lambda {Bookmark.find(@bookmark.id)}.should raise_error
+  end
+
+  it 'deleteEvent should destroy the associated recent event log' do
+    @user = User.getUser('100000450230611')
+    @log = RecentEvent.create(:event_id => @event.id, :user_id => @user.id)
+    @log.should_not be_nil
+    response = @user.deleteEvent(@event.id)
+    response.should equal(RedPins::Application::SUCCESS)
+    lambda {RecentEvent.find(@log.id)}.should raise_error
+  end
+
   it 'deleteEvent should return false if a user tried deleting an event that does not exist in the db' do
     @user = User.getUser('100000450230611')
     response = @user.deleteEvent(100)
