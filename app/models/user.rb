@@ -22,14 +22,14 @@ class User < ActiveRecord::Base
   validates :firstname, :presence => true
   validates :lastname, :presence => true
   has_many :created_events, :class_name => 'Event'
-  has_many :likes, :dependent => :destroy
+  has_many :likes, :dependent => :delete_all
   has_many :events, :through => :likes
-  has_many :comments, :dependent => :destroy
+  has_many :comments, :dependent => :delete_all
   has_many :events, :through => :comments
-  has_many :bookmarks, :dependent => :destroy
+  has_many :bookmarks, :dependent => :delete_all
   has_many :events, :through => :bookmarks
   has_many :event_images
-  has_many :recent_events, :dependent => :destroy
+  has_many :recent_events, :dependent => :delete_all
   has_many :events, :through => :recent_events
 
   def self.login(facebook_id, session_token)
@@ -152,7 +152,7 @@ class User < ActiveRecord::Base
     begin
       @event = Event.find(event_id)
       return RedPins::Application::ERR_USER_DELETE_EVENT unless @event.user_id == self.id
-      @event.delete
+      @event.destroy
     rescue => ex
       return RedPins::Application::ERR_USER_DELETE_EVENT
     end
@@ -305,7 +305,7 @@ class User < ActiveRecord::Base
       end
       return {:errCode => RedPins::Application::SUCCESS, :events => events, :next_page => next_page}
     rescue => ex
-      return {:errCode => RedPins::Application::ERR_USER_GET_RECENT_EVENTS}
+      return {:errCode => RedPins::Application::ERR_USER_GET_RECENT_EVENTS, :message => ex.message}
     end
   end
 

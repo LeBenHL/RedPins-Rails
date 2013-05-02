@@ -44,14 +44,14 @@ class Event < ActiveRecord::Base
   belongs_to :creator, :class_name => 'User', :foreign_key => "user_id"
   validates :creator, :presence => true
   validate :end_time_after_start_time
-  has_many :likes, :dependent => :destroy
+  has_many :likes, :dependent => :delete_all
   has_many :users, :through => :likes
-  has_many :comments, :dependent => :destroy
+  has_many :comments, :dependent => :delete_all
   has_many :users, :through => :comments
-  has_many :bookmarks, :dependent => :destroy
+  has_many :bookmarks, :dependent => :delete_all
   has_many :events, :through => :bookmarks
   has_many :event_images, :dependent => :destroy
-  has_many :recent_events, :dependent => :destroy
+  has_many :recent_events, :dependent => :delete_all
   has_many :users, :through => :recent_events
 
   def end_time_after_start_time
