@@ -143,6 +143,7 @@ class EventsController < ApplicationController
         else
           attributes[:isPhoto] = false
         end
+        attributes.merge!(@event.getRatings)
         @hash[:event] = attributes
       rescue
         @hash[:errCode] = RedPins::Application::ERR_NO_EVENT_EXISTS

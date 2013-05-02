@@ -123,6 +123,7 @@ class Event < ActiveRecord::Base
       else
         attributes[:isPhoto] = false
       end
+      attributes.merge!(event.getRatings)
       event_list.push(attributes)
     end
     return {:events => event_list, :next_page => events.results.next_page}

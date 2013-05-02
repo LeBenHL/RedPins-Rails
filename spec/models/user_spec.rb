@@ -409,6 +409,8 @@ describe User do
           attributes[:owner] = false
         end
         attributes[:isPhoto] = false
+        attributes[:likes] = 0
+        attributes[:dislikes] = 0
         response[:events].should include(attributes)
       end
       response[:events].length.should eq(5)
@@ -429,6 +431,8 @@ describe User do
           attributes[:owner] = false
         end
         attributes[:isPhoto] = false
+        attributes[:likes] = 0
+        attributes[:dislikes] = 0
         response[:events].should include(attributes)
       end
       response[:events].length.should eq(5)
@@ -571,6 +575,8 @@ describe User do
           attributes[:owner] = false
         end
         attributes[:isPhoto] = false
+        attributes[:likes] = 0
+        attributes[:dislikes] = 0
         response[:events].should include(attributes)
       end
       response[:events].length.should eq(5)
@@ -590,6 +596,8 @@ describe User do
           attributes[:owner] = false
         end
         attributes[:isPhoto] = false
+        attributes[:likes] = 0
+        attributes[:dislikes] = 0
         response[:events].should include(attributes)
       end
       response[:events].length.should eq(5)

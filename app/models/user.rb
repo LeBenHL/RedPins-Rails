@@ -210,6 +210,7 @@ class User < ActiveRecord::Base
         else
           event_attributes[:isPhoto] = false
         end
+        event_attributes.merge!(event.getRatings)
         events.push(event_attributes)
       end
       if self.bookmarks.length > offset + limit
@@ -294,6 +295,7 @@ class User < ActiveRecord::Base
         else
           event_attributes[:isPhoto] = false
         end
+        event_attributes.merge!(event.getRatings)
         events.push(event_attributes)
       end
       if self.recent_events.length > offset + limit
@@ -306,6 +308,7 @@ class User < ActiveRecord::Base
       return {:errCode => RedPins::Application::ERR_USER_GET_RECENT_EVENTS}
     end
   end
+
   def getSimpleRecommendations()
     begin
       likes = Like.where(:user_id => self.id)
