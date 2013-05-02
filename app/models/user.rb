@@ -317,22 +317,25 @@ class User < ActiveRecord::Base
 
   def getSimpleRecommendations()
     begin
-      likes = Like.where(:user_id => self.id)
+      #likes = Like.where(:user_id => self.id)
       events = []
-      likes.each do |like|
+      self.likes.each do |like|
         event = like.event
         if event.user_id != self.id
           events_recommended = Event.where(:user_id => event.user_id)
           events_recommended.each do |event_recommended|
-            event_recommended_attributes = event_recommended.attributes
-            event_recommended_attributes[:owner] = false
-            if event_recommended.event_images.count > 0
-              event_recommended_attributes[:isPhoto] = true
-              event_recommended_attributes[:photo] = event_recommended.event_images[0].photo.url(:thumbnail)
-            else
-              event_recommended_attributes[:isPhoto] = false
+            if self.likes.where(:like => false, :event_id => event_recommended.id).count == 0
+              event_recommended_attributes = event_recommended.attributes
+              event_recommended_attributes[:owner] = false
+              if event_recommended.event_images.count > 0
+                event_recommended_attributes[:isPhoto] = true
+                event_recommended_attributes[:photo] = event_recommended.event_images[0].photo.url(:thumbnail)
+              else
+                event_recommended_attributes[:isPhoto] = false
+              end
+              event_recommended_attributes.merge!(event_recommended.getRatings)
+              events.push(event_recommended_attributes)
             end
-            events.push(event_recommended_attributes)
           end
         end
       end

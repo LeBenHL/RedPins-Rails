@@ -25,7 +25,7 @@ RedPins::Application.routes.draw do
   match '/users/getBookmarks'=> 'Users#getBookmarks' , :via => :post
   match '/users/getRecentEvents' => 'Users#getRecentEvents', :via => :post
   match '/users/getUserProfile' => 'Users#getUserProfile', :via => :post
-  match '/users/getSimpleRecommendations' => 'User#getSimpleRecommendations', :via => :post
+  match '/users/getSimpleRecommendations' => 'Users#getSimpleRecommendations', :via => :post
 
   match '/events/search' =>  'Events#search', :via => :post 
   match '/events/searchViaCoordinates' => 'Events#searchViaCoordinates', :via => :post
