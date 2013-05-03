@@ -129,6 +129,28 @@ class Event < ActiveRecord::Base
     return {:events => event_list, :next_page => events.results.next_page}
   end
 
+  def getAttributes(user)
+    attributes = self.attributes
+    if self.user_id == user.id
+      attributes[:owner] = true
+    else
+      attributes[:owner] = false
+    end
+    if self.event_images.count > 0
+      attributes[:isPhoto] = true
+      attributes[:photo] = self.event_images.order("created_at DESC")[0].photo.url(:thumbnail)
+    else
+      attributes[:isPhoto] = false
+    end
+    if (Bookmark.where(:user_id => user.id, :event_id => self.id).count > 0)
+      attributes[:bookmark] = true
+    else
+      attributes[:bookmark] = false
+    end
+    attributes.merge!(self.getRatings)
+    return attributes
+  end
+
   def getRatings
     likes = self.likes.where(:like => true).count
     dislikes = self.likes.where(:like => false).count

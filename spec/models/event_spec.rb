@@ -279,4 +279,31 @@ describe Event do
 
   end
 
+  describe 'Event #getAttributes', :type => :request do
+    before(:each) do
+      @user1 = User.create(:email => 'email1@email.com', :facebook_id => '100000450230611', :firstname => 'Red', :lastname => 'Pin')
+      @user2 = User.create(:email => 'email2@email.com', :facebook_id => '668095230', :firstname => 'Red', :lastname => 'Pin')
+      @event = Event.create(:title => 'newEvent', :start_time => '2013-03-14', :end_time => '2013-03-15', :location => 'Berkeley', :url => 'www.thEvent.com', :user_id => @user1.id)
+    end
+
+    it 'should return a valid event and set owner as true if owner of the event does the API call' do
+      attributes = @event.getAttributes(@user1)
+      attributes.with_indifferent_access['id'].should equal(@event.id)
+      attributes.with_indifferent_access['owner'].should equal(true)
+      attributes.with_indifferent_access['dislikes'].should equal(0)
+      attributes.with_indifferent_access['likes'].should equal(0)
+      attributes.with_indifferent_access['bookmark'].should equal(false)
+    end
+
+    it 'should return SUCCESS if retrieve a valid event and set owner as false if non-owner of the event does the API call' do
+      attributes = @event.getAttributes(@user2)
+      attributes.with_indifferent_access['id'].should equal(@event.id)
+      attributes.with_indifferent_access['owner'].should equal(false)
+      attributes.with_indifferent_access['dislikes'].should equal(0)
+      attributes.with_indifferent_access['likes'].should equal(0)
+      attributes.with_indifferent_access['bookmark'].should equal(false)
+    end
+
+  end
+
 end

@@ -131,25 +131,7 @@ class EventsController < ApplicationController
         @event = Event.find(params['event_id'])
         @user.logEvent(@event.id)
         @hash[:errCode] = RedPins::Application::SUCCESS
-        attributes = @event.attributes
-        if @event.user_id == @user.id
-          attributes[:owner] = true
-        else
-          attributes[:owner] = false
-        end
-        if @event.event_images.count > 0
-          attributes[:isPhoto] = true
-          attributes[:photo] = @event.event_images.order("created_at DESC")[0].photo.url(:thumbnail)
-        else
-          attributes[:isPhoto] = false
-        end
-        if (Bookmark.where(:user_id => @user.id, :event_id => @event.id).count > 0)
-          attributes[:bookmark] = true
-        else
-          attributes[:bookmark] = false
-        end
-        attributes.merge!(@event.getRatings)
-        @hash[:event] = attributes
+        @hash[:event] = @event.getAttributes(@user)
       rescue
         @hash[:errCode] = RedPins::Application::ERR_NO_EVENT_EXISTS
       end
