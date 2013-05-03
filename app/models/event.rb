@@ -111,27 +111,14 @@ class Event < ActiveRecord::Base
     end
     event_list = []
     events.results.each do |event|
-      attributes = event.attributes
-      if event.user_id == user_id
-        attributes[:owner] = true
-      else
-        attributes[:owner] = false
-      end
-      if event.event_images.count > 0
-        attributes[:isPhoto] = true
-        attributes[:photo] = event.event_images.order("created_at DESC")[0].photo.url(:thumbnail)
-      else
-        attributes[:isPhoto] = false
-      end
-      attributes.merge!(event.getRatings)
-      event_list.push(attributes)
+      event_list.push(event.getAttributes(user_id))
     end
     return {:events => event_list, :next_page => events.results.next_page}
   end
 
-  def getAttributes(user)
+  def getAttributes(user_id)
     attributes = self.attributes
-    if self.user_id == user.id
+    if self.user_id == user_id
       attributes[:owner] = true
     else
       attributes[:owner] = false
@@ -142,7 +129,7 @@ class Event < ActiveRecord::Base
     else
       attributes[:isPhoto] = false
     end
-    if (Bookmark.where(:user_id => user.id, :event_id => self.id).count > 0)
+    if (Bookmark.where(:user_id => user_id, :event_id => self.id).count > 0)
       attributes[:bookmark] = true
     else
       attributes[:bookmark] = false

@@ -53,16 +53,16 @@
       <file leaf-file-name="event.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/event.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="155" column="54" selection-start="5470" selection-end="5470" vertical-scroll-proportion="-1.2692307">
+            <state line="104" column="48" selection-start="3935" selection-end="3935" vertical-scroll-proportion="-12.230769">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="events_controller.rb" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="events_controller.rb" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/events_controller.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="133" column="51" selection-start="3860" selection-end="3860" vertical-scroll-proportion="0.6720368">
+            <state line="133" column="53" selection-start="3862" selection-end="3862" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -95,10 +95,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="event_spec.rb" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="event_spec.rb" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/spec/models/event_spec.rb">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="294" column="72" selection-start="17985" selection-end="17985" vertical-scroll-proportion="0.0">
+            <state line="238" column="13" selection-start="15099" selection-end="15099" vertical-scroll-proportion="0.7069988">
               <folding />
             </state>
           </provider>
@@ -145,9 +145,9 @@
         <option value="$PROJECT_DIR$/spec/models/user_spec.rb" />
         <option value="$PROJECT_DIR$/app/models/user.rb" />
         <option value="$PROJECT_DIR$/spec/controllers/events_controller_spec.rb" />
+        <option value="$PROJECT_DIR$/app/controllers/events_controller.rb" />
         <option value="$PROJECT_DIR$/app/models/event.rb" />
         <option value="$PROJECT_DIR$/spec/models/event_spec.rb" />
-        <option value="$PROJECT_DIR$/app/controllers/events_controller.rb" />
       </list>
     </option>
   </component>
@@ -900,7 +900,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="ruby-line">
           <url>file://$PROJECT_DIR$/app/models/event.rb</url>
-          <line>153</line>
+          <line>140</line>
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -976,28 +976,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/spec/models/event_spec.rb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="294" column="72" selection-start="17985" selection-end="17985" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/application.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="70" column="14" selection-start="3043" selection-end="3043" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/event.rb">
+    <entry file="file://$PROJECT_DIR$/app/controllers/events_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="155" column="54" selection-start="5470" selection-end="5470" vertical-scroll-proportion="-1.2692307">
+        <state line="133" column="53" selection-start="3862" selection-end="3862" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/events_controller.rb">
+    <entry file="file://$PROJECT_DIR$/app/models/event.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="133" column="51" selection-start="3860" selection-end="3860" vertical-scroll-proportion="0.6720368">
+        <state line="104" column="48" selection-start="3935" selection-end="3935" vertical-scroll-proportion="-12.230769">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spec/models/event_spec.rb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="238" column="13" selection-start="15099" selection-end="15099" vertical-scroll-proportion="0.7069988">
           <folding />
         </state>
       </provider>

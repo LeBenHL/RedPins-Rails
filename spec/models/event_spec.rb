@@ -181,24 +181,28 @@ describe Event do
       event3[:isPhoto] = false
       event3[:likes] = 0
       event3[:dislikes] = 0
+      event3[:bookmark] = false
       search[:events].should include(event3)
       event6 = @event6.attributes
       event6[:owner] = true
       event6[:isPhoto] = false
       event6[:likes] = 0
       event6[:dislikes] = 0
+      event6[:bookmark] = false
       search[:events].should include(event6)
       event9 = @event9.attributes
       event9[:owner] = false
       event9[:isPhoto] = false
       event9[:likes] = 0
       event9[:dislikes] = 0
+      event9[:bookmark] = false
       search[:events].should include(event9)
       event15 = @event15.attributes
       event15[:owner] = false
       event15[:isPhoto] = false
       event15[:likes] = 0
       event15[:dislikes] = 0
+      event15[:bookmark] = false
       search[:events].should_not include(event15)
       search[:next_page].should be_nil
     end
@@ -211,24 +215,28 @@ describe Event do
       event3[:isPhoto] = false
       event3[:likes] = 0
       event3[:dislikes] = 0
+      event3[:bookmark] = false
       search[:events].should_not include(event3)
       event6 = @event6.attributes
       event6[:owner] = true
       event6[:isPhoto] = false
       event6[:likes] = 0
       event6[:dislikes] = 0
+      event6[:bookmark] = false
       search[:events].should_not include(event6)
       event9 = @event9.attributes
       event9[:owner] = false
       event9[:isPhoto] = false
       event9[:likes] = 0
       event9[:dislikes] = 0
+      event9[:bookmark] = false
       search.should_not include(event9)
       event15 = @event15.attributes
       event15[:owner] = false
       event15[:isPhoto] = false
       event15[:likes] = 0
       event15[:dislikes] = 0
+      event15[:bookmark] = false
       search[:events].should include(event15)
       search[:next_page].should be_nil
     end
@@ -287,7 +295,7 @@ describe Event do
     end
 
     it 'should return a valid event and set owner as true if owner of the event does the API call' do
-      attributes = @event.getAttributes(@user1)
+      attributes = @event.getAttributes(@user1.id)
       attributes.with_indifferent_access['id'].should equal(@event.id)
       attributes.with_indifferent_access['owner'].should equal(true)
       attributes.with_indifferent_access['dislikes'].should equal(0)
@@ -296,7 +304,7 @@ describe Event do
     end
 
     it 'should return SUCCESS if retrieve a valid event and set owner as false if non-owner of the event does the API call' do
-      attributes = @event.getAttributes(@user2)
+      attributes = @event.getAttributes(@user2.id)
       attributes.with_indifferent_access['id'].should equal(@event.id)
       attributes.with_indifferent_access['owner'].should equal(false)
       attributes.with_indifferent_access['dislikes'].should equal(0)

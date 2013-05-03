@@ -131,7 +131,7 @@ class EventsController < ApplicationController
         @event = Event.find(params['event_id'])
         @user.logEvent(@event.id)
         @hash[:errCode] = RedPins::Application::SUCCESS
-        @hash[:event] = @event.getAttributes(@user)
+        @hash[:event] = @event.getAttributes(@user.id)
       rescue
         @hash[:errCode] = RedPins::Application::ERR_NO_EVENT_EXISTS
       end
