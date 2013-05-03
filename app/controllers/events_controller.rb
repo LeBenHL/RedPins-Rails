@@ -143,6 +143,11 @@ class EventsController < ApplicationController
         else
           attributes[:isPhoto] = false
         end
+        if (Bookmark.where(:user_id => @user.id, :event_id => @event.id).count > 0)
+          attributes[:bookmark] = true
+        else
+          attributes[:bookmark] = false
+        end
         attributes.merge!(@event.getRatings)
         @hash[:event] = attributes
       rescue
