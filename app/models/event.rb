@@ -118,21 +118,23 @@ class Event < ActiveRecord::Base
 
   def getAttributes(user_id)
     attributes = self.attributes
-    if self.user_id == user_id
-      attributes[:owner] = true
-    else
-      attributes[:owner] = false
+    if not user_id.nil?
+      if self.user_id == user_id
+        attributes[:owner] = true
+      else
+        attributes[:owner] = false
+      end
+      if (Bookmark.where(:user_id => user_id, :event_id => self.id).count > 0)
+        attributes[:bookmark] = true
+      else
+        attributes[:bookmark] = false
+      end
     end
     if self.event_images.count > 0
       attributes[:isPhoto] = true
       attributes[:photo] = self.event_images.order("created_at DESC")[0].photo.url(:thumbnail)
     else
       attributes[:isPhoto] = false
-    end
-    if (Bookmark.where(:user_id => user_id, :event_id => self.id).count > 0)
-      attributes[:bookmark] = true
-    else
-      attributes[:bookmark] = false
     end
     attributes.merge!(self.getRatings)
     return attributes

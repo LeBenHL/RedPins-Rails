@@ -202,20 +202,7 @@ class User < ActiveRecord::Base
         if event.nil?
           next
         end
-        event_attributes = event.attributes
-        if event.user_id == self.id
-          event_attributes[:owner] = true
-        else
-          event_attributes[:owner] = false
-        end
-        if event.event_images.count > 0
-          event_attributes[:isPhoto] = true
-          event_attributes[:photo] = event.event_images.order("created_at DESC")[0].photo.url(:thumbnail)
-        else
-          event_attributes[:isPhoto] = false
-        end
-        event_attributes.merge!(event.getRatings)
-        events.push(event_attributes)
+        events.push(event.getAttributes(self.id))
       end
       if self.bookmarks.length > offset + limit
         next_page = page + 1
@@ -235,13 +222,7 @@ class User < ActiveRecord::Base
       myEvents = Event.where(:user_id => self.id).order("created_at DESC").limit(limit).offset(offset)
       events = []
       myEvents.each do |myEvent|
-        event_attributes = myEvent.attributes
-        if myEvent.user_id == self.id
-          event_attributes[:owner] = true
-        else
-          event_attributes[:owner] = false
-        end
-        events.push(event_attributes)
+        events.push(myEvent.getAttributes(self.id))
       end
       if self.created_events.length > offset + limit
         next_page = page + 1
@@ -290,20 +271,7 @@ class User < ActiveRecord::Base
         if event.nil?
           next
         end
-        event_attributes = event.attributes
-        if event.user_id == self.id
-          event_attributes[:owner] = true
-        else
-          event_attributes[:owner] = false
-        end
-        if event.event_images.count > 0
-          event_attributes[:isPhoto] = true
-          event_attributes[:photo] = event.event_images.order("created_at DESC")[0].photo.url(:thumbnail)
-        else
-          event_attributes[:isPhoto] = false
-        end
-        event_attributes.merge!(event.getRatings)
-        events.push(event_attributes)
+        events.push(event.getAttributes(self.id))
       end
       if self.recent_events.length > offset + limit
         next_page = page + 1
@@ -335,7 +303,7 @@ class User < ActiveRecord::Base
                 event_recommended_attributes[:isPhoto] = false
               end
               event_recommended_attributes.merge!(event_recommended.getRatings)
-              if !eventsSet.member? event_recommended_attributes['id']
+              if not eventsSet.member? event_recommended_attributes['id']
                 events.push(event_recommended_attributes)
                 eventsSet.add(event_recommended_attributes['id'])
               end

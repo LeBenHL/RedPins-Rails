@@ -420,15 +420,7 @@ describe User do
       bookmarks = Bookmark.where(:user_id => @user.id).order("created_at DESC").limit(5).offset(0)
       bookmarks.each do |bookmark|
         event = bookmark.event
-        attributes = event.attributes
-        if event.user_id == @user.id
-          attributes[:owner] = true
-        else
-          attributes[:owner] = false
-        end
-        attributes[:isPhoto] = false
-        attributes[:likes] = 0
-        attributes[:dislikes] = 0
+        attributes = event.getAttributes(@user.id)
         response[:events].should include(attributes)
       end
       response[:events].length.should eq(5)
@@ -442,15 +434,7 @@ describe User do
       bookmarks = Bookmark.where(:user_id => @user.id).order("created_at DESC").limit(5).offset(5)
       bookmarks.each do |bookmark|
         event = bookmark.event
-        attributes = event.attributes
-        if event.user_id == @user.id
-          attributes[:owner] = true
-        else
-          attributes[:owner] = false
-        end
-        attributes[:isPhoto] = false
-        attributes[:likes] = 0
-        attributes[:dislikes] = 0
+        attributes =  event.getAttributes(@user.id)
         response[:events].should include(attributes)
       end
       response[:events].length.should eq(5)
@@ -586,15 +570,7 @@ describe User do
       logs = RecentEvent.where(:user_id => @user.id).order("updated_at DESC").limit(5).offset(0)
       logs.each do |log|
         event = log.event
-        attributes = event.attributes
-        if event.user_id == @user.id
-          attributes[:owner] = true
-        else
-          attributes[:owner] = false
-        end
-        attributes[:isPhoto] = false
-        attributes[:likes] = 0
-        attributes[:dislikes] = 0
+        attributes = event.getAttributes(@user.id)
         response[:events].should include(attributes)
       end
       response[:events].length.should eq(5)
@@ -607,15 +583,7 @@ describe User do
       logs = RecentEvent.where(:user_id => @user.id).order("updated_at DESC").limit(5).offset(5)
       logs.each do |log|
         event = log.event
-        attributes = event.attributes
-        if event.user_id == @user.id
-          attributes[:owner] = true
-        else
-          attributes[:owner] = false
-        end
-        attributes[:isPhoto] = false
-        attributes[:likes] = 0
-        attributes[:dislikes] = 0
+        attributes = event.getAttributes(@user.id)
         response[:events].should include(attributes)
       end
       response[:events].length.should eq(5)
@@ -667,12 +635,7 @@ describe User do
       response[:errCode].should eq(RedPins::Application::SUCCESS)
       myEvents = Event.where(:user_id => @user4.id).order("created_at DESC").limit(5).offset(0)
       myEvents.each do |event|
-        attributes = event.attributes
-        if event.user_id == @user4.id
-          attributes[:owner] = true
-        else
-          attributes[:owner] = false
-        end
+        attributes = event.getAttributes(@user4.id)
         response[:myEvents].should include(attributes)
       end
       response[:myEvents].length.should eq(4)
@@ -682,14 +645,10 @@ describe User do
     it 'getMyEvents should return the second page of 1 event' do
       response = @user3.getMyEvents(2, 1)
       response[:errCode].should eq(RedPins::Application::SUCCESS)
-      myEvents = Event.where(:user_id => @user3.id).order("created_at DESC").limit(5).offset(0)
+      myEvents = Event.where(:user_id => @user3.id).order("created_at DESC").limit(1).offset(1)
       myEvents.each do |event|
-        attributes = event.attributes
-        if event.user_id == @user3.id
-          attributes[:owner] = true
-        else
-          attributes[:owner] = false
-        end
+        attributes = event.getAttributes(@user3.id)
+        response[:myEvents].should include(attributes)
       end
       response[:myEvents].length.should eq(1)
       response[:next_myEvent_page].should eq(3)
@@ -744,9 +703,7 @@ describe User do
     end
 
     after(:all) do
-      @user.likes.each do |like|
-        @user.removeLike(like.event_id)
-      end
+
     end
 
     it 'getSimpleRecommendations: returns all events by the same creators of user liked events' do
