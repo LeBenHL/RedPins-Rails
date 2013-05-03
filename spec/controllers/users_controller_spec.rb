@@ -779,28 +779,28 @@ describe UsersController do
 
       @event10 = Event.create(title: "Dead Poet's Society Meeting'", start_time: DateTime.new(2013,5,10), end_time: DateTime.new(2013,5,11),
                               location: "2100 Durant Ave.", user_id: @user5.id, url: 'www.google.com', latitude: 37.86669, longitude: -122.26759, description: "Read poetry. Speak poetry. Breathe poetry.")
-      @user.bookmarkEvent(@event1.id)
-      @user.bookmarkEvent(@event2.id)
-      @user.bookmarkEvent(@event3.id)
-      @user.bookmarkEvent(@event4.id)
+      @user.likeEvent(@event1.id, true)
+      @user.likeEvent(@event2.id, true)
+      @user.likeEvent(@event3.id, true)
+      @user.likeEvent(@event4.id, true)
     end
     
     it 'should return proper user profile info for user' do
-      params = { facebook_id: '100000450230611', :session_token => @session_token, :bookmarksPage => 1, :eventsPage => 1 }
+      params = { facebook_id: '100000450230611', :session_token => @session_token, :likesPage => 1, :eventsPage => 1 }
       post '/users/getUserProfile.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
       parsed_body = JSON.parse(response.body)
       parsed_body['errCode'].should == RedPins::Application::SUCCESS
       parsed_body['myEvents'].length.should eq(3)
-      parsed_body['events'].length.should eq(4)
+      parsed_body['likedEvents'].length.should eq(4)
     end
     
-    it 'should return proper user profile info for user given he has no bookmarks' do
-      params = { facebook_id: '668095230', :session_token => @session_token2, :bookmarksPage => 1, :eventsPage => 1 }
+    it 'should return proper user profile info for user given he has no likes' do
+      params = { facebook_id: '668095230', :session_token => @session_token2, :likesPage => 1, :eventsPage => 1 }
       post '/users/getUserProfile.json', params.to_json, { 'CONTENT_TYPE' => 'application/json', 'ACCEPT' => 'application/json' }
       parsed_body = JSON.parse(response.body)
       parsed_body['errCode'].should == RedPins::Application::SUCCESS
       parsed_body['myEvents'].length.should eq(1)
-      parsed_body['events'].length.should eq(0)
+      parsed_body['likedEvents'].length.should eq(0)
     end
     
   end

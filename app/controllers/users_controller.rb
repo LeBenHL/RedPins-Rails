@@ -233,7 +233,7 @@ class UsersController < ApplicationController
     @hash = {}
     if response > 0
       @user = User.getUser(params['facebook_id'])
-      @hash = @user.getBookmarks(params['bookmarksPage'])
+      @hash = @user.getLikedEvents(params['likesPage'])
       @hash.merge!(@user.getMyEvents(params['eventsPage']))
     else
       @hash[:errCode] = response

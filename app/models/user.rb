@@ -215,6 +215,30 @@ class User < ActiveRecord::Base
     end
   end
   
+  def getLikedEvents(page = 1, per_page = 6)
+    begin
+      limit = per_page
+      offset = (page - 1) * per_page
+      likes = Like.where(:user_id => self.id).order("created_at DESC").limit(limit).offset(offset)
+      events = []
+      likes.each do |like|
+        event = like.event
+        if event.nil?
+          next
+        end
+        events.push(event.getAttributes(self.id))
+      end
+      if self.likes.length > offset + limit
+        next_page = page + 1
+      else
+        next_page = nil
+      end
+      return {:errCode => RedPins::Application::SUCCESS, :likedEvents => events, :next_likes_page => next_page}
+    rescue => ex
+      return {:errCode => RedPins::Application::ERR_USER_GET_LIKES}
+    end
+  end
+  
   def getMyEvents(page = 1, per_page = 6)
     begin
       limit = per_page
