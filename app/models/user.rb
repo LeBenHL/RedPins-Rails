@@ -14,6 +14,7 @@
 require 'valid_email'
 require 'net/https'
 require 'json'
+require 'set'
 
 class User < ActiveRecord::Base
   attr_accessible :email, :facebook_id, :id, :firstname, :lastname
@@ -317,8 +318,8 @@ class User < ActiveRecord::Base
 
   def getSimpleRecommendations()
     begin
-      #likes = Like.where(:user_id => self.id)
       events = []
+      eventsSet = Set.new
       self.likes.where(:like => true).each do |like|
         event = like.event
         if event.user_id != self.id
@@ -334,7 +335,10 @@ class User < ActiveRecord::Base
                 event_recommended_attributes[:isPhoto] = false
               end
               event_recommended_attributes.merge!(event_recommended.getRatings)
-              events.push(event_recommended_attributes)
+              if !eventsSet.member? event_recommended_attributes['id']
+                events.push(event_recommended_attributes)
+                eventsSet.add(event_recommended_attributes['id'])
+              end
             end
           end
         end
